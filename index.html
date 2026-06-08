@@ -650,6 +650,67 @@ body.light-mode .lab-adn .hof-card strong{
   color:#1a56db;
 }
 
+
+/* === Tooltips informativos para botones === */
+.tooltip-btn{
+  position:relative;
+  overflow:visible !important;
+}
+.tooltip-btn::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 10px);
+  transform:translateX(-50%) translateY(6px);
+  width:min(330px, 82vw);
+  background:#020617;
+  color:#e5e7eb;
+  border:1px solid #38bdf8;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:12px;
+  font-weight:600;
+  line-height:1.35;
+  text-align:left;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  opacity:0;
+  pointer-events:none;
+  z-index:99999;
+  transition:opacity .18s ease, transform .18s ease;
+  white-space:normal;
+}
+.tooltip-btn::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 3px);
+  transform:translateX(-50%);
+  border:7px solid transparent;
+  border-top-color:#38bdf8;
+  opacity:0;
+  pointer-events:none;
+  z-index:99999;
+  transition:opacity .18s ease;
+}
+.tooltip-btn:hover::after,
+.tooltip-btn:focus-visible::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+.tooltip-btn:hover::before,
+.tooltip-btn:focus-visible::before{
+  opacity:1;
+}
+body.light-mode .tooltip-btn::after{
+  background:#ffffff;
+  color:#111827;
+  border-color:#1a56db;
+  box-shadow:0 12px 26px rgba(15,23,42,.22);
+}
+body.light-mode .tooltip-btn::before{
+  border-top-color:#1a56db;
+}
+
 </style>
 </head>
 <body>
@@ -1842,6 +1903,38 @@ function finalizarLaboratorioADN(stats, totalSimulaciones){
   if(out) out.innerHTML = html;
 }
 
+
+/* === Información al pasar el mouse sobre cada botón === */
+function aplicarTooltipsBotones(){
+  const ayudas = [
+    {match:'Analizar Supervivencia Global', info:'Analiza los sorteos reales guardados y calcula cuáles números aparecen con más fuerza. Base para crear el núcleo.'},
+    {match:'Generar Ticket Núcleo', info:'Crea 1 ticket usando los 10 números con mayor supervivencia en tus sorteos reales.'},
+    {match:'Generar Tickets Derivados', info:'Genera 10 tickets combinando el núcleo fuerte con números de apoyo y rotaciones basadas en supervivencia.'},
+    {match:'ADN Evolutivo', info:'Evoluciona candidatos usando tus sorteos reales: cruza, filtra y conserva los tickets con mejor rendimiento histórico.'},
+    {match:'Verificar Tickets', info:'Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta.'},
+    {match:'Simular 1,000', info:'Prueba rápida del Laboratorio ADN. Usa sorteos simulados válidos, no sorteos reales.'},
+    {match:'Simular 10,000', info:'Prueba media para detectar tickets que empiezan a resistir mejor que otros dentro de los 10 ADN.'},
+    {match:'Simular 100,000', info:'Prueba fuerte para elegir candidatos antes de jugar. Mide supervivencia, ranking y Hall Of Fame.'},
+    {match:'Simular 500,000', info:'Prueba avanzada. Sirve para confirmar estabilidad y reducir ruido estadístico.'},
+    {match:'Simular 1,000,000', info:'Prueba máxima del laboratorio. Ideal para detectar el ticket más rentable y el más estable a gran escala.'},
+    {match:'Reiniciar Hall Of Fame', info:'Borra el historial guardado del Hall Of Fame ADN en este navegador.'},
+    {match:'Comparar Ticket Personalizado', info:'Compara un ticket escrito manualmente contra los sorteos reales guardados y el período seleccionado.'},
+    {match:'Guardar Sorteos Reales', info:'Agrega nuevos sorteos reales a la base local. El sistema valida 20 números únicos y evita duplicados.'},
+    {match:'Modo claro', info:'Cambia entre modo oscuro y modo claro.'},
+    {match:'Modo oscuro', info:'Cambia entre modo claro y modo oscuro.'}
+  ];
+
+  document.querySelectorAll('button').forEach(btn=>{
+    const texto = (btn.textContent || '').replace(/\s+/g,' ').trim();
+    const ayuda = ayudas.find(a => texto.includes(a.match));
+    if(ayuda){
+      btn.classList.add('tooltip-btn');
+      btn.setAttribute('data-tooltip', ayuda.info);
+      btn.setAttribute('title', ayuda.info);
+    }
+  });
+}
+
 inicializarSorteosBaseVisibles();
 renderHallOfFameADN();
 
@@ -1849,6 +1942,12 @@ actualizarContadorReales();
 if(ticketsGenerados.length){
   renderTickets(ticketsGenerados,"🎟️ Tickets Guardados");
 }
+
+
+aplicarTooltipsBotones();
+const tooltipObserver = new MutationObserver(()=>aplicarTooltipsBotones());
+tooltipObserver.observe(document.body,{childList:true,subtree:true});
+
 </script>
 </body>
 </html>
