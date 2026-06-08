@@ -204,6 +204,43 @@ th{background:#f1f5f9}
   from{transform:rotateX(-25deg) rotateY(0deg) rotateZ(0deg)}
   to{transform:rotateX(335deg) rotateY(360deg) rotateZ(180deg)}
 }
+/* === Estado ARMADO / SOLVED === */
+.rubik-cube.solved{
+  animation:none !important;
+  transform:rotateX(-25deg) rotateY(35deg) !important;
+  transition:transform 0.5s ease;
+}
+.rubik-cube.solved .cube-face span{
+  transition:background 0.4s ease, box-shadow 0.4s ease;
+  box-shadow:0 0 6px 1px rgba(255,255,255,0.55), inset 0 0 4px rgba(255,255,255,0.3);
+}
+.rubik-cube.solved .cube-face{
+  border-color:rgba(255,255,255,0.45);
+  box-shadow:0 0 14px 3px rgba(99,200,255,0.35);
+}
+@keyframes solvedPop{
+  0%{transform:rotateX(-25deg) rotateY(35deg) scale(1)}
+  40%{transform:rotateX(-25deg) rotateY(35deg) scale(1.13)}
+  100%{transform:rotateX(-25deg) rotateY(35deg) scale(1)}
+}
+.rubik-cube.solved{
+  animation:solvedPop 0.55s ease forwards !important;
+}
+.rubik-badge{
+  text-align:center;
+  margin-top:6px;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+  color:#86efac;
+  opacity:0;
+  transition:opacity 0.5s ease 0.4s;
+  pointer-events:none;
+  text-shadow:0 0 8px rgba(134,239,172,0.7);
+}
+.rubik-badge.visible{
+  opacity:1;
+}
 .dna{
   height:120px;
   position:relative;
@@ -557,6 +594,7 @@ body.light-mode .evo-chip{
           <div class="cube-face top"></div>
           <div class="cube-face bottom"></div>
         </div>
+        <div class="rubik-badge" id="rubikBadge">🧬 COMPLETADO</div>
       </div>
 
       <div>
@@ -650,6 +688,11 @@ function toggleTheme(){
 
 function prepararCuboRubik(){
   const colores = ["#ef4444","#22c55e","#3b82f6","#f59e0b","#f8fafc","#eab308"];
+  const cube = document.getElementById("rubikCube");
+  const badge = document.getElementById("rubikBadge");
+  // Quitar estado armado al preparar
+  if(cube) cube.classList.remove("solved");
+  if(badge) badge.classList.remove("visible");
   document.querySelectorAll(".cube-face").forEach((face,idx)=>{
     if(face.children.length) return;
     for(let i=0;i<9;i++){
@@ -662,12 +705,14 @@ function prepararCuboRubik(){
 
 function iniciarAnimacionGenKin(mensaje="Procesando matriz..."){
   aplicarTemaGuardado();
-prepararCuboRubik();
+  prepararCuboRubik(); // también quita .solved y oculta badge
   const cube=document.getElementById("rubikCube");
+  const badge=document.getElementById("rubikBadge");
   const status=document.getElementById("matrixStatus");
   const log=document.getElementById("consoleLog");
   const matrix=document.getElementById("matrixConsole");
-  if(cube) cube.classList.add("spin");
+  if(cube){ cube.classList.remove("solved"); cube.classList.add("spin"); }
+  if(badge) badge.classList.remove("visible");
   if(matrix) matrix.classList.add("pulse");
   if(status) status.textContent="Procesando";
   if(log){
@@ -677,12 +722,32 @@ prepararCuboRubik();
 
 function finalizarAnimacionGenKin(mensaje="Proceso completado."){
   const cube=document.getElementById("rubikCube");
+  const badge=document.getElementById("rubikBadge");
   const status=document.getElementById("matrixStatus");
   const log=document.getElementById("consoleLog");
   const matrix=document.getElementById("matrixConsole");
-  if(cube) cube.classList.remove("spin");
+
+  if(cube){
+    cube.classList.remove("spin");
+    // Pintar cada cara con su color sólido (estado armado)
+    const coloresSolved = ["#ef4444","#22c55e","#3b82f6","#f59e0b","#f8fafc","#eab308"];
+    cube.querySelectorAll(".cube-face").forEach((face, idx) => {
+      const color = coloresSolved[idx % coloresSolved.length];
+      face.querySelectorAll("span").forEach(span => {
+        span.style.setProperty("--c", color);
+      });
+    });
+    // Pequeño delay para que el repintado sea visible antes del pop
+    requestAnimationFrame(() => {
+      cube.classList.add("solved");
+    });
+  }
+
+  // Mostrar badge "🧬 COMPLETADO" con transición
+  if(badge) setTimeout(() => badge.classList.add("visible"), 420);
+
   if(matrix) matrix.classList.remove("pulse");
-  if(status) status.textContent="Completado";
+  if(status) status.textContent="✅ Completado";
   if(log){
     log.innerHTML += `<br><span class="ok">✅ ${mensaje}</span>`;
   }
