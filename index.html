@@ -496,6 +496,27 @@ body.light-mode .theme-toggle{
   border-color:#334155;
 }
 
+
+.evo-mini{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin:12px 0;
+}
+.evo-chip{
+  background:#0b1220;
+  border:1px solid #334155;
+  border-radius:12px;
+  padding:10px;
+  color:#e5e7eb;
+  text-align:center;
+}
+body.light-mode .evo-chip{
+  background:#ffffff;
+  color:#111827;
+  border-color:#dbe3ef;
+}
+
 </style>
 </head>
 <body>
@@ -558,6 +579,7 @@ body.light-mode .theme-toggle{
     <button onclick="ejecutarConAnimacion('Analizando supervivencia global...', analizarSupervivencia)" class="btn-green">🧬 Analizar Supervivencia Global</button>
     <button onclick="ejecutarConAnimacion('Generando ticket núcleo...', generarTicketNucleo)" class="btn-purple">🔥 Generar Ticket Núcleo</button>
     <button onclick="ejecutarConAnimacion('Generando tickets derivados...', generarTicketsDerivados)" class="btn-orange">🎟️ Generar Tickets Derivados</button>
+    <button onclick="ejecutarConAnimacion('Activando ADN Evolutivo...', activarADNEvolutivo)" class="btn-green">🧬 ADN Evolutivo</button>
     <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
   </div>
 
@@ -867,6 +889,182 @@ function generarTicketsDerivados(){
   ticketsGenerados=tickets;
   localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
   renderTickets(ticketsGenerados,"🎟️ 10 Tickets Derivados por Supervivencia");
+  verificarTicketsGenerados();
+}
+
+
+function generarTicketAleatorioDesdePool(pool){
+  const ticket = [];
+  const base = [...pool];
+
+  while(ticket.length < 10 && base.length){
+    const idx = Math.floor(Math.random() * base.length);
+    const n = base.splice(idx,1)[0];
+    if(!ticket.includes(n)) ticket.push(n);
+  }
+
+  while(ticket.length < 10){
+    const n = Math.floor(Math.random() * 80) + 1;
+    if(!ticket.includes(n)) ticket.push(n);
+  }
+
+  return ticket.sort((a,b)=>a-b);
+}
+
+function scoreTicketADN(ticket){
+  const usados = obtenerSorteosUsados();
+  let puntos = 0;
+  let premios = 0;
+  let maxHit = 0;
+  let diasPremio = 0;
+
+  usados.forEach(sorteo=>{
+    const h = contarAciertos(ticket, sorteo);
+    const p = premioPorHits(h);
+    maxHit = Math.max(maxHit, h);
+    premios += p;
+    if(p > 0) diasPremio++;
+
+    // Score híbrido: premia recuperación, 5+, 6+, 7+ y estabilidad diaria.
+    puntos += h;
+    if(h === 0) puntos += 1.2;
+    if(h >= 5) puntos += 10;
+    if(h >= 6) puntos += 24;
+    if(h >= 7) puntos += 65;
+    if(h >= 8) puntos += 180;
+    if(h >= 9) puntos += 800;
+    if(h >= 10) puntos += 5000;
+    puntos += p / 60;
+  });
+
+  puntos += diasPremio * 4;
+  puntos += maxHit * 12;
+
+  return {ticket, puntos, premios, maxHit, diasPremio};
+}
+
+function cruzarTicketsADN(a,b,pool){
+  const hijo = [];
+  const combinado = [...a, ...b];
+
+  combinado.forEach(n=>{
+    if(!hijo.includes(n) && Math.random() < 0.55 && hijo.length < 10){
+      hijo.push(n);
+    }
+  });
+
+  while(hijo.length < 10 && pool.length){
+    const n = pool[Math.floor(Math.random() * pool.length)];
+    if(!hijo.includes(n)) hijo.push(n);
+  }
+
+  // Mutación baja: cambia 1 número en algunos hijos
+  if(Math.random() < 0.22){
+    const pos = Math.floor(Math.random() * hijo.length);
+    let nuevo = Math.floor(Math.random() * 80) + 1;
+    let intentos = 0;
+    while(hijo.includes(nuevo) && intentos < 50){
+      nuevo = Math.floor(Math.random() * 80) + 1;
+      intentos++;
+    }
+    hijo[pos] = nuevo;
+  }
+
+  return [...new Set(hijo)].slice(0,10).sort((a,b)=>a-b);
+}
+
+function activarADNEvolutivo(){
+  if(!sorteosReales.length){
+    alert("Primero guarda sorteos reales.");
+    return;
+  }
+
+  if(!rankingSupervivencia.length){
+    analizarSupervivencia();
+  }
+
+  const generaciones = 20;
+  const poblacionInicial = 100;
+  const elite = 20;
+  const pool = rankingSupervivencia.length
+    ? rankingSupervivencia.slice(0,40).map(x=>x.num)
+    : Array.from({length:80},(_,i)=>i+1);
+
+  let poblacion = [];
+
+  // Semilla: tickets derivados actuales + tickets aleatorios inteligentes
+  for(let i=0;i<poblacionInicial;i++){
+    poblacion.push(generarTicketAleatorioDesdePool(pool));
+  }
+
+  // Si ya había tickets generados, entran como candidatos
+  ticketsGenerados.forEach(t=>poblacion.push(t));
+
+  let evaluados = [];
+
+  for(let g=1; g<=generaciones; g++){
+    evaluados = poblacion
+      .map(t=>scoreTicketADN(t))
+      .sort((a,b)=>b.puntos-a.puntos || b.premios-a.premios || b.maxHit-a.maxHit);
+
+    const mejores = evaluados.slice(0, elite).map(x=>x.ticket);
+    const nueva = [...mejores];
+
+    while(nueva.length < poblacionInicial){
+      const p1 = mejores[Math.floor(Math.random() * mejores.length)];
+      const p2 = mejores[Math.floor(Math.random() * mejores.length)];
+      nueva.push(cruzarTicketsADN(p1,p2,pool));
+    }
+
+    poblacion = nueva;
+  }
+
+  evaluados = poblacion
+    .map(t=>scoreTicketADN(t))
+    .sort((a,b)=>b.puntos-a.puntos || b.premios-a.premios || b.maxHit-a.maxHit);
+
+  const finales = [];
+  const vistas = new Set();
+
+  for(const ev of evaluados){
+    const clave = ev.ticket.join("-");
+    if(!vistas.has(clave)){
+      finales.push(ev.ticket);
+      vistas.add(clave);
+    }
+    if(finales.length >= 10) break;
+  }
+
+  ticketsGenerados = finales;
+  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
+
+  const mejor = evaluados[0];
+  let html = `
+    <div class="ticket">
+      <h2>🧬 ADN Evolutivo Experimental</h2>
+      <div class="evo-mini">
+        <div class="evo-chip"><strong>Generaciones</strong><br>${generaciones}</div>
+        <div class="evo-chip"><strong>Candidatos</strong><br>${poblacionInicial}</div>
+        <div class="evo-chip"><strong>Elite conservada</strong><br>${elite}</div>
+        <div class="evo-chip"><strong>Mejor hit</strong><br>${mejor.maxHit}</div>
+        <div class="evo-chip"><strong>Premios mejor ticket</strong><br>RD$${mejor.premios.toLocaleString()}</div>
+      </div>
+
+      <details class="collapse-box">
+        <summary>🏆 Ver/Ocultar 10 Tickets Elite ADN</summary>
+  `;
+
+  finales.forEach((ticket,i)=>{
+    html += `
+      <div class="ticket">
+        <strong>Ticket Elite #${i+1}</strong>
+        <div class="balls">${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}</div>
+      </div>
+    `;
+  });
+
+  html += `</details></div>`;
+  mostrarEnMatriz(html);
   verificarTicketsGenerados();
 }
 
