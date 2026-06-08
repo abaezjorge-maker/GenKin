@@ -554,6 +554,102 @@ body.light-mode .evo-chip{
   border-color:#dbe3ef;
 }
 
+
+
+/* === Laboratorio Estadístico ADN Evolutivo === */
+.lab-adn{
+  margin:18px 0;
+  background:#0b1220;
+  border:1px solid #334155;
+  border-radius:20px;
+  padding:18px;
+  color:#e5e7eb;
+}
+.lab-adn h2{
+  color:#93c5fd;
+  margin:0 0 8px;
+}
+.lab-adn .lab-warning{
+  background:rgba(245,158,11,.12);
+  border:1px solid rgba(245,158,11,.35);
+  color:#fde68a;
+  border-radius:14px;
+  padding:11px;
+  font-size:13px;
+  line-height:1.45;
+  margin:12px 0;
+}
+.lab-adn .lab-actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(185px,1fr));
+  gap:10px;
+  margin:14px 0;
+}
+.lab-adn .lab-output{
+  margin-top:14px;
+}
+.lab-adn .lab-progress{
+  width:100%;
+  height:12px;
+  background:#111827;
+  border:1px solid #334155;
+  border-radius:999px;
+  overflow:hidden;
+  margin:10px 0;
+}
+.lab-adn .lab-progress-bar{
+  height:100%;
+  width:0%;
+  background:#1a56db;
+  transition:width .15s linear;
+}
+.lab-adn .hof-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.lab-adn .hof-card{
+  background:#111c31;
+  border:1px solid #334155;
+  border-radius:14px;
+  padding:12px;
+  color:#e5e7eb;
+}
+.lab-adn .hof-card strong{
+  display:block;
+  color:#93c5fd;
+  margin-bottom:5px;
+}
+.lab-adn .mini-table{
+  overflow:auto;
+}
+body.light-mode .lab-adn{
+  background:#ffffff;
+  border-color:#dbe3ef;
+  color:#111827;
+}
+body.light-mode .lab-adn h2{
+  color:#1a56db;
+}
+body.light-mode .lab-adn .lab-warning{
+  background:#fff7ed;
+  border-color:#fed7aa;
+  color:#9a3412;
+}
+body.light-mode .lab-adn .lab-progress{
+  background:#f1f5f9;
+  border-color:#dbe3ef;
+}
+body.light-mode .lab-adn .hof-card{
+  background:#f8fafc;
+  border-color:#dbe3ef;
+  color:#111827;
+}
+body.light-mode .lab-adn .hof-card strong{
+  color:#1a56db;
+}
+
 </style>
 </head>
 <body>
@@ -622,6 +718,39 @@ body.light-mode .evo-chip{
   </div>
 
     <div class="console-output" id="matrixOutput"></div>
+  </div>
+
+
+
+  <div class="lab-adn" id="laboratorioADN">
+    <h2>🧪 Laboratorio Estadístico ADN Evolutivo</h2>
+    <p class="small">Simula sorteos matemáticamente válidos de Kino y compara esos sorteos contra los 10 tickets generados por ADN Evolutivo.</p>
+    <div class="lab-warning">
+      <strong>IMPORTANTE:</strong> Esta prueba no usa sorteos reales. Cada sorteo simulado contiene 20 números únicos, del 1 al 80, sin repetir.
+    </div>
+
+    <div class="lab-actions">
+      <button onclick="simularLaboratorioADN(1000)" class="btn-green">🔥 Simular 1,000</button>
+      <button onclick="simularLaboratorioADN(10000)" class="btn-purple">📊 Simular 10,000</button>
+      <button onclick="simularLaboratorioADN(100000)" class="btn-orange">🚀 Simular 100,000</button>
+      <button onclick="simularLaboratorioADN(500000)" class="btn-blue">⚡ Simular 500,000</button>
+      <button onclick="simularLaboratorioADN(1000000)" class="btn-dark">♾️ Simular 1,000,000</button>
+    </div>
+
+    <div id="labProgressBox" class="hidden">
+      <div class="small" id="labProgressText">Preparando simulación...</div>
+      <div class="lab-progress"><div class="lab-progress-bar" id="labProgressBar"></div></div>
+    </div>
+
+    <div class="lab-output" id="laboratorioADNOutput"></div>
+
+    <details class="collapse-box" open>
+      <summary>🔥 Hall Of Fame ADN</summary>
+      <div id="hallOfFameADN"></div>
+      <div class="compact-actions">
+        <button onclick="reiniciarHallOfFameADN()" class="btn-dark">🧹 Reiniciar Hall Of Fame</button>
+      </div>
+    </details>
   </div>
 
   <div class="ticket">
@@ -845,6 +974,233 @@ function guardarSorteosReales(){
   localStorage.setItem("sorteosKino", JSON.stringify(sorteosReales));
   document.getElementById("sorteosInput").value = "";
   prepararCuboRubik();
+
+/* === Laboratorio Estadístico ADN Evolutivo === */
+const HOF_KEY_ADN = "hallOfFameADNGenKin";
+
+function obtenerHallOfFameADN(){
+  return JSON.parse(localStorage.getItem(HOF_KEY_ADN) || JSON.stringify({
+    max10:{valor:0,ticket:null,fecha:null,simulaciones:0},
+    max9:{valor:0,ticket:null,fecha:null,simulaciones:0},
+    masRentable:{valor:0,ticket:null,fecha:null,simulaciones:0},
+    masSupervivencia:{valor:0,ticket:null,fecha:null,simulaciones:0}
+  }));
+}
+
+function guardarHallOfFameADN(hof){
+  localStorage.setItem(HOF_KEY_ADN, JSON.stringify(hof));
+}
+
+function renderTicketMini(ticket){
+  if(!ticket || !ticket.length) return "—";
+  return ticket.map(n=>fmt(n)).join(" • ");
+}
+
+function renderHallOfFameADN(){
+  const box = document.getElementById("hallOfFameADN");
+  if(!box) return;
+  const hof = obtenerHallOfFameADN();
+
+  function card(titulo, dato, sufijo=""){
+    const fecha = dato.fecha ? `<br><span class="small">${dato.fecha}</span>` : "";
+    const sims = dato.simulaciones ? `<br><span class="small">Simulación: ${dato.simulaciones.toLocaleString()} sorteos</span>` : "";
+    return `<div class="hof-card"><strong>${titulo}</strong><div>${dato.valor.toLocaleString()}${sufijo}</div><div class="small">${renderTicketMini(dato.ticket)}</div>${fecha}${sims}</div>`;
+  }
+
+  box.innerHTML = `<div class="hof-grid">
+    ${card("🏆 Mayor cantidad de 10 aciertos", hof.max10)}
+    ${card("🥇 Mayor cantidad de 9 aciertos", hof.max9)}
+    ${card("💰 Ticket más rentable", hof.masRentable, " pts")}
+    ${card("🧬 Ticket con más supervivencia", hof.masSupervivencia, "% ")}
+  </div>`;
+}
+
+function reiniciarHallOfFameADN(){
+  if(!confirm("¿Seguro que deseas reiniciar el Hall Of Fame ADN?")) return;
+  localStorage.removeItem(HOF_KEY_ADN);
+  renderHallOfFameADN();
+}
+
+function actualizarHallOfFameADN(resultado, simulaciones){
+  const hof = obtenerHallOfFameADN();
+  const fecha = new Date().toLocaleString();
+
+  resultado.stats.forEach(s=>{
+    if(s.c10 > hof.max10.valor){
+      hof.max10 = {valor:s.c10, ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+    if(s.c9 > hof.max9.valor){
+      hof.max9 = {valor:s.c9, ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+    if(s.puntos > hof.masRentable.valor){
+      hof.masRentable = {valor:Number(s.puntos.toFixed(2)), ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+    if(s.supervivencia > hof.masSupervivencia.valor){
+      hof.masSupervivencia = {valor:Number(s.supervivencia.toFixed(4)), ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+  });
+
+  guardarHallOfFameADN(hof);
+  renderHallOfFameADN();
+}
+
+function crearStatsLaboratorio(tickets){
+  return tickets.map((t,i)=>({
+    ticket:i+1,
+    ticketNumeros:[...t],
+    totalHits:0,
+    maxHits:0,
+    c0:0,c1:0,c2:0,c3:0,c4:0,c5:0,c6:0,c7:0,c8:0,c9:0,c10:0,
+    puntos:0,
+    supervivencia:0
+  }));
+}
+
+function puntuarHitsLaboratorio(h){
+  if(h === 10) return 1000;
+  if(h === 9) return 500;
+  if(h === 8) return 100;
+  if(h === 7) return 20;
+  if(h === 6) return 5;
+  if(h === 5) return 1;
+  if(h === 0) return 0.5;
+  return 0;
+}
+
+function simularLaboratorioADN(totalSimulaciones){
+  if(!ticketsGenerados.length){
+    alert("Primero genera los 10 tickets con ADN Evolutivo.");
+    return;
+  }
+  if(ticketsGenerados.length < 10){
+    alert("Para esta prueba necesitas 10 tickets generados. Activa ADN Evolutivo o Tickets Derivados primero.");
+    return;
+  }
+
+  const tickets = ticketsGenerados.slice(0,10);
+  const stats = crearStatsLaboratorio(tickets);
+  const out = document.getElementById("laboratorioADNOutput");
+  const progressBox = document.getElementById("labProgressBox");
+  const progressText = document.getElementById("labProgressText");
+  const progressBar = document.getElementById("labProgressBar");
+
+  if(progressBox) progressBox.classList.remove("hidden");
+  if(progressBar) progressBar.style.width = "0%";
+  if(progressText) progressText.textContent = `Simulando ${totalSimulaciones.toLocaleString()} sorteos válidos de Kino...`;
+  if(out) out.innerHTML = `<div class="ticket"><strong>🧪 Simulación en proceso...</strong><p class="small">No se están usando sorteos reales. Solo azar matemático válido: 20 números únicos del 1 al 80.</p></div>`;
+
+  let i = 0;
+  const chunk = totalSimulaciones >= 500000 ? 5000 : totalSimulaciones >= 100000 ? 2500 : 1000;
+
+  function procesarBloque(){
+    const limite = Math.min(i + chunk, totalSimulaciones);
+
+    for(; i < limite; i++){
+      const sorteo = generarSorteoAzar();
+      tickets.forEach((ticket,idx)=>{
+        const h = contarAciertos(ticket, sorteo);
+        const s = stats[idx];
+        s.totalHits += h;
+        s.maxHits = Math.max(s.maxHits, h);
+        s["c"+h]++;
+        s.puntos += puntuarHitsLaboratorio(h);
+      });
+    }
+
+    const pct = (i / totalSimulaciones) * 100;
+    if(progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+    if(progressText) progressText.textContent = `Procesados ${i.toLocaleString()} de ${totalSimulaciones.toLocaleString()} sorteos (${pct.toFixed(1)}%)`;
+
+    if(i < totalSimulaciones){
+      setTimeout(procesarBloque, 0);
+    }else{
+      finalizarLaboratorioADN(stats, totalSimulaciones);
+    }
+  }
+
+  procesarBloque();
+}
+
+function finalizarLaboratorioADN(stats, totalSimulaciones){
+  const out = document.getElementById("laboratorioADNOutput");
+  const progressText = document.getElementById("labProgressText");
+  const progressBar = document.getElementById("labProgressBar");
+
+  stats.forEach(s=>{
+    s.promedio = totalSimulaciones ? s.totalHits / totalSimulaciones : 0;
+    s.supervivencia = totalSimulaciones ? ((s.c5+s.c6+s.c7+s.c8+s.c9+s.c10) / totalSimulaciones) * 100 : 0;
+  });
+
+  const ranking = [...stats].sort((a,b)=>b.puntos-a.puntos || b.c10-a.c10 || b.c9-a.c9 || b.maxHits-a.maxHits);
+  const total5mas = stats.reduce((a,s)=>a+s.c5+s.c6+s.c7+s.c8+s.c9+s.c10,0);
+  const total6mas = stats.reduce((a,s)=>a+s.c6+s.c7+s.c8+s.c9+s.c10,0);
+  const total7mas = stats.reduce((a,s)=>a+s.c7+s.c8+s.c9+s.c10,0);
+  const total8mas = stats.reduce((a,s)=>a+s.c8+s.c9+s.c10,0);
+  const total9mas = stats.reduce((a,s)=>a+s.c9+s.c10,0);
+  const total10 = stats.reduce((a,s)=>a+s.c10,0);
+  const mejorHit = Math.max(...stats.map(s=>s.maxHits));
+
+  const resultado = {stats, ranking};
+  actualizarHallOfFameADN(resultado, totalSimulaciones);
+
+  if(progressBar) progressBar.style.width = "100%";
+  if(progressText) progressText.textContent = `✅ Simulación completada: ${totalSimulaciones.toLocaleString()} sorteos`;
+
+  let html = `<div class="ticket">
+    <h2>🧪 Resultado Laboratorio ADN</h2>
+    <p class="small">Prueba realizada solo con sorteos simulados válidos de Kino: 20 números únicos del 1 al 80.</p>
+    <div class="grid">
+      <div class="stat"><span>Simulaciones</span><strong>${totalSimulaciones.toLocaleString()}</strong></div>
+      <div class="stat"><span>Tickets ADN</span><strong>${stats.length}</strong></div>
+      <div class="stat"><span>Mejor ticket</span><strong>#${ranking[0].ticket}</strong></div>
+      <div class="stat"><span>Mejor hit</span><strong>${mejorHit}</strong></div>
+      <div class="stat"><span>5+ aciertos</span><strong>${total5mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>6+ aciertos</span><strong>${total6mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>7+ aciertos</span><strong>${total7mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>8+ aciertos</span><strong>${total8mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>9+ aciertos</span><strong>${total9mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>10 aciertos</span><strong>${total10.toLocaleString()}</strong></div>
+    </div>
+
+    <details class="collapse-box" open>
+      <summary>🏆 Ranking automático</summary>
+      <div class="mini-table"><table>
+        <thead><tr><th>Rank</th><th>Ticket</th><th>Puntos</th><th>Supervivencia 5+</th><th>Max</th><th>10</th><th>9</th><th>8</th><th>7</th><th>6</th><th>5</th></tr></thead><tbody>`;
+
+  ranking.forEach((s,idx)=>{
+    html += `<tr>
+      <td><strong>#${idx+1}</strong></td>
+      <td>#${s.ticket}</td>
+      <td>${s.puntos.toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+      <td>${s.supervivencia.toFixed(4)}%</td>
+      <td>${s.maxHits}</td>
+      <td>${s.c10}</td><td>${s.c9}</td><td>${s.c8}</td><td>${s.c7}</td><td>${s.c6}</td><td>${s.c5}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></details>
+
+    <details class="collapse-box">
+      <summary>📋 Estadísticas completas por ticket</summary>
+      <div class="mini-table"><table>
+        <thead><tr><th>Ticket</th><th>Promedio hits</th><th>Máximo</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead><tbody>`;
+
+  stats.forEach(s=>{
+    html += `<tr>
+      <td><strong>#${s.ticket}</strong></td>
+      <td>${s.promedio.toFixed(4)}</td>
+      <td>${s.maxHits}</td>
+      <td>${s.c0}</td><td>${s.c1}</td><td>${s.c2}</td><td>${s.c3}</td><td>${s.c4}</td><td>${s.c5}</td><td>${s.c6}</td><td>${s.c7}</td><td>${s.c8}</td><td>${s.c9}</td><td>${s.c10}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></details></div>`;
+
+  if(out) out.innerHTML = html;
+}
+
+renderHallOfFameADN();
+
 actualizarContadorReales();
   alert("Proceso completado\\n\\n✅ Agregados: "+agregados+"\\n⚠️ Duplicados: "+duplicados+"\\n❌ Inválidos: "+invalidos);
 }
@@ -1233,6 +1589,233 @@ function compararTicketPersonalizado(){
   renderTickets(ticketsGenerados,"➕ Ticket Personalizado");
   verificarTicketsGenerados();
 }
+
+
+/* === Laboratorio Estadístico ADN Evolutivo === */
+const HOF_KEY_ADN = "hallOfFameADNGenKin";
+
+function obtenerHallOfFameADN(){
+  return JSON.parse(localStorage.getItem(HOF_KEY_ADN) || JSON.stringify({
+    max10:{valor:0,ticket:null,fecha:null,simulaciones:0},
+    max9:{valor:0,ticket:null,fecha:null,simulaciones:0},
+    masRentable:{valor:0,ticket:null,fecha:null,simulaciones:0},
+    masSupervivencia:{valor:0,ticket:null,fecha:null,simulaciones:0}
+  }));
+}
+
+function guardarHallOfFameADN(hof){
+  localStorage.setItem(HOF_KEY_ADN, JSON.stringify(hof));
+}
+
+function renderTicketMini(ticket){
+  if(!ticket || !ticket.length) return "—";
+  return ticket.map(n=>fmt(n)).join(" • ");
+}
+
+function renderHallOfFameADN(){
+  const box = document.getElementById("hallOfFameADN");
+  if(!box) return;
+  const hof = obtenerHallOfFameADN();
+
+  function card(titulo, dato, sufijo=""){
+    const fecha = dato.fecha ? `<br><span class="small">${dato.fecha}</span>` : "";
+    const sims = dato.simulaciones ? `<br><span class="small">Simulación: ${dato.simulaciones.toLocaleString()} sorteos</span>` : "";
+    return `<div class="hof-card"><strong>${titulo}</strong><div>${dato.valor.toLocaleString()}${sufijo}</div><div class="small">${renderTicketMini(dato.ticket)}</div>${fecha}${sims}</div>`;
+  }
+
+  box.innerHTML = `<div class="hof-grid">
+    ${card("🏆 Mayor cantidad de 10 aciertos", hof.max10)}
+    ${card("🥇 Mayor cantidad de 9 aciertos", hof.max9)}
+    ${card("💰 Ticket más rentable", hof.masRentable, " pts")}
+    ${card("🧬 Ticket con más supervivencia", hof.masSupervivencia, "% ")}
+  </div>`;
+}
+
+function reiniciarHallOfFameADN(){
+  if(!confirm("¿Seguro que deseas reiniciar el Hall Of Fame ADN?")) return;
+  localStorage.removeItem(HOF_KEY_ADN);
+  renderHallOfFameADN();
+}
+
+function actualizarHallOfFameADN(resultado, simulaciones){
+  const hof = obtenerHallOfFameADN();
+  const fecha = new Date().toLocaleString();
+
+  resultado.stats.forEach(s=>{
+    if(s.c10 > hof.max10.valor){
+      hof.max10 = {valor:s.c10, ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+    if(s.c9 > hof.max9.valor){
+      hof.max9 = {valor:s.c9, ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+    if(s.puntos > hof.masRentable.valor){
+      hof.masRentable = {valor:Number(s.puntos.toFixed(2)), ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+    if(s.supervivencia > hof.masSupervivencia.valor){
+      hof.masSupervivencia = {valor:Number(s.supervivencia.toFixed(4)), ticket:s.ticketNumeros, fecha, simulaciones};
+    }
+  });
+
+  guardarHallOfFameADN(hof);
+  renderHallOfFameADN();
+}
+
+function crearStatsLaboratorio(tickets){
+  return tickets.map((t,i)=>({
+    ticket:i+1,
+    ticketNumeros:[...t],
+    totalHits:0,
+    maxHits:0,
+    c0:0,c1:0,c2:0,c3:0,c4:0,c5:0,c6:0,c7:0,c8:0,c9:0,c10:0,
+    puntos:0,
+    supervivencia:0
+  }));
+}
+
+function puntuarHitsLaboratorio(h){
+  if(h === 10) return 1000;
+  if(h === 9) return 500;
+  if(h === 8) return 100;
+  if(h === 7) return 20;
+  if(h === 6) return 5;
+  if(h === 5) return 1;
+  if(h === 0) return 0.5;
+  return 0;
+}
+
+function simularLaboratorioADN(totalSimulaciones){
+  if(!ticketsGenerados.length){
+    alert("Primero genera los 10 tickets con ADN Evolutivo.");
+    return;
+  }
+  if(ticketsGenerados.length < 10){
+    alert("Para esta prueba necesitas 10 tickets generados. Activa ADN Evolutivo o Tickets Derivados primero.");
+    return;
+  }
+
+  const tickets = ticketsGenerados.slice(0,10);
+  const stats = crearStatsLaboratorio(tickets);
+  const out = document.getElementById("laboratorioADNOutput");
+  const progressBox = document.getElementById("labProgressBox");
+  const progressText = document.getElementById("labProgressText");
+  const progressBar = document.getElementById("labProgressBar");
+
+  if(progressBox) progressBox.classList.remove("hidden");
+  if(progressBar) progressBar.style.width = "0%";
+  if(progressText) progressText.textContent = `Simulando ${totalSimulaciones.toLocaleString()} sorteos válidos de Kino...`;
+  if(out) out.innerHTML = `<div class="ticket"><strong>🧪 Simulación en proceso...</strong><p class="small">No se están usando sorteos reales. Solo azar matemático válido: 20 números únicos del 1 al 80.</p></div>`;
+
+  let i = 0;
+  const chunk = totalSimulaciones >= 500000 ? 5000 : totalSimulaciones >= 100000 ? 2500 : 1000;
+
+  function procesarBloque(){
+    const limite = Math.min(i + chunk, totalSimulaciones);
+
+    for(; i < limite; i++){
+      const sorteo = generarSorteoAzar();
+      tickets.forEach((ticket,idx)=>{
+        const h = contarAciertos(ticket, sorteo);
+        const s = stats[idx];
+        s.totalHits += h;
+        s.maxHits = Math.max(s.maxHits, h);
+        s["c"+h]++;
+        s.puntos += puntuarHitsLaboratorio(h);
+      });
+    }
+
+    const pct = (i / totalSimulaciones) * 100;
+    if(progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+    if(progressText) progressText.textContent = `Procesados ${i.toLocaleString()} de ${totalSimulaciones.toLocaleString()} sorteos (${pct.toFixed(1)}%)`;
+
+    if(i < totalSimulaciones){
+      setTimeout(procesarBloque, 0);
+    }else{
+      finalizarLaboratorioADN(stats, totalSimulaciones);
+    }
+  }
+
+  procesarBloque();
+}
+
+function finalizarLaboratorioADN(stats, totalSimulaciones){
+  const out = document.getElementById("laboratorioADNOutput");
+  const progressText = document.getElementById("labProgressText");
+  const progressBar = document.getElementById("labProgressBar");
+
+  stats.forEach(s=>{
+    s.promedio = totalSimulaciones ? s.totalHits / totalSimulaciones : 0;
+    s.supervivencia = totalSimulaciones ? ((s.c5+s.c6+s.c7+s.c8+s.c9+s.c10) / totalSimulaciones) * 100 : 0;
+  });
+
+  const ranking = [...stats].sort((a,b)=>b.puntos-a.puntos || b.c10-a.c10 || b.c9-a.c9 || b.maxHits-a.maxHits);
+  const total5mas = stats.reduce((a,s)=>a+s.c5+s.c6+s.c7+s.c8+s.c9+s.c10,0);
+  const total6mas = stats.reduce((a,s)=>a+s.c6+s.c7+s.c8+s.c9+s.c10,0);
+  const total7mas = stats.reduce((a,s)=>a+s.c7+s.c8+s.c9+s.c10,0);
+  const total8mas = stats.reduce((a,s)=>a+s.c8+s.c9+s.c10,0);
+  const total9mas = stats.reduce((a,s)=>a+s.c9+s.c10,0);
+  const total10 = stats.reduce((a,s)=>a+s.c10,0);
+  const mejorHit = Math.max(...stats.map(s=>s.maxHits));
+
+  const resultado = {stats, ranking};
+  actualizarHallOfFameADN(resultado, totalSimulaciones);
+
+  if(progressBar) progressBar.style.width = "100%";
+  if(progressText) progressText.textContent = `✅ Simulación completada: ${totalSimulaciones.toLocaleString()} sorteos`;
+
+  let html = `<div class="ticket">
+    <h2>🧪 Resultado Laboratorio ADN</h2>
+    <p class="small">Prueba realizada solo con sorteos simulados válidos de Kino: 20 números únicos del 1 al 80.</p>
+    <div class="grid">
+      <div class="stat"><span>Simulaciones</span><strong>${totalSimulaciones.toLocaleString()}</strong></div>
+      <div class="stat"><span>Tickets ADN</span><strong>${stats.length}</strong></div>
+      <div class="stat"><span>Mejor ticket</span><strong>#${ranking[0].ticket}</strong></div>
+      <div class="stat"><span>Mejor hit</span><strong>${mejorHit}</strong></div>
+      <div class="stat"><span>5+ aciertos</span><strong>${total5mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>6+ aciertos</span><strong>${total6mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>7+ aciertos</span><strong>${total7mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>8+ aciertos</span><strong>${total8mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>9+ aciertos</span><strong>${total9mas.toLocaleString()}</strong></div>
+      <div class="stat"><span>10 aciertos</span><strong>${total10.toLocaleString()}</strong></div>
+    </div>
+
+    <details class="collapse-box" open>
+      <summary>🏆 Ranking automático</summary>
+      <div class="mini-table"><table>
+        <thead><tr><th>Rank</th><th>Ticket</th><th>Puntos</th><th>Supervivencia 5+</th><th>Max</th><th>10</th><th>9</th><th>8</th><th>7</th><th>6</th><th>5</th></tr></thead><tbody>`;
+
+  ranking.forEach((s,idx)=>{
+    html += `<tr>
+      <td><strong>#${idx+1}</strong></td>
+      <td>#${s.ticket}</td>
+      <td>${s.puntos.toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+      <td>${s.supervivencia.toFixed(4)}%</td>
+      <td>${s.maxHits}</td>
+      <td>${s.c10}</td><td>${s.c9}</td><td>${s.c8}</td><td>${s.c7}</td><td>${s.c6}</td><td>${s.c5}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></details>
+
+    <details class="collapse-box">
+      <summary>📋 Estadísticas completas por ticket</summary>
+      <div class="mini-table"><table>
+        <thead><tr><th>Ticket</th><th>Promedio hits</th><th>Máximo</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead><tbody>`;
+
+  stats.forEach(s=>{
+    html += `<tr>
+      <td><strong>#${s.ticket}</strong></td>
+      <td>${s.promedio.toFixed(4)}</td>
+      <td>${s.maxHits}</td>
+      <td>${s.c0}</td><td>${s.c1}</td><td>${s.c2}</td><td>${s.c3}</td><td>${s.c4}</td><td>${s.c5}</td><td>${s.c6}</td><td>${s.c7}</td><td>${s.c8}</td><td>${s.c9}</td><td>${s.c10}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></details></div>`;
+
+  if(out) out.innerHTML = html;
+}
+
+renderHallOfFameADN();
 
 actualizarContadorReales();
 if(ticketsGenerados.length){
