@@ -158,6 +158,22 @@ table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}th,td{p
 
     <button id="btnGenerar" onclick="iniciarGeneracion()">⚡ Generar 10 Tickets por Secuencia Real</button>
 
+    <button onclick="cargarTicketsPro20()" style="background:#7c3aed;margin-top:10px">
+      🏆 Generar con tus 10 Tickets Pro 20
+    </button>
+
+    <div class="ticket" style="margin-top:18px">
+      <strong>➕ Agrega un ticket para comparar</strong>
+      <p class="small">
+        Escribe 10 números del 1 al 80. El sistema lo comparará contra los sorteos reales usando el mismo período seleccionado abajo.
+      </p>
+      <textarea id="ticketPersonalizado" style="min-height:75px" placeholder="Ejemplo: 07 23 25 34 40 46 59 61 63 70"></textarea>
+      <br><br>
+      <button onclick="compararTicketPersonalizado()" style="background:#f59e0b">
+        🔍 Comparar Ticket Personalizado
+      </button>
+    </div>
+
     <p class="small">
       Consejo: primero guarda sorteos reales; luego genera los tickets por aceleraciones dominantes.
     </p>
@@ -189,6 +205,8 @@ table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}th,td{p
     </div>
 
     <div id="verificacion"></div>
+    <div id="comparacionPersonalizada"></div>
+    <div id="batallaSistemas"></div>
 
   </div>
 </div>
@@ -474,7 +492,7 @@ function verificarTicketsGenerados(){
         <div class="stat"><span>Mejor hit</span><strong>${Math.max(...stats.map(s=>s.maxHits))}</strong></div>
         <div class="stat"><span>Premios</span><strong>RD$${totalPremios.toLocaleString()}</strong></div>
         <div class="stat"><span>💰 Recuperación</span><strong>${recuperacion.toFixed(2)}%</strong></div>
-        <div class="stat"><span>📉 Pérdida</span><strong>${perdida < 0 ? "-RD$" + Math.abs(perdida).toLocaleString() : "RD$0"}</strong></div>
+        <div class="stat"><span>${perdida >= 0 ? "📈 Ganancia" : "📉 Pérdida"}</span><strong>${perdida >= 0 ? "RD$" + perdida.toLocaleString() : "-RD$" + Math.abs(perdida).toLocaleString()}</strong></div>
         <div class="stat"><span>🎯 Días con premio</span><strong>${diasConPremio} de ${usados.length}</strong></div>
         <div class="stat"><span>📊 Probabilidad diaria</span><strong>${probabilidadDiaria.toFixed(2)}%</strong></div>
       </div>
@@ -505,6 +523,237 @@ function verificarTicketsGenerados(){
 
   html += `</tbody></table></div></div>`;
   document.getElementById("verificacion").innerHTML = html;
+  actualizarBatallaSistemas();
+}
+
+
+const TICKETS_PRO20 = [
+  [7,23,25,34,40,46,59,61,63,70],
+  [14,23,25,44,47,51,55,56,59,61],
+  [5,7,23,34,52,54,55,61,70,74],
+  [5,7,23,24,47,55,59,70,71,74],
+  [7,23,25,34,44,46,52,54,55,56],
+  [5,44,46,47,51,54,55,63,70,74],
+  [5,7,14,40,46,55,56,59,63,74],
+  [7,14,23,40,44,47,51,54,59,74],
+  [25,40,44,51,52,54,56,61,63,70],
+  [5,14,34,40,46,47,52,56,61,74]
+];
+
+function obtenerSorteosUsados(){
+  sorteosReales = JSON.parse(localStorage.getItem("sorteosKino") || "[]");
+  const cantidad = parseInt(document.querySelector('input[name="usarSorteos"]:checked').value);
+  return cantidad >= 999999 ? sorteosReales.slice() : sorteosReales.slice(-Math.min(cantidad, sorteosReales.length));
+}
+
+function calcularResumenTickets(tickets, usados){
+  const stats = tickets.map((t,i)=>({
+    ticket:i+1,totalHits:0,maxHits:0,c0:0,c5:0,c6:0,c7:0,c8:0,c9:0,c10:0,premios:0
+  }));
+
+  let diasConPremio = 0;
+
+  usados.forEach(sorteo=>{
+    let huboPremioEnSorteo = false;
+
+    tickets.forEach((ticket, i)=>{
+      const h = contarAciertos(ticket, sorteo);
+      stats[i].totalHits += h;
+      stats[i].maxHits = Math.max(stats[i].maxHits, h);
+      if(h === 0) stats[i].c0++;
+      if(h === 5) stats[i].c5++;
+      if(h === 6) stats[i].c6++;
+      if(h === 7) stats[i].c7++;
+      if(h === 8) stats[i].c8++;
+      if(h === 9) stats[i].c9++;
+      if(h === 10) stats[i].c10++;
+
+      const premio = premioPorHits(h);
+      if(premio > 0) huboPremioEnSorteo = true;
+      stats[i].premios += premio;
+    });
+
+    if(huboPremioEnSorteo) diasConPremio++;
+  });
+
+  const totalPremios = stats.reduce((a,b)=>a+b.premios,0);
+  const inversion = usados.length * tickets.length * 25;
+  const recuperacion = inversion ? (totalPremios / inversion) * 100 : 0;
+  const diferencia = totalPremios - inversion;
+  const probabilidadDiaria = usados.length ? (diasConPremio / usados.length) * 100 : 0;
+  const mejor = [...stats].sort((a,b)=>b.premios-a.premios || b.maxHits-a.maxHits)[0] || {ticket:0,maxHits:0,premios:0};
+
+  return {
+    stats,
+    totalPremios,
+    inversion,
+    recuperacion,
+    diferencia,
+    diasConPremio,
+    probabilidadDiaria,
+    mejor,
+    mejorHit: stats.length ? Math.max(...stats.map(s=>s.maxHits)) : 0
+  };
+}
+
+function renderResumenComparacion(titulo, tickets, contenedorId){
+  if(!sorteosReales.length){
+    alert("No hay sorteos reales guardados. Pega sorteos reales y guárdalos primero.");
+    return;
+  }
+
+  const usados = obtenerSorteosUsados();
+  if(!usados.length){
+    alert("No hay sorteos disponibles para ese período.");
+    return;
+  }
+
+  const r = calcularResumenTickets(tickets, usados);
+
+  let html = `
+    <div class="ticket">
+      <h2>${titulo}</h2>
+      <div class="grid">
+        <div class="stat"><span>Sorteos usados</span><strong>${usados.length.toLocaleString()}</strong></div>
+        <div class="stat"><span>Tickets</span><strong>${tickets.length}</strong></div>
+        <div class="stat"><span>Mejor ticket</span><strong>#${r.mejor.ticket}</strong></div>
+        <div class="stat"><span>Mejor hit</span><strong>${r.mejorHit}</strong></div>
+        <div class="stat"><span>Premios</span><strong>RD$${r.totalPremios.toLocaleString()}</strong></div>
+        <div class="stat"><span>💰 Recuperación</span><strong>${r.recuperacion.toFixed(2)}%</strong></div>
+        <div class="stat"><span>${r.diferencia >= 0 ? "📈 Ganancia" : "📉 Pérdida"}</span><strong>${r.diferencia >= 0 ? "RD$" + r.diferencia.toLocaleString() : "-RD$" + Math.abs(r.diferencia).toLocaleString()}</strong></div>
+        <div class="stat"><span>🎯 Días con premio</span><strong>${r.diasConPremio} de ${usados.length}</strong></div>
+        <div class="stat"><span>📊 Probabilidad diaria</span><strong>${r.probabilidadDiaria.toFixed(2)}%</strong></div>
+      </div>
+
+      <div style="overflow:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Ticket</th><th>Total hits</th><th>Promedio</th><th>Máximo</th>
+            <th>0</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>Premios</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  r.stats.forEach(s=>{
+    html += `
+      <tr>
+        <td><strong>#${s.ticket}</strong></td>
+        <td>${s.totalHits}</td>
+        <td>${(s.totalHits/usados.length).toFixed(2)}</td>
+        <td>${s.maxHits}</td>
+        <td>${s.c0}</td><td>${s.c5}</td><td>${s.c6}</td><td>${s.c7}</td><td>${s.c8}</td><td>${s.c9}</td><td>${s.c10}</td>
+        <td><strong>RD$${s.premios.toLocaleString()}</strong></td>
+      </tr>
+    `;
+  });
+
+  html += `</tbody></table></div></div>`;
+  document.getElementById(contenedorId).innerHTML = html;
+  return r;
+}
+
+function cargarTicketsPro20(){
+  ticketsGenerados = TICKETS_PRO20.map(t=>t.slice());
+  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
+  renderTickets(ticketsGenerados, []);
+  renderResumenComparacion("🏆 Verificación de tus 10 Tickets Pro 20", ticketsGenerados, "verificacion");
+  actualizarBatallaSistemas();
+}
+
+function compararTicketPersonalizado(){
+  const texto = document.getElementById("ticketPersonalizado").value.trim();
+  if(!texto){
+    alert("Escribe un ticket de 10 números.");
+    return;
+  }
+
+  const nums = limpiarLinea(texto);
+  const ticket = [...new Set(nums)].sort((a,b)=>a-b);
+
+  if(ticket.length !== 10){
+    alert("El ticket personalizado debe tener exactamente 10 números únicos del 1 al 80.");
+    return;
+  }
+
+  renderResumenComparacion("➕ Comparación de Ticket Personalizado", [ticket], "comparacionPersonalizada");
+  actualizarBatallaSistemas(ticket);
+}
+
+function actualizarBatallaSistemas(ticketPersonalizado=null){
+  if(!sorteosReales.length) return;
+  const usados = obtenerSorteosUsados();
+  if(!usados.length) return;
+
+  const sistemas = [];
+
+  if(ticketsGenerados.length){
+    const r = calcularResumenTickets(ticketsGenerados, usados);
+    sistemas.push({
+      nombre:"🧬/🏆 Tickets activos",
+      premios:r.totalPremios,
+      recuperacion:r.recuperacion,
+      diferencia:r.diferencia,
+      mejorHit:r.mejorHit,
+      dias:`${r.diasConPremio}/${usados.length}`
+    });
+  }
+
+  const rPro = calcularResumenTickets(TICKETS_PRO20, usados);
+  sistemas.push({
+    nombre:"🏆 Pro 20",
+    premios:rPro.totalPremios,
+    recuperacion:rPro.recuperacion,
+    diferencia:rPro.diferencia,
+    mejorHit:rPro.mejorHit,
+    dias:`${rPro.diasConPremio}/${usados.length}`
+  });
+
+  if(ticketPersonalizado){
+    const rPers = calcularResumenTickets([ticketPersonalizado], usados);
+    sistemas.push({
+      nombre:"➕ Personalizado",
+      premios:rPers.totalPremios,
+      recuperacion:rPers.recuperacion,
+      diferencia:rPers.diferencia,
+      mejorHit:rPers.mejorHit,
+      dias:`${rPers.diasConPremio}/${usados.length}`
+    });
+  }
+
+  sistemas.sort((a,b)=>b.recuperacion-a.recuperacion || b.premios-a.premios);
+
+  let html = `
+    <div class="ticket">
+      <h2>⚔️ Batalla de Sistemas</h2>
+      <p class="small">Comparación usando el mismo período seleccionado: ${usados.length} sorteos.</p>
+      <div style="overflow:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Ranking</th><th>Sistema</th><th>Recuperación</th><th>Premios</th><th>Ganancia/Pérdida</th><th>Mejor hit</th><th>Días con premio</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  sistemas.forEach((s,i)=>{
+    html += `
+      <tr>
+        <td><strong>#${i+1}</strong></td>
+        <td><strong>${s.nombre}</strong></td>
+        <td>${s.recuperacion.toFixed(2)}%</td>
+        <td>RD$${s.premios.toLocaleString()}</td>
+        <td>${s.diferencia >= 0 ? "RD$" + s.diferencia.toLocaleString() : "-RD$" + Math.abs(s.diferencia).toLocaleString()}</td>
+        <td>${s.mejorHit}</td>
+        <td>${s.dias}</td>
+      </tr>
+    `;
+  });
+
+  html += `</tbody></table></div></div>`;
+  document.getElementById("batallaSistemas").innerHTML = html;
 }
 
 
@@ -708,6 +957,7 @@ async function iniciarGeneracion(){
 
   renderTickets(ticketsGenerados, []);
   document.getElementById("resultados").innerHTML += renderAnalisisSecuencia(analisis);
+  actualizarBatallaSistemas();
 }
 
 actualizarContadorReales();
