@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generador Kino Secuencia Real</title>
+<title>GenKin Survival Engine</title>
 <style>
 *{box-sizing:border-box}
 body{
@@ -12,80 +12,80 @@ body{
   font-family:Arial,sans-serif;
   background:#f3f6fb;
   color:#111827;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 .main{
   width:100%;
-  max-width:950px;
-  padding:20px;
+  max-width:1100px;
+  margin:auto;
+  padding:18px;
 }
 .card{
-  background:white;
+  background:#fff;
   border-radius:22px;
-  padding:28px;
-  box-shadow:0 8px 28px rgba(0,0,0,.12);
-  text-align:center;
+  padding:24px;
+  box-shadow:0 8px 28px rgba(0,0,0,.10);
+  position:relative;
 }
-h1{
-  margin:0 0 8px;
-  font-size:34px;
-  color:#1a56db;
-}
+.header{text-align:center;margin-bottom:18px}
+h1{margin:0 0 8px;font-size:32px;color:#1a56db}
+h2{margin:0 0 12px}
 p{color:#4b5563}
-textarea{width:100%;min-height:150px;padding:12px;border-radius:12px;border:1px solid #d1d5db;font-family:monospace;font-size:14px}
-label{background:#f8fafc;border:1px solid #dbe3ef;border-radius:12px;padding:12px;text-align:left}
+.note{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  padding:10px;
+  border-radius:14px;
+  font-size:12px;
+  line-height:1.4;
+  margin-bottom:16px;
+}
+.actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+  margin:16px 0;
+}
 button{
   width:100%;
-  padding:16px;
+  padding:15px;
   border:none;
   border-radius:14px;
-  background:#1a56db;
   color:white;
-  font-size:17px;
+  font-size:16px;
   font-weight:bold;
   cursor:pointer;
 }
-button:hover{background:#0f3fa8}
-button:disabled{background:#9ca3af;cursor:not-allowed}
+button:hover{filter:brightness(.94)}
+.btn-green{background:#0e9f6e}
+.btn-purple{background:#7c3aed}
+.btn-orange{background:#f59e0b}
+.btn-dark{background:#111827}
+.btn-blue{background:#1a56db}
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
   gap:12px;
-  margin:20px 0;
+  margin:16px 0;
 }
 .stat{
   background:#f8fafc;
   border:1px solid #dbe3ef;
   border-radius:14px;
   padding:14px;
+  text-align:center;
 }
 .stat strong{
   display:block;
   font-size:20px;
-  color:#111827;
-}
-.progressBox{
-  margin:18px 0;
-  background:#e5e7eb;
-  height:18px;
-  border-radius:999px;
-  overflow:hidden;
-}
-#progressBar{
-  height:100%;
-  width:0%;
-  background:#1a56db;
-  transition:.2s;
+  color:#0b4edb;
 }
 .ticket{
   background:#f8fafc;
   border:1px solid #dbe3ef;
   border-radius:14px;
   padding:14px;
-  margin:12px 0;
-  text-align:left;
+  margin:14px 0;
 }
 .ticket strong{color:#1a56db}
 .balls{
@@ -95,328 +95,661 @@ button:disabled{background:#9ca3af;cursor:not-allowed}
   margin-top:10px;
 }
 .ball{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:#e8effe;
-  color:#1040b0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:13px;
-  font-family:monospace;
-  font-weight:bold;
+  width:34px;height:34px;border-radius:50%;
+  background:#e8effe;color:#1040b0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-family:monospace;font-weight:bold;
 }
 .small{font-size:13px;color:#6b7280}
-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}th,td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:center}th{background:#f1f5f9}
-.warning{
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
+textarea{
+  width:100%;
+  min-height:115px;
   padding:12px;
-  border-radius:14px;
-  margin:16px 0;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  font-family:monospace;
+  font-size:14px;
 }
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+th,td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:center}
+th{background:#f1f5f9}
+.filters{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+.filters label{
+  background:white;
+  border:1px solid #dbe3ef;
+  border-radius:12px;
+  padding:11px;
+  display:block;
+}
+.hidden{display:none}
+.final-tools{margin-top:28px}
+.compact-actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+@media(max-width:700px){
+  h1{font-size:26px}
+  .card{padding:16px}
+}
+
+.matrix-console{
+  background:#0b1020;
+  border:1px solid #26324f;
+  border-radius:18px;
+  padding:18px;
+  margin:18px 0;
+  color:#dbeafe;
+  overflow:hidden;
+  position:relative;
+  min-height:260px;
+}
+.matrix-title{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+}
+.matrix-title strong{color:#93c5fd}
+.stage-wrap{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:18px;
+  align-items:center;
+}
+.rubik-scene{
+  width:140px;height:140px;
+  perspective:700px;
+  margin:auto;
+}
+.rubik-cube{
+  width:92px;height:92px;
+  position:relative;
+  transform-style:preserve-3d;
+  transform:rotateX(-25deg) rotateY(35deg);
+  margin:24px auto;
+}
+.rubik-cube.spin{
+  animation:spinCube 1.25s linear infinite;
+}
+.cube-face{
+  position:absolute;
+  width:92px;height:92px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:3px;
+  padding:4px;
+  background:#111827;
+  border:1px solid rgba(255,255,255,.15);
+}
+.cube-face span{
+  border-radius:4px;
+  background:var(--c);
+}
+.front{transform:translateZ(46px)}
+.back{transform:rotateY(180deg) translateZ(46px)}
+.right{transform:rotateY(90deg) translateZ(46px)}
+.left{transform:rotateY(-90deg) translateZ(46px)}
+.top{transform:rotateX(90deg) translateZ(46px)}
+.bottom{transform:rotateX(-90deg) translateZ(46px)}
+@keyframes spinCube{
+  from{transform:rotateX(-25deg) rotateY(0deg) rotateZ(0deg)}
+  to{transform:rotateX(335deg) rotateY(360deg) rotateZ(180deg)}
+}
+.dna{
+  height:120px;
+  position:relative;
+  overflow:hidden;
+  border-radius:14px;
+  background:linear-gradient(90deg, rgba(30,64,175,.18), rgba(14,165,233,.14));
+  border:1px solid rgba(147,197,253,.25);
+}
+.dna-line{
+  position:absolute;
+  width:100%;
+  top:50%;
+  left:0;
+  transform:translateY(-50%);
+  font-family:monospace;
+  font-size:13px;
+  color:#7dd3fc;
+  white-space:nowrap;
+  animation:dnaMove 2.2s linear infinite;
+}
+.dna-line:nth-child(2){top:35%; animation-duration:2.9s; color:#c4b5fd}
+.dna-line:nth-child(3){top:65%; animation-duration:3.4s; color:#86efac}
+@keyframes dnaMove{
+  from{transform:translate(100%,-50%)}
+  to{transform:translate(-100%,-50%)}
+}
+.console-log{
+  margin-top:12px;
+  background:rgba(15,23,42,.9);
+  border:1px solid rgba(148,163,184,.25);
+  border-radius:12px;
+  padding:12px;
+  font-family:monospace;
+  font-size:13px;
+  min-height:74px;
+  color:#bfdbfe;
+}
+.console-log .ok{color:#86efac}
+.console-log .warn{color:#fde68a}
+.console-output{
+  margin-top:14px;
+}
+.console-output .ticket{
+  background:#f8fafc;
+  color:#111827;
+}
+.pulse{
+  animation:pulseGlow 1s ease-in-out infinite alternate;
+}
+@keyframes pulseGlow{
+  from{box-shadow:0 0 0 rgba(59,130,246,.2)}
+  to{box-shadow:0 0 24px rgba(59,130,246,.45)}
+}
+@media(max-width:760px){
+  .stage-wrap{grid-template-columns:1fr}
+}
+
+
+.collapse-box{
+  background:#ffffff;
+  border:1px solid #dbe3ef;
+  border-radius:14px;
+  padding:12px;
+  margin:12px 0;
+}
+.collapse-box summary{
+  cursor:pointer;
+  font-weight:bold;
+  color:#1a56db;
+  list-style:none;
+}
+.collapse-box summary::-webkit-details-marker{display:none}
+.collapse-box summary::before{
+  content:"▶ ";
+  color:#7c3aed;
+}
+.collapse-box[open] summary::before{
+  content:"▼ ";
+}
+.matrix-console .actions{
+  margin:16px 0 10px;
+}
+.matrix-console .actions button{
+  min-height:68px;
+}
+
+
+/* === Tema oscuro por defecto + modo claro === */
+:root{
+  color-scheme: dark;
+}
+body{
+  background:#070b16 !important;
+  color:#e5e7eb !important;
+}
+.card{
+  background:#0f172a !important;
+  color:#e5e7eb !important;
+  border:1px solid #1f2a44;
+}
+.header p,
+p,
+.small{
+  color:#cbd5e1 !important;
+}
+h1,h2,h3{
+  color:#93c5fd;
+}
+.note{
+  background:#172033 !important;
+  border-color:#334155 !important;
+  color:#fde68a !important;
+}
+.stat{
+  background:#111c31 !important;
+  border-color:#334155 !important;
+  color:#e5e7eb !important;
+}
+.stat span{
+  color:#cbd5e1;
+}
+.stat strong{
+  color:#93c5fd !important;
+}
+.ticket{
+  background:#111c31 !important;
+  border-color:#334155 !important;
+  color:#e5e7eb !important;
+}
+.ticket strong{
+  color:#93c5fd !important;
+}
+.collapse-box{
+  background:#0f172a !important;
+  border-color:#334155 !important;
+  color:#e5e7eb !important;
+}
+.collapse-box summary{
+  color:#bfdbfe !important;
+}
+.ball{
+  background:#dbeafe !important;
+  color:#0f172a !important;
+  border:1px solid #93c5fd;
+}
+table{
+  color:#e5e7eb !important;
+}
+th{
+  background:#1e293b !important;
+  color:#bfdbfe !important;
+}
+td{
+  border-bottom-color:#334155 !important;
+  color:#e5e7eb !important;
+}
+.filters label{
+  background:#111c31 !important;
+  border-color:#334155 !important;
+  color:#e5e7eb !important;
+}
+textarea{
+  background:#0b1220 !important;
+  color:#e5e7eb !important;
+  border-color:#334155 !important;
+}
+textarea::placeholder{
+  color:#94a3b8 !important;
+}
+.console-output .ticket{
+  background:#111c31 !important;
+  color:#e5e7eb !important;
+}
+.console-output .stat{
+  background:#0b1220 !important;
+}
+.console-output .collapse-box{
+  background:#0b1220 !important;
+}
+.theme-toggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+  z-index:9999;
+  width:auto;
+  padding:10px 14px;
+  border-radius:999px;
+  background:#f8fafc;
+  color:#0f172a;
+  border:1px solid #cbd5e1;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+/* Modo claro */
+body.light-mode{
+  background:#f3f6fb !important;
+  color:#111827 !important;
+}
+body.light-mode .card{
+  background:#ffffff !important;
+  color:#111827 !important;
+  border-color:#e5e7eb;
+}
+body.light-mode .header p,
+body.light-mode p,
+body.light-mode .small{
+  color:#4b5563 !important;
+}
+body.light-mode h1{
+  color:#1a56db !important;
+}
+body.light-mode h2,
+body.light-mode h3{
+  color:#111827 !important;
+}
+body.light-mode .note{
+  background:#fff7ed !important;
+  border-color:#fed7aa !important;
+  color:#9a3412 !important;
+}
+body.light-mode .stat{
+  background:#f8fafc !important;
+  border-color:#dbe3ef !important;
+  color:#111827 !important;
+}
+body.light-mode .stat span{
+  color:#4b5563;
+}
+body.light-mode .stat strong{
+  color:#0b4edb !important;
+}
+body.light-mode .ticket{
+  background:#f8fafc !important;
+  border-color:#dbe3ef !important;
+  color:#111827 !important;
+}
+body.light-mode .ticket strong{
+  color:#1a56db !important;
+}
+body.light-mode .collapse-box{
+  background:#ffffff !important;
+  border-color:#dbe3ef !important;
+  color:#111827 !important;
+}
+body.light-mode .collapse-box summary{
+  color:#1a56db !important;
+}
+body.light-mode .ball{
+  background:#e8effe !important;
+  color:#1040b0 !important;
+  border:1px solid #bfdbfe;
+}
+body.light-mode table{
+  color:#111827 !important;
+}
+body.light-mode th{
+  background:#f1f5f9 !important;
+  color:#111827 !important;
+}
+body.light-mode td{
+  border-bottom-color:#e5e7eb !important;
+  color:#111827 !important;
+}
+body.light-mode .filters label{
+  background:#ffffff !important;
+  border-color:#dbe3ef !important;
+  color:#111827 !important;
+}
+body.light-mode textarea{
+  background:#ffffff !important;
+  color:#111827 !important;
+  border-color:#d1d5db !important;
+}
+body.light-mode textarea::placeholder{
+  color:#6b7280 !important;
+}
+body.light-mode .console-output .ticket{
+  background:#f8fafc !important;
+  color:#111827 !important;
+}
+body.light-mode .console-output .stat{
+  background:#ffffff !important;
+}
+body.light-mode .console-output .collapse-box{
+  background:#ffffff !important;
+}
+body.light-mode .theme-toggle{
+  background:#0f172a;
+  color:#ffffff;
+  border-color:#334155;
+}
+
 </style>
 </head>
 <body>
-
+<button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">☀️ Modo claro</button>
 <div class="main">
-  <div class="card">
-    <h1>🚀 Generador Kino — Secuencia Real</h1>
-    <p>
-      Analiza sorteos reales, detecta aceleraciones dominantes y extrae
-      <strong>10 tickets premium</strong> optimizados por frecuencia.
-    </p>
+<div class="card">
 
-    <div class="warning">
-      Este modo deja de depender del 8,911,711 fijo. Ahora busca la aceleración real entre sorteos históricos: +1 hasta +79.
-    </div>
-
-    <div class="grid">
-      <div class="stat">
-        <span>Aceleraciones</span>
-        <strong>+1 a +79</strong>
-      </div>
-      <div class="stat">
-        <span>Sorteos reales</span>
-        <strong id="generadas">0</strong>
-      </div>
-      <div class="stat">
-        <span>Mejor aceleración</span>
-        <strong id="porcentaje">--</strong>
-      </div>
-      <div class="stat">
-        <span>Estado</span>
-        <strong id="estado">Listo</strong>
-      </div>
-    </div>
-
-    <div class="progressBox">
-      <div id="progressBar"></div>
-    </div>
-
-    <button id="btnGenerar" onclick="iniciarGeneracion()">⚡ Generar 10 Tickets por Secuencia Real</button>
-
-    <button onclick="cargarTicketsPro20()" style="background:#7c3aed;margin-top:10px">
-      🏆 Generar con tus 10 Tickets Pro 20
-    </button>
-
-    <div class="ticket" style="margin-top:18px">
-      <strong>➕ Agrega un ticket para comparar</strong>
-      <p class="small">
-        Escribe 10 números del 1 al 80. El sistema lo comparará contra los sorteos reales usando el mismo período seleccionado abajo.
-      </p>
-      <textarea id="ticketPersonalizado" style="min-height:75px" placeholder="Ejemplo: 07 23 25 34 40 46 59 61 63 70"></textarea>
-      <br><br>
-      <button onclick="compararTicketPersonalizado()" style="background:#f59e0b">
-        🔍 Comparar Ticket Personalizado
-      </button>
-    </div>
-
-    <p class="small">
-      Consejo: primero guarda sorteos reales; luego genera los tickets por aceleraciones dominantes.
-    </p>
-
-    <div id="resultados"></div>
-    <div class="ticket" style="margin-top:20px">
-      <strong>📥 Sorteos reales para verificar</strong>
-      <p class="small">
-        Si ya tenías 101 sorteos guardados en otra página, solo se conservan si usaban el mismo navegador y la misma clave de localStorage.
-        Esta versión intentará leer <strong>sorteosKino</strong>. Si no aparecen, pégalos aquí manualmente.
-      </p>
-      <textarea id="sorteosInput" placeholder="Pega sorteos reales aquí. Un sorteo por línea, 20 números por sorteo."></textarea>
-      <br><br>
-      <button onclick="guardarSorteosReales()">💾 Guardar Sorteos Reales</button>
-      <p class="small"><strong>📥 Sorteos históricos disponibles:</strong> <span id="contadorReales">0</span></p>
-
-      <div class="grid">
-        <label><input type="radio" name="usarSorteos" value="3" checked> 🔥 Últimos 3 días</label>
-        <label><input type="radio" name="usarSorteos" value="7"> 📅 Últimos 7 días</label>
-        <label><input type="radio" name="usarSorteos" value="15"> 📅 Últimos 15 días</label>
-        <label><input type="radio" name="usarSorteos" value="30"> 📅 Últimos 30 días</label>
-        <label><input type="radio" name="usarSorteos" value="50"> 📊 Últimos 50 sorteos</label>
-        <label><input type="radio" name="usarSorteos" value="100"> 📊 Últimos 100 sorteos</label>
-        <label><input type="radio" name="usarSorteos" value="500"> 📊 Últimos 500 sorteos</label>
-        <label><input type="radio" name="usarSorteos" value="999999"> ♾️ Todos</label>
-      </div>
-
-      <button onclick="verificarTicketsGenerados()" style="margin-top:12px;background:#0e9f6e">🔍 Verificar Tickets Generados</button>
-    </div>
-
-    <div id="verificacion"></div>
-    <div id="comparacionPersonalizada"></div>
-    <div id="batallaSistemas"></div>
-
+  <div class="note">
+    <strong>Historial GenKin:</strong>
+    se utilizó la combinación <strong>8,911,711</strong>, luego se actualizó a aceleraciones <strong>+1 al +79</strong>, y luego se predijo que era necesario comparar los números que se logran mantener.
   </div>
+
+  <div class="header">
+    <h1>🧬 GenKin Survival Engine</h1>
+    <p>Analiza sorteos reales, detecta supervivencia global y genera tickets derivados para verificarlos.</p>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><span>Sorteos reales</span><strong id="contadorReales">0</strong></div>
+    <div class="stat"><span>Motor actual</span><strong>Supervivencia</strong></div>
+    <div class="stat"><span>Rango</span><strong>1 - 80</strong></div>
+  </div>
+
+
+  <div class="matrix-console" id="matrixConsole">
+    <div class="matrix-title">
+      <strong>🧠 Matriz Interactiva GenKin</strong>
+      <span id="matrixStatus">En espera</span>
+    </div>
+
+    <div class="stage-wrap">
+      <div class="rubik-scene">
+        <div class="rubik-cube" id="rubikCube">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="dna" id="dnaBox">
+          <div class="dna-line">A-T-C-G • 8,911,711 • +1/+79 • SUPERVIVENCIA • NÚCLEO • DERIVADOS</div>
+          <div class="dna-line">01 07 44 63 72 10 16 23 55 65 • GENKIN MATRIX</div>
+          <div class="dna-line">ANALIZANDO SECUENCIAS • CRUZANDO SORTEOS • FILTRANDO NÚMEROS VIVOS</div>
+        </div>
+        <div class="console-log" id="consoleLog">
+          <span class="warn">Sistema listo.</span><br>
+          Presiona un botón para iniciar la animación y mostrar el resultado aquí.
+        </div>
+      </div>
+    </div>
+
+    
+
+
+  <div class="actions">
+    <button onclick="ejecutarConAnimacion('Analizando supervivencia global...', analizarSupervivencia)" class="btn-green">🧬 Analizar Supervivencia Global</button>
+    <button onclick="ejecutarConAnimacion('Generando ticket núcleo...', generarTicketNucleo)" class="btn-purple">🔥 Generar Ticket Núcleo</button>
+    <button onclick="ejecutarConAnimacion('Generando tickets derivados...', generarTicketsDerivados)" class="btn-orange">🎟️ Generar Tickets Derivados</button>
+    <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
+  </div>
+
+    <div class="console-output" id="matrixOutput"></div>
+  </div>
+
+  <div class="ticket">
+    <strong>📅 Período para verificar</strong>
+    <p class="small">Selecciona cuántos sorteos usar al verificar tickets.</p>
+    <div class="filters">
+      <label><input type="radio" name="usarSorteos" value="3"> 🔥 Últimos 3 días</label>
+      <label><input type="radio" name="usarSorteos" value="7" checked> 📅 Últimos 7 días</label>
+      <label><input type="radio" name="usarSorteos" value="15"> 📅 Últimos 15 días</label>
+      <label><input type="radio" name="usarSorteos" value="30"> 📅 Últimos 30 días</label>
+      <label><input type="radio" name="usarSorteos" value="50"> 📊 Últimos 50 sorteos</label>
+      <label><input type="radio" name="usarSorteos" value="100"> 📊 Últimos 100 sorteos</label>
+      <label><input type="radio" name="usarSorteos" value="500mix"> 🧪 Prueba 500: Reales + Azar</label>
+      <label><input type="radio" name="usarSorteos" value="999999"> ♾️ Todos</label>
+    </div>
+  </div>
+
+  <div id="legacyHidden" style="display:none"><div id="supervivencia"></div>
+  <div id="ticketsBox"></div>
+  <div id="verificacion"></div></div>
+
+  <div class="final-tools">
+    <h2>🧰 Herramientas secundarias</h2>
+
+    <div class="ticket">
+      <strong>➕ Agregar ticket personalizado</strong>
+      <p class="small">Escribe 10 números del 1 al 80 para compararlo contra los sorteos guardados.</p>
+      <textarea id="ticketPersonalizado" style="min-height:75px" placeholder="07 23 25 34 40 46 59 61 63 70"></textarea>
+      <button onclick="ejecutarConAnimacion('Comparando ticket personalizado...', compararTicketPersonalizado)" class="btn-orange">🔍 Comparar Ticket Personalizado</button>
+    </div>
+
+    <div class="ticket">
+      <strong>📥 Agregar sorteos reales</strong>
+      <p class="small">Pega sorteos reales. Un sorteo por línea, 20 números por sorteo. El sistema elimina duplicados automáticamente.</p>
+      <textarea id="sorteosInput" placeholder="01 07 08 11 12 16 18 22 29 35 37 42 44 46 56 60 65 69 72 79"></textarea>
+      <button onclick="guardarSorteosReales()" class="btn-blue">💾 Guardar Sorteos Reales</button>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script>
-const TOTAL_COMBINACIONES = 8911711;
-const NUMEROS_KINO = 80;
-const NUMEROS_POR_SORTEO = 20;
-const TICKETS_A_CREAR = 10;
-const NUMEROS_POR_TICKET = 10;
-const BLOQUE = 5000;
 
-let trabajando = false;
-
-function fmt(n){
-  return n < 10 ? "0" + n : "" + n;
+function aplicarTemaGuardado(){
+  const tema = localStorage.getItem("genkinTema") || "dark";
+  const btn = document.getElementById("themeToggle");
+  if(tema === "light"){
+    document.body.classList.add("light-mode");
+    if(btn) btn.textContent = "🌙 Modo oscuro";
+  }else{
+    document.body.classList.remove("light-mode");
+    if(btn) btn.textContent = "☀️ Modo claro";
+  }
 }
 
-function generarCombinacion20(){
-  const nums = [];
-  while(nums.length < NUMEROS_POR_SORTEO){
-    const n = Math.floor(Math.random() * NUMEROS_KINO) + 1;
-    if(!nums.includes(n)) nums.push(n);
-  }
-  return nums;
+function toggleTheme(){
+  const esClaro = document.body.classList.toggle("light-mode");
+  localStorage.setItem("genkinTema", esClaro ? "light" : "dark");
+  const btn = document.getElementById("themeToggle");
+  if(btn) btn.textContent = esClaro ? "🌙 Modo oscuro" : "☀️ Modo claro";
 }
 
-function elegirTicket(frecuencias, usadosGlobales){
-  const candidatos = [];
-  for(let n = 1; n <= NUMEROS_KINO; n++){
-    candidatos.push({
-      num:n,
-      score:frecuencias[n],
-      usado:usadosGlobales[n] || 0
-    });
-  }
 
-  candidatos.sort((a,b)=>{
-    return (b.score - a.score) || (a.usado - b.usado) || (Math.random() - 0.5);
+function prepararCuboRubik(){
+  const colores = ["#ef4444","#22c55e","#3b82f6","#f59e0b","#f8fafc","#eab308"];
+  document.querySelectorAll(".cube-face").forEach((face,idx)=>{
+    if(face.children.length) return;
+    for(let i=0;i<9;i++){
+      const s=document.createElement("span");
+      s.style.setProperty("--c", colores[(idx+i)%colores.length]);
+      face.appendChild(s);
+    }
   });
-
-  const ticket = [];
-  let i = 0;
-
-  while(ticket.length < NUMEROS_POR_TICKET && i < candidatos.length){
-    const c = candidatos[i];
-    if(c.usado < 3){
-      ticket.push(c.num);
-      usadosGlobales[c.num] = (usadosGlobales[c.num] || 0) + 1;
-    }
-    i++;
-  }
-
-  while(ticket.length < NUMEROS_POR_TICKET){
-    const n = Math.floor(Math.random() * NUMEROS_KINO) + 1;
-    if(!ticket.includes(n)){
-      ticket.push(n);
-      usadosGlobales[n] = (usadosGlobales[n] || 0) + 1;
-    }
-  }
-
-  return ticket.sort((a,b)=>a-b);
 }
 
-function crearTicketsPremium(frecuencias){
-  const tickets = [];
-  const usadosGlobales = {};
-
-  for(let i = 0; i < TICKETS_A_CREAR; i++){
-    const variacion = {};
-    for(let n = 1; n <= NUMEROS_KINO; n++){
-      const ruido = Math.random() * 0.08;
-      const penalizacion = (usadosGlobales[n] || 0) * 0.12;
-      variacion[n] = frecuencias[n] + ruido - penalizacion;
-    }
-    tickets.push(elegirTicket(variacion, usadosGlobales));
+function iniciarAnimacionGenKin(mensaje="Procesando matriz..."){
+  aplicarTemaGuardado();
+prepararCuboRubik();
+  const cube=document.getElementById("rubikCube");
+  const status=document.getElementById("matrixStatus");
+  const log=document.getElementById("consoleLog");
+  const matrix=document.getElementById("matrixConsole");
+  if(cube) cube.classList.add("spin");
+  if(matrix) matrix.classList.add("pulse");
+  if(status) status.textContent="Procesando";
+  if(log){
+    log.innerHTML = `<span class="warn">⚙ ${mensaje}</span><br>🧊 Cubo Rubik activado durante 3.5 segundos...<br>🧬 Transformando matriz en secuencia ADN...`;
   }
-
-  return tickets;
 }
 
-function renderTickets(tickets, frecuencias){
-  let html = "<h2>🎟️ 10 Tickets Premium Generados</h2>";
+function finalizarAnimacionGenKin(mensaje="Proceso completado."){
+  const cube=document.getElementById("rubikCube");
+  const status=document.getElementById("matrixStatus");
+  const log=document.getElementById("consoleLog");
+  const matrix=document.getElementById("matrixConsole");
+  if(cube) cube.classList.remove("spin");
+  if(matrix) matrix.classList.remove("pulse");
+  if(status) status.textContent="Completado";
+  if(log){
+    log.innerHTML += `<br><span class="ok">✅ ${mensaje}</span>`;
+  }
+}
 
-  tickets.forEach((ticket, i)=>{
-    html += `
-      <div class="ticket">
-        <strong>Ticket Premium #${i+1}</strong>
-        <div class="balls">
-          ${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}
-        </div>
-      </div>
-    `;
+function limpiarPanelesAntiguos(){
+  ["supervivencia","ticketsBox","verificacion"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML="";
   });
-
-  const top = [];
-  for(let n = 1; n <= NUMEROS_KINO; n++){
-    top.push({num:n, freq:frecuencias[n]});
-  }
-  top.sort((a,b)=>b.freq-a.freq);
-
-  html += `
-    <div class="ticket">
-      <strong>🔥 Núcleo más repetido de la simulación</strong>
-      <div class="balls">
-        ${top.slice(0,20).map(x=>`<div class="ball">${fmt(x.num)}</div>`).join("")}
-      </div>
-    </div>
-  `;
-
-  document.getElementById("resultados").innerHTML = html;
 }
 
-async function iniciarGeneracion(){
-  if(trabajando) return;
-
-  trabajando = true;
-  document.getElementById("btnGenerar").disabled = true;
-  document.getElementById("estado").textContent = "Generando...";
-  document.getElementById("resultados").innerHTML = "";
-
-  const frecuencias = Array(NUMEROS_KINO + 1).fill(0);
-  let generadas = 0;
-
-  while(generadas < TOTAL_COMBINACIONES){
-    const limite = Math.min(BLOQUE, TOTAL_COMBINACIONES - generadas);
-
-    for(let i = 0; i < limite; i++){
-      const combo = generarCombinacion20();
-      combo.forEach(n=>frecuencias[n]++);
-    }
-
-    generadas += limite;
-
-    const pct = (generadas / TOTAL_COMBINACIONES) * 100;
-    document.getElementById("generadas").textContent = generadas.toLocaleString();
-    document.getElementById("porcentaje").textContent = pct.toFixed(2) + "%";
-    document.getElementById("progressBar").style.width = pct + "%";
-
-    await new Promise(r=>setTimeout(r,0));
-  }
-
-  const tickets = crearTicketsPremium(frecuencias);
-  ticketsGenerados = tickets;
-  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
-
-  document.getElementById("estado").textContent = "Completado";
-  document.getElementById("btnGenerar").disabled = false;
-  trabajando = false;
-
-  renderTickets(tickets, frecuencias);
+function mostrarEnMatriz(html){
+  const out=document.getElementById("matrixOutput");
+  if(out) out.innerHTML = html;
 }
 
-let ticketsGenerados = JSON.parse(localStorage.getItem("ticketsGeneradosKino") || "[]");
+function agregarEnMatriz(html){
+  const out=document.getElementById("matrixOutput");
+  if(out) out.innerHTML += html;
+}
+
+const DURACION_ANIMACION_GENKIN = 3500;
+
+function ejecutarConAnimacion(mensaje, callback){
+  iniciarAnimacionGenKin(mensaje);
+  setTimeout(()=>{
+    callback();
+    finalizarAnimacionGenKin("Resultado generado en la matriz.");
+  }, DURACION_ANIMACION_GENKIN);
+}
+
+const PREMIOS = {10:25000000,9:150000,8:10000,7:1000,6:300,5:60,0:80};
 let sorteosReales = JSON.parse(localStorage.getItem("sorteosKino") || "[]");
+let ticketsGenerados = JSON.parse(localStorage.getItem("ticketsGeneradosKino") || "[]");
+let rankingSupervivencia = [];
 
-const PREMIOS = {
-  10: 25000000,
-  9: 150000,
-  8: 10000,
-  7: 1000,
-  6: 300,
-  5: 60,
-  0: 80
-};
-
-function premioPorHits(h){
-  return PREMIOS[h] || 0;
-}
+function fmt(n){return n < 10 ? "0" + n : "" + n;}
+function premioPorHits(h){return PREMIOS[h] || 0;}
+function actualizarContadorReales(){document.getElementById("contadorReales").textContent = sorteosReales.length.toLocaleString();}
 
 function limpiarLinea(linea){
-  return linea
-    .replace(/[^\d]+/g," ")
-    .trim()
-    .split(/\s+/)
-    .map(Number)
-    .filter(n=>n>=1 && n<=80);
+  return linea.replace(/[^\d]+/g," ").trim().split(/\s+/).map(Number).filter(n=>n>=1 && n<=80);
 }
 
-function actualizarContadorReales(){
-  const el = document.getElementById("contadorReales");
-  if(el) el.textContent = sorteosReales.length.toLocaleString();
+function generarSorteoAzar(){
+  const nums = [];
+  while(nums.length < 20){
+    const n = Math.floor(Math.random() * 80) + 1;
+    if(!nums.includes(n)) nums.push(n);
+  }
+  return nums.sort((a,b)=>a-b);
+}
+
+function obtenerSorteosUsados(){
+  sorteosReales = JSON.parse(localStorage.getItem("sorteosKino") || "[]");
+  const seleccionado = document.querySelector('input[name="usarSorteos"]:checked');
+  const valor = seleccionado ? seleccionado.value : "999999";
+
+  if(valor === "500mix"){
+    const usados = sorteosReales.slice();
+    const faltantes = Math.max(0, 500 - usados.length);
+    for(let i=0; i<faltantes; i++){
+      usados.push(generarSorteoAzar());
+    }
+    usados.modoPruebaAzar = true;
+    usados.realesUsados = sorteosReales.length;
+    usados.azaresGenerados = faltantes;
+    return usados;
+  }
+
+  const cantidad = parseInt(valor);
+  return cantidad >= 999999 ? sorteosReales.slice() : sorteosReales.slice(-Math.min(cantidad, sorteosReales.length));
 }
 
 function guardarSorteosReales(){
   const texto = document.getElementById("sorteosInput").value.trim();
-  if(!texto){
-    alert("Pega al menos un sorteo real.");
-    return;
-  }
+  if(!texto){alert("Pega al menos un sorteo real.");return;}
 
-  const lineas = texto.split("\n");
-  let agregados = 0, duplicados = 0, invalidos = 0;
+  const lineas = texto.split("\\n");
+  let agregados=0, duplicados=0, invalidos=0;
   const existentes = new Set(sorteosReales.map(s=>[...s].sort((a,b)=>a-b).join("-")));
 
   lineas.forEach(linea=>{
     const nums = limpiarLinea(linea);
     const unicos = [...new Set(nums)].sort((a,b)=>a-b);
-
-    if(unicos.length !== 20){
-      invalidos++;
-      return;
-    }
-
+    if(unicos.length !== 20){invalidos++;return;}
     const clave = unicos.join("-");
-    if(existentes.has(clave)){
-      duplicados++;
-      return;
-    }
-
+    if(existentes.has(clave)){duplicados++;return;}
     sorteosReales.push(unicos);
     existentes.add(clave);
     agregados++;
@@ -424,545 +757,224 @@ function guardarSorteosReales(){
 
   localStorage.setItem("sorteosKino", JSON.stringify(sorteosReales));
   document.getElementById("sorteosInput").value = "";
-  actualizarContadorReales();
-
-  alert("Proceso completado\\n\\n✅ Agregados: " + agregados + "\\n⚠️ Duplicados: " + duplicados + "\\n❌ Inválidos: " + invalidos);
+  prepararCuboRubik();
+actualizarContadorReales();
+  alert("Proceso completado\\n\\n✅ Agregados: "+agregados+"\\n⚠️ Duplicados: "+duplicados+"\\n❌ Inválidos: "+invalidos);
 }
 
-function contarAciertos(ticket, sorteo){
-  const set = new Set(sorteo);
+function analizarSupervivencia(){
+  if(!sorteosReales.length){alert("Primero guarda sorteos reales.");return;}
+
+  const conteo = {};
+  for(let n=1;n<=80;n++) conteo[n]=0;
+
+  sorteosReales.forEach(sorteo=>sorteo.forEach(n=>conteo[n]++));
+
+  rankingSupervivencia = Object.entries(conteo)
+    .map(([num,veces])=>({num:Number(num),veces,porcentaje:(veces/sorteosReales.length)*100}))
+    .sort((a,b)=>b.veces-a.veces || a.num-b.num);
+
+  let html = `
+  <div class="ticket">
+    <h2>🧬 Supervivencia Global</h2>
+    <div class="grid">
+      <div class="stat"><span>Sorteos analizados</span><strong>${sorteosReales.length}</strong></div>
+      <div class="stat"><span>Número líder</span><strong>${fmt(rankingSupervivencia[0].num)}</strong></div>
+      <div class="stat"><span>Apariciones</span><strong>${rankingSupervivencia[0].veces}</strong></div>
+      <div class="stat"><span>Supervivencia</span><strong>${rankingSupervivencia[0].porcentaje.toFixed(2)}%</strong></div>
+    </div>
+    <details class="collapse-box">
+      <summary>🔥 Top 20 números supervivientes</summary>
+      <div class="balls">${rankingSupervivencia.slice(0,20).map(x=>`<div class="ball" title="${x.veces} veces">${fmt(x.num)}</div>`).join("")}</div>
+    </details>
+
+    <details class="collapse-box">
+      <summary>📋 Tabla completa de supervivencia</summary>
+      <div style="overflow:auto">
+      <table><thead><tr><th>Ranking</th><th>Número</th><th>Apariciones</th><th>Supervivencia</th></tr></thead><tbody>`;
+
+  rankingSupervivencia.slice(0,30).forEach((x,i)=>{
+    html += `<tr><td>#${i+1}</td><td><strong>${fmt(x.num)}</strong></td><td>${x.veces}</td><td>${x.porcentaje.toFixed(2)}%</td></tr>`;
+  });
+
+  html += `</tbody></table></div></details></div>`;
+  mostrarEnMatriz(html);
+}
+
+function asegurarRanking(){
+  if(!rankingSupervivencia.length) analizarSupervivencia();
+  return rankingSupervivencia.length > 0;
+}
+
+function renderTickets(tickets,titulo="🎟️ Tickets Generados"){
+  let html = `<div class="ticket">
+    <h2>${titulo}</h2>
+    <div class="grid">
+      <div class="stat"><span>Tickets generados</span><strong>${tickets.length}</strong></div>
+      <div class="stat"><span>Números por ticket</span><strong>10</strong></div>
+    </div>
+    <div class="compact-actions">
+      <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
+    </div>
+    <details class="collapse-box">
+      <summary>🎟️ Ver/Ocultar Tickets Generados (${tickets.length})</summary>`;
+
+  tickets.forEach((ticket,i)=>{
+    html += `<div class="ticket"><strong>Ticket #${i+1}</strong><div class="balls">${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}</div></div>`;
+  });
+
+  html += `</details></div>`;
+  mostrarEnMatriz(html);
+}
+
+function toggleTicketsVisibles(){
+  const box=document.getElementById("listaTicketsGenerados");
+  if(box) box.classList.toggle("hidden");
+}
+
+function generarTicketNucleo(){
+  if(!asegurarRanking()) return;
+  const ticket = rankingSupervivencia.slice(0,10).map(x=>x.num).sort((a,b)=>a-b);
+  ticketsGenerados = [ticket];
+  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
+  renderTickets(ticketsGenerados,"🔥 Ticket Núcleo de Supervivencia");
+  verificarTicketsGenerados();
+}
+
+function generarTicketsDerivados(){
+  if(!asegurarRanking()) return;
+
+  const top10 = rankingSupervivencia.slice(0,10).map(x=>x.num);
+  const apoyo = rankingSupervivencia.slice(10,35).map(x=>x.num);
+  const tickets = [[...top10].sort((a,b)=>a-b)];
+
+  for(let i=0;i<9;i++){
+    let ticket=[];
+    const rot=[...top10.slice(i%top10.length),...top10.slice(0,i%top10.length)];
+    ticket.push(...rot.slice(0,6));
+    const start=(i*3)%apoyo.length;
+    const pool=[...apoyo.slice(start),...apoyo.slice(0,start)];
+    for(const n of pool){if(ticket.length>=10)break;if(!ticket.includes(n))ticket.push(n);}
+    let idx=0;
+    while(ticket.length<10 && idx<rankingSupervivencia.length){
+      const n=rankingSupervivencia[idx].num;
+      if(!ticket.includes(n))ticket.push(n);
+      idx++;
+    }
+    tickets.push(ticket.sort((a,b)=>a-b));
+  }
+
+  ticketsGenerados=tickets;
+  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
+  renderTickets(ticketsGenerados,"🎟️ 10 Tickets Derivados por Supervivencia");
+  verificarTicketsGenerados();
+}
+
+function contarAciertos(ticket,sorteo){
+  const set=new Set(sorteo);
   return ticket.filter(n=>set.has(n)).length;
 }
 
-function verificarTicketsGenerados(){
-  if(!ticketsGenerados.length){
-    alert("Primero genera los 10 tickets premium.");
-    return;
-  }
+function calcularResumenTickets(tickets){
+  const usados = obtenerSorteosUsados();
 
-  if(!sorteosReales.length){
-    alert("No hay sorteos reales guardados. Pega sorteos reales y guárdalos primero.");
-    return;
-  }
-
-  const cantidad = parseInt(document.querySelector('input[name="usarSorteos"]:checked').value);
-  const usados = cantidad >= 999999 ? sorteosReales.slice() : sorteosReales.slice(-Math.min(cantidad, sorteosReales.length));
-
-  const stats = ticketsGenerados.map((t,i)=>({
-    ticket:i+1,totalHits:0,maxHits:0,c0:0,c5:0,c6:0,c7:0,c8:0,c9:0,c10:0,premios:0
-  }));
-
-  let diasConPremio = 0;
-
-  usados.forEach(sorteo=>{
-    let huboPremioEnSorteo = false;
-
-    ticketsGenerados.forEach((ticket, i)=>{
-      const h = contarAciertos(ticket, sorteo);
-      stats[i].totalHits += h;
-      stats[i].maxHits = Math.max(stats[i].maxHits, h);
-      if(h === 0) stats[i].c0++;
-      if(h === 5) stats[i].c5++;
-      if(h === 6) stats[i].c6++;
-      if(h === 7) stats[i].c7++;
-      if(h === 8) stats[i].c8++;
-      if(h === 9) stats[i].c9++;
-      if(h === 10) stats[i].c10++;
-      const premio = premioPorHits(h);
-      if(premio > 0) huboPremioEnSorteo = true;
-      stats[i].premios += premio;
-    });
-
-    if(huboPremioEnSorteo) diasConPremio++;
-  });
-
-  const totalPremios = stats.reduce((a,b)=>a+b.premios,0);
-  const inversion = usados.length * ticketsGenerados.length * 25;
-  const recuperacion = inversion ? (totalPremios / inversion) * 100 : 0;
-  const perdida = totalPremios - inversion;
-  const probabilidadDiaria = usados.length ? (diasConPremio / usados.length) * 100 : 0;
-  const mejor = [...stats].sort((a,b)=>b.premios-a.premios || b.maxHits-a.maxHits)[0];
-
-  let html = `
-    <div class="ticket">
-      <h2>🔍 Verificación de Tickets Generados</h2>
-      <div class="grid">
-        <div class="stat"><span>Sorteos usados</span><strong>${usados.length.toLocaleString()}</strong></div>
-        <div class="stat"><span>Mejor ticket</span><strong>#${mejor.ticket}</strong></div>
-        <div class="stat"><span>Mejor hit</span><strong>${Math.max(...stats.map(s=>s.maxHits))}</strong></div>
-        <div class="stat"><span>Premios</span><strong>RD$${totalPremios.toLocaleString()}</strong></div>
-        <div class="stat"><span>💰 Recuperación</span><strong>${recuperacion.toFixed(2)}%</strong></div>
-        <div class="stat"><span>${perdida >= 0 ? "📈 Ganancia" : "📉 Pérdida"}</span><strong>${perdida >= 0 ? "RD$" + perdida.toLocaleString() : "-RD$" + Math.abs(perdida).toLocaleString()}</strong></div>
-        <div class="stat"><span>🎯 Días con premio</span><strong>${diasConPremio} de ${usados.length}</strong></div>
-        <div class="stat"><span>📊 Probabilidad diaria</span><strong>${probabilidadDiaria.toFixed(2)}%</strong></div>
-      </div>
-
-      <div style="overflow:auto">
-      <table>
-        <thead>
-          <tr>
-            <th>Ticket</th><th>Total hits</th><th>Promedio</th><th>Máximo</th>
-            <th>0</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>Premios</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  stats.forEach(s=>{
-    html += `
-      <tr>
-        <td><strong>#${s.ticket}</strong></td>
-        <td>${s.totalHits}</td>
-        <td>${(s.totalHits/usados.length).toFixed(2)}</td>
-        <td>${s.maxHits}</td>
-        <td>${s.c0}</td><td>${s.c5}</td><td>${s.c6}</td><td>${s.c7}</td><td>${s.c8}</td><td>${s.c9}</td><td>${s.c10}</td>
-        <td><strong>RD$${s.premios.toLocaleString()}</strong></td>
-      </tr>
-    `;
-  });
-
-  html += `</tbody></table></div></div>`;
-  document.getElementById("verificacion").innerHTML = html;
-  actualizarBatallaSistemas();
-}
-
-
-const TICKETS_PRO20 = [
-  [7,23,25,34,40,46,59,61,63,70],
-  [14,23,25,44,47,51,55,56,59,61],
-  [5,7,23,34,52,54,55,61,70,74],
-  [5,7,23,24,47,55,59,70,71,74],
-  [7,23,25,34,44,46,52,54,55,56],
-  [5,44,46,47,51,54,55,63,70,74],
-  [5,7,14,40,46,55,56,59,63,74],
-  [7,14,23,40,44,47,51,54,59,74],
-  [25,40,44,51,52,54,56,61,63,70],
-  [5,14,34,40,46,47,52,56,61,74]
-];
-
-function obtenerSorteosUsados(){
-  sorteosReales = JSON.parse(localStorage.getItem("sorteosKino") || "[]");
-  const cantidad = parseInt(document.querySelector('input[name="usarSorteos"]:checked').value);
-  return cantidad >= 999999 ? sorteosReales.slice() : sorteosReales.slice(-Math.min(cantidad, sorteosReales.length));
-}
-
-function calcularResumenTickets(tickets, usados){
   const stats = tickets.map((t,i)=>({
     ticket:i+1,totalHits:0,maxHits:0,c0:0,c5:0,c6:0,c7:0,c8:0,c9:0,c10:0,premios:0
   }));
 
-  let diasConPremio = 0;
+  let diasConPremio=0;
 
   usados.forEach(sorteo=>{
-    let huboPremioEnSorteo = false;
-
-    tickets.forEach((ticket, i)=>{
-      const h = contarAciertos(ticket, sorteo);
-      stats[i].totalHits += h;
-      stats[i].maxHits = Math.max(stats[i].maxHits, h);
-      if(h === 0) stats[i].c0++;
-      if(h === 5) stats[i].c5++;
-      if(h === 6) stats[i].c6++;
-      if(h === 7) stats[i].c7++;
-      if(h === 8) stats[i].c8++;
-      if(h === 9) stats[i].c9++;
-      if(h === 10) stats[i].c10++;
-
-      const premio = premioPorHits(h);
-      if(premio > 0) huboPremioEnSorteo = true;
-      stats[i].premios += premio;
+    let huboPremio=false;
+    tickets.forEach((ticket,i)=>{
+      const h=contarAciertos(ticket,sorteo);
+      const premio=premioPorHits(h);
+      stats[i].totalHits+=h;
+      stats[i].maxHits=Math.max(stats[i].maxHits,h);
+      if(h===0)stats[i].c0++;
+      if(h===5)stats[i].c5++;
+      if(h===6)stats[i].c6++;
+      if(h===7)stats[i].c7++;
+      if(h===8)stats[i].c8++;
+      if(h===9)stats[i].c9++;
+      if(h===10)stats[i].c10++;
+      if(premio>0)huboPremio=true;
+      stats[i].premios+=premio;
     });
-
-    if(huboPremioEnSorteo) diasConPremio++;
+    if(huboPremio)diasConPremio++;
   });
 
-  const totalPremios = stats.reduce((a,b)=>a+b.premios,0);
-  const inversion = usados.length * tickets.length * 25;
-  const recuperacion = inversion ? (totalPremios / inversion) * 100 : 0;
-  const diferencia = totalPremios - inversion;
-  const probabilidadDiaria = usados.length ? (diasConPremio / usados.length) * 100 : 0;
-  const mejor = [...stats].sort((a,b)=>b.premios-a.premios || b.maxHits-a.maxHits)[0] || {ticket:0,maxHits:0,premios:0};
+  const totalPremios=stats.reduce((a,b)=>a+b.premios,0);
+  const inversion=usados.length*tickets.length*25;
+  const recuperacion=inversion?(totalPremios/inversion)*100:0;
+  const diferencia=totalPremios-inversion;
+  const probabilidadDiaria=usados.length?(diasConPremio/usados.length)*100:0;
+  const mejor=[...stats].sort((a,b)=>b.premios-a.premios || b.maxHits-a.maxHits)[0] || {ticket:0};
 
   return {
-    stats,
-    totalPremios,
-    inversion,
-    recuperacion,
-    diferencia,
-    diasConPremio,
-    probabilidadDiaria,
-    mejor,
-    mejorHit: stats.length ? Math.max(...stats.map(s=>s.maxHits)) : 0
+    usados,stats,totalPremios,inversion,recuperacion,diferencia,
+    diasConPremio,probabilidadDiaria,mejor,
+    mejorHit:stats.length?Math.max(...stats.map(s=>s.maxHits)):0
   };
 }
 
-function renderResumenComparacion(titulo, tickets, contenedorId){
-  if(!sorteosReales.length){
-    alert("No hay sorteos reales guardados. Pega sorteos reales y guárdalos primero.");
-    return;
-  }
+function verificarTicketsGenerados(){
+  if(!sorteosReales.length){alert("Primero guarda sorteos reales.");return;}
+  if(!ticketsGenerados.length){alert("Primero genera tickets.");return;}
 
-  const usados = obtenerSorteosUsados();
-  if(!usados.length){
-    alert("No hay sorteos disponibles para ese período.");
-    return;
-  }
+  const r=calcularResumenTickets(ticketsGenerados);
 
-  const r = calcularResumenTickets(tickets, usados);
-
-  let html = `
-    <div class="ticket">
-      <h2>${titulo}</h2>
-      <div class="grid">
-        <div class="stat"><span>Sorteos usados</span><strong>${usados.length.toLocaleString()}</strong></div>
-        <div class="stat"><span>Tickets</span><strong>${tickets.length}</strong></div>
-        <div class="stat"><span>Mejor ticket</span><strong>#${r.mejor.ticket}</strong></div>
-        <div class="stat"><span>Mejor hit</span><strong>${r.mejorHit}</strong></div>
-        <div class="stat"><span>Premios</span><strong>RD$${r.totalPremios.toLocaleString()}</strong></div>
-        <div class="stat"><span>💰 Recuperación</span><strong>${r.recuperacion.toFixed(2)}%</strong></div>
-        <div class="stat"><span>${r.diferencia >= 0 ? "📈 Ganancia" : "📉 Pérdida"}</span><strong>${r.diferencia >= 0 ? "RD$" + r.diferencia.toLocaleString() : "-RD$" + Math.abs(r.diferencia).toLocaleString()}</strong></div>
-        <div class="stat"><span>🎯 Días con premio</span><strong>${r.diasConPremio} de ${usados.length}</strong></div>
-        <div class="stat"><span>📊 Probabilidad diaria</span><strong>${r.probabilidadDiaria.toFixed(2)}%</strong></div>
-      </div>
-
-      <div style="overflow:auto">
-      <table>
-        <thead>
-          <tr>
-            <th>Ticket</th><th>Total hits</th><th>Promedio</th><th>Máximo</th>
-            <th>0</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>Premios</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
+  let html = `<div class="ticket">
+    <h2>📊 Verificación de Tickets Generados</h2>
+    <div class="grid">
+      <div class="stat"><span>Sorteos usados</span><strong>${r.usados.length}</strong></div>
+      ${r.usados.modoPruebaAzar ? `<div class="stat"><span>🧪 Modo prueba</span><strong>${r.usados.realesUsados} reales + ${r.usados.azaresGenerados} azar</strong></div>` : ""}
+      <div class="stat"><span>Tickets</span><strong>${ticketsGenerados.length}</strong></div>
+      <div class="stat"><span>Mejor ticket</span><strong>#${r.mejor.ticket}</strong></div>
+      <div class="stat"><span>Mejor hit</span><strong>${r.mejorHit}</strong></div>
+      <div class="stat"><span>Premios</span><strong>RD$${r.totalPremios.toLocaleString()}</strong></div>
+      <div class="stat"><span>💰 Recuperación</span><strong>${r.recuperacion.toFixed(2)}%</strong></div>
+      <div class="stat"><span>${r.diferencia>=0?"📈 Ganancia":"📉 Pérdida"}</span><strong>${r.diferencia>=0?"RD$"+r.diferencia.toLocaleString():"-RD$"+Math.abs(r.diferencia).toLocaleString()}</strong></div>
+      <div class="stat"><span>🎯 Días con premio</span><strong>${r.diasConPremio} de ${r.usados.length}</strong></div>
+      <div class="stat"><span>📊 Probabilidad diaria</span><strong>${r.probabilidadDiaria.toFixed(2)}%</strong></div>
+    </div>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>Ticket</th><th>Total hits</th><th>Promedio</th><th>Máximo</th><th>0</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>Premios</th></tr></thead><tbody>`;
 
   r.stats.forEach(s=>{
-    html += `
-      <tr>
-        <td><strong>#${s.ticket}</strong></td>
-        <td>${s.totalHits}</td>
-        <td>${(s.totalHits/usados.length).toFixed(2)}</td>
-        <td>${s.maxHits}</td>
-        <td>${s.c0}</td><td>${s.c5}</td><td>${s.c6}</td><td>${s.c7}</td><td>${s.c8}</td><td>${s.c9}</td><td>${s.c10}</td>
-        <td><strong>RD$${s.premios.toLocaleString()}</strong></td>
-      </tr>
-    `;
+    html += `<tr>
+      <td><strong>#${s.ticket}</strong></td>
+      <td>${s.totalHits}</td>
+      <td>${r.usados.length ? (s.totalHits/r.usados.length).toFixed(2) : "0.00"}</td>
+      <td>${s.maxHits}</td>
+      <td>${s.c0}</td><td>${s.c5}</td><td>${s.c6}</td><td>${s.c7}</td><td>${s.c8}</td><td>${s.c9}</td><td>${s.c10}</td>
+      <td><strong>RD$${s.premios.toLocaleString()}</strong></td>
+    </tr>`;
   });
 
   html += `</tbody></table></div></div>`;
-  document.getElementById(contenedorId).innerHTML = html;
-  return r;
-}
-
-function cargarTicketsPro20(){
-  ticketsGenerados = TICKETS_PRO20.map(t=>t.slice());
-  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
-  renderTickets(ticketsGenerados, []);
-  renderResumenComparacion("🏆 Verificación de tus 10 Tickets Pro 20", ticketsGenerados, "verificacion");
-  actualizarBatallaSistemas();
+  agregarEnMatriz(html);
 }
 
 function compararTicketPersonalizado(){
-  const texto = document.getElementById("ticketPersonalizado").value.trim();
-  if(!texto){
-    alert("Escribe un ticket de 10 números.");
-    return;
-  }
+  const texto=document.getElementById("ticketPersonalizado").value.trim();
+  if(!texto){alert("Escribe un ticket de 10 números.");return;}
 
-  const nums = limpiarLinea(texto);
-  const ticket = [...new Set(nums)].sort((a,b)=>a-b);
+  const nums=limpiarLinea(texto);
+  const ticket=[...new Set(nums)].sort((a,b)=>a-b);
 
-  if(ticket.length !== 10){
-    alert("El ticket personalizado debe tener exactamente 10 números únicos del 1 al 80.");
-    return;
-  }
+  if(ticket.length!==10){alert("El ticket personalizado debe tener exactamente 10 números únicos.");return;}
 
-  renderResumenComparacion("➕ Comparación de Ticket Personalizado", [ticket], "comparacionPersonalizada");
-  actualizarBatallaSistemas(ticket);
-}
-
-function actualizarBatallaSistemas(ticketPersonalizado=null){
-  if(!sorteosReales.length) return;
-  const usados = obtenerSorteosUsados();
-  if(!usados.length) return;
-
-  const sistemas = [];
-
-  if(ticketsGenerados.length){
-    const r = calcularResumenTickets(ticketsGenerados, usados);
-    sistemas.push({
-      nombre:"🧬/🏆 Tickets activos",
-      premios:r.totalPremios,
-      recuperacion:r.recuperacion,
-      diferencia:r.diferencia,
-      mejorHit:r.mejorHit,
-      dias:`${r.diasConPremio}/${usados.length}`
-    });
-  }
-
-  const rPro = calcularResumenTickets(TICKETS_PRO20, usados);
-  sistemas.push({
-    nombre:"🏆 Pro 20",
-    premios:rPro.totalPremios,
-    recuperacion:rPro.recuperacion,
-    diferencia:rPro.diferencia,
-    mejorHit:rPro.mejorHit,
-    dias:`${rPro.diasConPremio}/${usados.length}`
-  });
-
-  if(ticketPersonalizado){
-    const rPers = calcularResumenTickets([ticketPersonalizado], usados);
-    sistemas.push({
-      nombre:"➕ Personalizado",
-      premios:rPers.totalPremios,
-      recuperacion:rPers.recuperacion,
-      diferencia:rPers.diferencia,
-      mejorHit:rPers.mejorHit,
-      dias:`${rPers.diasConPremio}/${usados.length}`
-    });
-  }
-
-  sistemas.sort((a,b)=>b.recuperacion-a.recuperacion || b.premios-a.premios);
-
-  let html = `
-    <div class="ticket">
-      <h2>⚔️ Batalla de Sistemas</h2>
-      <p class="small">Comparación usando el mismo período seleccionado: ${usados.length} sorteos.</p>
-      <div style="overflow:auto">
-      <table>
-        <thead>
-          <tr>
-            <th>Ranking</th><th>Sistema</th><th>Recuperación</th><th>Premios</th><th>Ganancia/Pérdida</th><th>Mejor hit</th><th>Días con premio</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  sistemas.forEach((s,i)=>{
-    html += `
-      <tr>
-        <td><strong>#${i+1}</strong></td>
-        <td><strong>${s.nombre}</strong></td>
-        <td>${s.recuperacion.toFixed(2)}%</td>
-        <td>RD$${s.premios.toLocaleString()}</td>
-        <td>${s.diferencia >= 0 ? "RD$" + s.diferencia.toLocaleString() : "-RD$" + Math.abs(s.diferencia).toLocaleString()}</td>
-        <td>${s.mejorHit}</td>
-        <td>${s.dias}</td>
-      </tr>
-    `;
-  });
-
-  html += `</tbody></table></div></div>`;
-  document.getElementById("batallaSistemas").innerHTML = html;
-}
-
-
-/* === MODO SECUENCIA REAL: reemplaza el generador 8,911,711 === */
-
-function acelerarNumero(n, salto){
-  let r = ((n - 1 + salto) % 80) + 1;
-  return r;
-}
-
-function acelerarSorteo(sorteo, salto){
-  return [...new Set(sorteo.map(n => acelerarNumero(n, salto)))].sort((a,b)=>a-b);
-}
-
-function contarCoincidencias(arrA, arrB){
-  const setB = new Set(arrB);
-  return arrA.filter(n => setB.has(n)).length;
-}
-
-function analizarAceleracionesReales(sorteosBase){
-  const ranking = {};
-  const pares = [];
-
-  for(let i = 0; i < sorteosBase.length - 1; i++){
-    const actual = sorteosBase[i];
-    const siguiente = sorteosBase[i + 1];
-
-    let mejorSalto = 1;
-    let mejorHits = -1;
-
-    for(let salto = 1; salto <= 79; salto++){
-      const acelerado = acelerarSorteo(actual, salto);
-      const hits = contarCoincidencias(acelerado, siguiente);
-
-      if(!ranking[salto]){
-        ranking[salto] = {salto, veces:0, totalHits:0, maxHits:0};
-      }
-
-      ranking[salto].totalHits += hits;
-      ranking[salto].maxHits = Math.max(ranking[salto].maxHits, hits);
-
-      if(hits > mejorHits){
-        mejorHits = hits;
-        mejorSalto = salto;
-      }
-    }
-
-    ranking[mejorSalto].veces++;
-    pares.push({par:i+1, salto:mejorSalto, hits:mejorHits});
-  }
-
-  const lista = Object.values(ranking).sort((a,b)=>{
-    return b.veces - a.veces || b.totalHits - a.totalHits || b.maxHits - a.maxHits;
-  });
-
-  return {ranking:lista, pares};
-}
-
-function crearTicketsDesdeSecuenciaReal(sorteosBase, analisis){
-  const ultimoSorteo = sorteosBase[sorteosBase.length - 1];
-  const topSaltos = analisis.ranking.slice(0, 10).map(x => x.salto);
-  const poolScore = {};
-
-  // 1) Proyecta el último sorteo con las aceleraciones dominantes
-  topSaltos.forEach((salto, idx)=>{
-    const peso = 10 - idx;
-    acelerarSorteo(ultimoSorteo, salto).forEach(n=>{
-      poolScore[n] = (poolScore[n] || 0) + peso;
-    });
-  });
-
-  // 2) Agrega números sobrevivientes recientes
-  sorteosBase.slice(-15).forEach((sorteo, idx)=>{
-    const peso = idx + 1;
-    sorteo.forEach(n=>{
-      poolScore[n] = (poolScore[n] || 0) + (peso * 0.12);
-    });
-  });
-
-  // 3) Crea 10 tickets con balance y poca repetición
-  const tickets = [];
-  const usadosGlobales = {};
-  const candidatosBase = [];
-
-  for(let n = 1; n <= 80; n++){
-    candidatosBase.push({num:n, score:poolScore[n] || 0});
-  }
-
-  for(let t = 0; t < 10; t++){
-    const candidatos = candidatosBase.map(c=>({
-      num:c.num,
-      score:c.score - ((usadosGlobales[c.num] || 0) * 1.8) + Math.random() * 0.25
-    })).sort((a,b)=>b.score-a.score);
-
-    const ticket = [];
-
-    // Mezcla 7 fuertes + 3 de cobertura
-    for(const c of candidatos){
-      if(ticket.length >= 7) break;
-      if(!ticket.includes(c.num)){
-        ticket.push(c.num);
-        usadosGlobales[c.num] = (usadosGlobales[c.num] || 0) + 1;
-      }
-    }
-
-    while(ticket.length < 10){
-      const n = Math.floor(Math.random() * 80) + 1;
-      if(!ticket.includes(n)){
-        ticket.push(n);
-        usadosGlobales[n] = (usadosGlobales[n] || 0) + 1;
-      }
-    }
-
-    tickets.push(ticket.sort((a,b)=>a-b));
-  }
-
-  return {tickets, topSaltos, poolScore};
-}
-
-function renderAnalisisSecuencia(analisis){
-  let html = `
-    <div class="ticket">
-      <h2>🧬 Aceleraciones reales detectadas</h2>
-      <div style="overflow:auto">
-      <table>
-        <thead>
-          <tr>
-            <th>Ranking</th>
-            <th>Aceleración</th>
-            <th>Veces dominante</th>
-            <th>Total hits</th>
-            <th>Máximo hit</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  analisis.ranking.slice(0,15).forEach((r,i)=>{
-    html += `
-      <tr>
-        <td>#${i+1}</td>
-        <td><strong>+${r.salto}</strong></td>
-        <td>${r.veces}</td>
-        <td>${r.totalHits}</td>
-        <td>${r.maxHits}</td>
-      </tr>
-    `;
-  });
-
-  html += `</tbody></table></div></div>`;
-  return html;
-}
-
-function renderTickets(tickets, frecuencias){
-  let html = "<h2>🎟️ 10 Tickets por Secuencia Real</h2>";
-
-  tickets.forEach((ticket, i)=>{
-    html += `
-      <div class="ticket">
-        <strong>Ticket Secuencia Real #${i+1}</strong>
-        <div class="balls">
-          ${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}
-        </div>
-      </div>
-    `;
-  });
-
-  document.getElementById("resultados").innerHTML = html;
-}
-
-async function iniciarGeneracion(){
-  if(trabajando) return;
-
-  sorteosReales = JSON.parse(localStorage.getItem("sorteosKino") || "[]");
-
-  if(!sorteosReales || sorteosReales.length < 2){
-    alert("Primero guarda al menos 2 sorteos reales para detectar la secuencia real.");
-    return;
-  }
-
-  trabajando = true;
-  document.getElementById("btnGenerar").disabled = true;
-  document.getElementById("estado").textContent = "Analizando...";
-  document.getElementById("resultados").innerHTML = "";
-  document.getElementById("verificacion").innerHTML = "";
-
-  await new Promise(r=>setTimeout(r,50));
-
-  const analisis = analizarAceleracionesReales(sorteosReales);
-  const generado = crearTicketsDesdeSecuenciaReal(sorteosReales, analisis);
-
-  ticketsGenerados = generado.tickets;
+  ticketsGenerados=[ticket];
   localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
-
-  document.getElementById("generadas").textContent = sorteosReales.length.toLocaleString();
-  document.getElementById("porcentaje").textContent = "+" + analisis.ranking[0].salto;
-  document.getElementById("progressBar").style.width = "100%";
-  document.getElementById("estado").textContent = "Completado";
-  document.getElementById("btnGenerar").disabled = false;
-  trabajando = false;
-
-  renderTickets(ticketsGenerados, []);
-  document.getElementById("resultados").innerHTML += renderAnalisisSecuencia(analisis);
-  actualizarBatallaSistemas();
+  renderTickets(ticketsGenerados,"➕ Ticket Personalizado");
+  verificarTicketsGenerados();
 }
 
 actualizarContadorReales();
-if(ticketsGenerados.length){ renderTickets(ticketsGenerados, []); }
+if(ticketsGenerados.length){
+  renderTickets(ticketsGenerados,"🎟️ Tickets Guardados");
+}
 </script>
-
 </body>
 </html>
