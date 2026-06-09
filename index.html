@@ -711,6 +711,84 @@ body.light-mode .tooltip-btn::before{
   border-top-color:#1a56db;
 }
 
+
+/* === Núcleo Activo Inteligente === */
+.nucleo-activo{
+  margin:18px 0;
+  background:#0b1220;
+  border:1px solid #2563eb;
+  border-radius:20px;
+  padding:18px;
+  color:#e5e7eb;
+  box-shadow:0 0 24px rgba(37,99,235,.16);
+}
+.nucleo-activo h2{
+  margin:0 0 8px;
+  color:#93c5fd;
+}
+.nucleo-activo textarea{
+  min-height:90px;
+  margin:8px 0 10px;
+}
+.nucleo-opciones{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:10px;
+  margin:10px 0;
+}
+.nucleo-opciones label{
+  background:#111c31;
+  border:1px solid #334155;
+  border-radius:12px;
+  padding:11px;
+  color:#e5e7eb;
+}
+.nucleo-output{
+  margin-top:14px;
+}
+.ticket-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.copy-small{
+  width:auto;
+  padding:9px 12px;
+  border-radius:10px;
+  font-size:13px;
+}
+.nucleo-pill{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#1e293b;
+  color:#bfdbfe;
+  border:1px solid #334155;
+  margin:3px;
+  font-weight:bold;
+}
+body.light-mode .nucleo-activo{
+  background:#ffffff;
+  border-color:#bfdbfe;
+  color:#111827;
+  box-shadow:0 8px 24px rgba(15,23,42,.08);
+}
+body.light-mode .nucleo-activo h2{
+  color:#1a56db;
+}
+body.light-mode .nucleo-opciones label{
+  background:#f8fafc;
+  border-color:#dbe3ef;
+  color:#111827;
+}
+body.light-mode .nucleo-pill{
+  background:#e8effe;
+  color:#1040b0;
+  border-color:#bfdbfe;
+}
+
 </style>
 </head>
 <body>
@@ -734,6 +812,26 @@ body.light-mode .tooltip-btn::before{
     <div class="stat"><span>Rango</span><strong>1 - 80</strong></div>
   </div>
 
+
+
+
+  <div class="nucleo-activo" id="nucleoActivoBox">
+    <h2>🧠 Núcleo Activo Inteligente</h2>
+    <p class="small">Pega el último sorteo de Kino/Súper Kino. El motor detecta núcleo vivo, apoyos y derivados para crear 10 tickets Elite.</p>
+    <textarea id="ultimoSorteoNucleo" placeholder="03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
+
+    <div class="nucleo-opciones">
+      <label><input type="checkbox" id="usarMemoriaNucleo" checked> 🧬 Mantener memoria del núcleo anterior</label>
+      <label><input type="checkbox" id="guardarSorteoNucleo" checked> 💾 Guardar este sorteo en la base real</label>
+    </div>
+
+    <div class="compact-actions">
+      <button onclick="ejecutarConAnimacion('Generando Núcleo Activo...', generarNucleoActivoDesdeInput)" class="btn-blue tooltip-btn" data-tooltip="Genera 10 tickets Elite desde el último sorteo, combinando núcleo vivo, apoyo, derivados ±1 y memoria anterior." title="Genera 10 tickets Elite desde el último sorteo, combinando núcleo vivo, apoyo, derivados ±1 y memoria anterior.">🔥 Generar Núcleo Activo</button>
+      <button onclick="copiarTodosTicketsNucleo()" class="btn-green tooltip-btn" data-tooltip="Copia en un solo bloque los 10 tickets generados por Núcleo Activo." title="Copia en un solo bloque los 10 tickets generados por Núcleo Activo.">📋 Copiar 10 Tickets</button>
+    </div>
+
+    <div class="nucleo-output" id="nucleoActivoOutput"></div>
+  </div>
 
   <div class="matrix-console" id="matrixConsole">
     <div class="matrix-title">
@@ -1301,6 +1399,7 @@ function finalizarLaboratorioADN(stats, totalSimulaciones){
 }
 
 renderHallOfFameADN();
+cargarNucleoActivoGuardado();
 
 actualizarContadorReales();
   alert("Proceso completado\\n\\n✅ Agregados: "+agregados+"\\n⚠️ Duplicados: "+duplicados+"\\n❌ Inválidos: "+invalidos);
@@ -1933,6 +2032,8 @@ function aplicarTooltipsBotones(){
     {match:'Reiniciar Hall Of Fame', info:'Borra el historial guardado del Hall Of Fame ADN en este navegador.'},
     {match:'Comparar Ticket Personalizado', info:'Compara un ticket escrito manualmente contra los sorteos reales guardados y el período seleccionado.'},
     {match:'Guardar Sorteos Reales', info:'Agrega nuevos sorteos reales a la base local. El sistema valida 20 números únicos y evita duplicados.'},
+    {match:'Generar Núcleo Activo', info:'Genera 10 tickets Elite desde el último sorteo, combinando núcleo vivo, apoyo, derivados ±1 y memoria anterior.'},
+    {match:'Copiar 10 Tickets', info:'Copia en un solo bloque los 10 tickets generados por Núcleo Activo.'},
     {match:'Modo claro', info:'Cambia entre modo oscuro y modo claro.'},
     {match:'Modo oscuro', info:'Cambia entre modo claro y modo oscuro.'}
   ];
@@ -1946,6 +2047,237 @@ function aplicarTooltipsBotones(){
       btn.setAttribute('title', ayuda.info);
     }
   });
+}
+
+
+/* === Motor Núcleo Activo Inteligente === */
+let ticketsNucleoActivo = JSON.parse(localStorage.getItem("ticketsNucleoActivoKino") || "[]");
+let nucleoActivoMemoria = JSON.parse(localStorage.getItem("nucleoActivoMemoriaKino") || "[]");
+
+function numerosUnicosOrdenados(arr, max=80){
+  return [...new Set((arr || []).map(Number).filter(n=>n>=1 && n<=max))].sort((a,b)=>a-b);
+}
+
+function parsearSorteoNucleo(){
+  const input = document.getElementById("ultimoSorteoNucleo");
+  const nums = limpiarLinea(input ? input.value : "");
+  return numerosUnicosOrdenados(nums,80);
+}
+
+function derivadosNucleo(nums){
+  const out = [];
+  nums.forEach(n=>{
+    [n-1,n+1].forEach(x=>{ if(x>=1 && x<=80) out.push(x); });
+    const inv = Number(String(fmt(n)).split("").reverse().join(""));
+    if(inv>=1 && inv<=80) out.push(inv);
+  });
+  return numerosUnicosOrdenados(out);
+}
+
+function frecuenciaHistoricaNucleo(){
+  const freq = {};
+  for(let n=1;n<=80;n++) freq[n]=0;
+  (sorteosReales || []).forEach(s=>{
+    numerosUnicosOrdenados(s).forEach(n=>freq[n]++);
+  });
+  return freq;
+}
+
+function detectarNucleoActivo(sorteo){
+  const freq = frecuenciaHistoricaNucleo();
+  const memoriaActiva = document.getElementById("usarMemoriaNucleo")?.checked;
+  const memoriaSet = new Set(memoriaActiva ? nucleoActivoMemoria : []);
+
+  const candidatos = sorteo.map((n,idx)=>{
+    const cerca = sorteo.filter(x=>x!==n && Math.abs(x-n)<=3).length;
+    const familia = sorteo.filter(x=>Math.floor(x/10)===Math.floor(n/10)).length;
+    const memoria = memoriaSet.has(n) ? 10 : 0;
+    const hist = freq[n] || 0;
+    const zonaAlta = n>=60 ? 2 : 0;
+    const score = memoria + cerca*3 + familia*2 + hist*0.35 + zonaAlta + (idx>=14 ? 1 : 0);
+    return {n, score, hist, cerca, familia, memoria};
+  }).sort((a,b)=>b.score-a.score || b.hist-a.hist || a.n-b.n);
+
+  const nucleo = candidatos.slice(0,5).map(x=>x.n);
+  const apoyo = candidatos.slice(5,10).map(x=>x.n);
+  const derivados = derivadosNucleo([...nucleo, ...apoyo])
+    .filter(n=>!nucleo.includes(n))
+    .sort((a,b)=>(freq[b]||0)-(freq[a]||0) || a-b)
+    .slice(0,18);
+
+  return {nucleo:numerosUnicosOrdenados(nucleo), apoyo:numerosUnicosOrdenados(apoyo), derivados, candidatos};
+}
+
+function completarTicket(base, pool){
+  const ticket = [...new Set(base)];
+  for(const n of pool){
+    if(ticket.length>=10) break;
+    if(n>=1 && n<=80 && !ticket.includes(n)) ticket.push(n);
+  }
+  let n=1;
+  while(ticket.length<10 && n<=80){
+    if(!ticket.includes(n)) ticket.push(n);
+    n++;
+  }
+  return ticket.slice(0,10).sort((a,b)=>a-b);
+}
+
+function generarTicketsDesdeNucleoActivo(data){
+  const {nucleo, apoyo, derivados} = data;
+  const memoria = document.getElementById("usarMemoriaNucleo")?.checked ? nucleoActivoMemoria : [];
+  const historicos = rankingSupervivencia.length ? rankingSupervivencia.slice(0,35).map(x=>x.num) : [];
+  const pool = numerosUnicosOrdenados([...apoyo, ...derivados, ...memoria, ...historicos]);
+
+  const moldes = [
+    [...nucleo, ...apoyo],
+    [...nucleo, ...apoyo.slice(0,3), ...derivados.slice(0,2)],
+    [...nucleo, ...apoyo.slice(2,5), ...derivados.slice(2,4)],
+    [...nucleo, ...derivados.slice(0,5)],
+    [...nucleo, ...apoyo.slice(0,2), ...derivados.slice(4,7)],
+    [...nucleo, ...apoyo.slice(3,5), ...derivados.slice(7,10)],
+    [...nucleo.slice(0,4), ...apoyo, ...derivados.slice(0,1)],
+    [...nucleo.slice(1,5), ...apoyo, ...derivados.slice(1,2)],
+    [...nucleo, ...memoria.slice(0,2), ...derivados.slice(10,13)],
+    [...nucleo.slice(0,3), ...apoyo.slice(0,4), ...derivados.slice(0,3)]
+  ];
+
+  const tickets = [];
+  const vistas = new Set();
+  moldes.forEach((m,i)=>{
+    const rotPool = [...pool.slice(i), ...pool.slice(0,i)];
+    const t = completarTicket(m, rotPool);
+    const clave = t.join("-");
+    if(!vistas.has(clave)){ tickets.push(t); vistas.add(clave); }
+  });
+
+  let i=0;
+  while(tickets.length<10){
+    const extra = completarTicket([...nucleo.slice(i%5), ...apoyo.slice(0,3)], [...pool.slice(i*2), ...pool]);
+    const clave = extra.join("-");
+    if(!vistas.has(clave)){ tickets.push(extra); vistas.add(clave); }
+    i++;
+    if(i>50) break;
+  }
+  return tickets.slice(0,10);
+}
+
+function textoTicketNucleo(ticket, i){
+  return `Ticket Elite #${i+1}: ${ticket.map(fmt).join(" ")}`;
+}
+
+function copiarTextoSeguro(texto){
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(texto).then(()=>alert("Copiado ✅"));
+    return;
+  }
+  const ta=document.createElement("textarea");
+  ta.value=texto;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+  alert("Copiado ✅");
+}
+
+function copiarTicketNucleo(i){
+  if(!ticketsNucleoActivo[i]) return;
+  copiarTextoSeguro(textoTicketNucleo(ticketsNucleoActivo[i], i));
+}
+
+function copiarTodosTicketsNucleo(){
+  if(!ticketsNucleoActivo.length){
+    alert("Primero genera el Núcleo Activo.");
+    return;
+  }
+  copiarTextoSeguro(ticketsNucleoActivo.map((t,i)=>textoTicketNucleo(t,i)).join("\n"));
+}
+
+function renderNucleoActivo(data, tickets){
+  const out = document.getElementById("nucleoActivoOutput");
+  if(!out) return;
+  const pill = arr => arr.map(n=>`<span class="nucleo-pill">${fmt(n)}</span>`).join("");
+  let html = `
+    <div class="ticket">
+      <h2>🧬 Núcleo Activo Detectado</h2>
+      <p class="small">Base principal:</p>
+      <div>${pill(data.nucleo)}</div>
+      <p class="small">Apoyo:</p>
+      <div>${pill(data.apoyo)}</div>
+      <p class="small">Derivados ±1 / inversos útiles:</p>
+      <div>${pill(data.derivados.slice(0,12))}</div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-row">
+        <h2>🎟️ 10 Tickets Elite Núcleo Activo</h2>
+        <button class="btn-green copy-small" onclick="copiarTodosTicketsNucleo()">📋 Copiar todos</button>
+      </div>
+  `;
+
+  tickets.forEach((ticket,i)=>{
+    html += `
+      <div class="ticket">
+        <div class="ticket-row">
+          <strong>Ticket Elite #${i+1}</strong>
+          <button class="btn-blue copy-small" onclick="copiarTicketNucleo(${i})">📋 Copiar</button>
+        </div>
+        <div class="balls">${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}</div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  out.innerHTML = html;
+}
+
+function guardarSorteoDesdeNucleo(sorteo){
+  const clave = sorteo.join("-");
+  const existentes = new Set((sorteosReales || []).map(s=>numerosUnicosOrdenados(s).join("-")));
+  if(!existentes.has(clave)){
+    sorteosReales.push(sorteo);
+    localStorage.setItem("sorteosKino", JSON.stringify(sorteosReales));
+    actualizarContadorReales();
+  }
+}
+
+function generarNucleoActivoDesdeInput(){
+  const sorteo = parsearSorteoNucleo();
+  if(sorteo.length !== 20){
+    alert("Pega un sorteo válido de 20 números únicos entre 1 y 80.");
+    return;
+  }
+  if(!rankingSupervivencia.length && sorteosReales.length) analizarSupervivencia();
+
+  const data = detectarNucleoActivo(sorteo);
+  const tickets = generarTicketsDesdeNucleoActivo(data);
+
+  ticketsNucleoActivo = tickets;
+  ticketsGenerados = tickets;
+  nucleoActivoMemoria = numerosUnicosOrdenados([...data.nucleo, ...data.apoyo.slice(0,2)]);
+
+  localStorage.setItem("ticketsNucleoActivoKino", JSON.stringify(ticketsNucleoActivo));
+  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
+  localStorage.setItem("nucleoActivoMemoriaKino", JSON.stringify(nucleoActivoMemoria));
+
+  if(document.getElementById("guardarSorteoNucleo")?.checked){
+    guardarSorteoDesdeNucleo(sorteo);
+  }
+
+  renderNucleoActivo(data, tickets);
+  mostrarEnMatriz(`
+    <div class="ticket">
+      <h2>🔥 Núcleo Activo enviado a Verificar Tickets</h2>
+      <p class="small">Los 10 tickets Elite ya quedaron guardados como tickets generados.</p>
+      <div class="compact-actions">
+        <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
+        <button onclick="copiarTodosTicketsNucleo()" class="btn-green">📋 Copiar 10 Tickets</button>
+      </div>
+    </div>
+  `);
+}
+
+function cargarNucleoActivoGuardado(){
+  if(!ticketsNucleoActivo.length) return;
+  const data = {nucleo:nucleoActivoMemoria.slice(0,5), apoyo:nucleoActivoMemoria.slice(5,7), derivados:derivadosNucleo(nucleoActivoMemoria)};
+  renderNucleoActivo(data, ticketsNucleoActivo);
 }
 
 inicializarSorteosBaseVisibles();
