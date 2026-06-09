@@ -796,28 +796,20 @@ body.light-mode .nucleo-pill{
 <div class="main">
 <div class="card">
 
-  <div class="note">
-    <strong>Historial GenKin:</strong>
-    se utilizó la combinación <strong>8,911,711</strong>, luego se actualizó a aceleraciones <strong>+1 al +79</strong>, y luego se predijo que era necesario comparar los números que se logran mantener.
-  </div>
-
   <div class="header">
-    <h1>🧬 GenKin Survival Engine</h1>
-    <p>Analiza sorteos reales, detecta supervivencia global y genera tickets derivados para verificarlos.</p>
+    <h1>🧬 Motor Híbrido Elite</h1>
+    <p>Fusiona 5 tickets del Núcleo Histórico + 5 tickets del Núcleo Activo con último sorteo.</p>
   </div>
 
   <div class="grid">
     <div class="stat"><span>Sorteos reales</span><strong id="contadorReales">101</strong></div>
-    <div class="stat"><span>Motor actual</span><strong>Supervivencia</strong></div>
-    <div class="stat"><span>Rango</span><strong>1 - 80</strong></div>
+    <div class="stat"><span>Motor actual</span><strong>Híbrido Elite</strong></div>
+    <div class="stat"><span>Tickets diarios</span><strong>10</strong></div>
   </div>
 
-
-
-
   <div class="nucleo-activo" id="nucleoActivoBox">
-    <h2>🧠 Núcleo Activo Inteligente</h2>
-    <p class="small">Pega el último sorteo de Kino/Súper Kino. El motor detecta núcleo vivo, apoyos y derivados para crear 10 tickets Elite.</p>
+    <h2>🔥 Motor Híbrido Elite</h2>
+    <p class="small">Pega el último sorteo. El sistema generará 10 tickets finales: 5 desde Núcleo Histórico y 5 desde Núcleo Activo + último sorteo.</p>
     <textarea id="ultimoSorteoNucleo" placeholder="03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
 
     <div class="nucleo-opciones">
@@ -826,8 +818,9 @@ body.light-mode .nucleo-pill{
     </div>
 
     <div class="compact-actions">
-      <button onclick="ejecutarConAnimacion('Generando Núcleo Activo...', generarNucleoActivoDesdeInput)" class="btn-blue tooltip-btn" data-tooltip="Genera 10 tickets Elite desde el último sorteo, combinando núcleo vivo, apoyo, derivados ±1 y memoria anterior." title="Genera 10 tickets Elite desde el último sorteo, combinando núcleo vivo, apoyo, derivados ±1 y memoria anterior.">🔥 Generar Núcleo Activo</button>
-      <button onclick="copiarTodosTicketsNucleo()" class="btn-green tooltip-btn" data-tooltip="Copia en un solo bloque los 10 tickets generados por Núcleo Activo." title="Copia en un solo bloque los 10 tickets generados por Núcleo Activo.">📋 Copiar 10 Tickets</button>
+      <button onclick="ejecutarConAnimacion('Generando Motor Híbrido Elite...', generarMotorHibridoElite)" class="btn-blue tooltip-btn" data-tooltip="Genera 5 tickets del Núcleo Histórico y 5 tickets del Núcleo Activo + último sorteo." title="Genera 5 tickets del Núcleo Histórico y 5 tickets del Núcleo Activo + último sorteo.">🔥 Generar Motor Híbrido Elite</button>
+      <button onclick="copiarTodosTicketsNucleo()" class="btn-green tooltip-btn" data-tooltip="Copia en un solo bloque los 10 tickets híbridos generados." title="Copia en un solo bloque los 10 tickets híbridos generados.">📋 Copiar 10 Tickets</button>
+      <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los 10 tickets híbridos contra el período seleccionado." title="Compara los 10 tickets híbridos contra el período seleccionado.">📊 Verificar Tickets</button>
     </div>
 
     <div class="nucleo-output" id="nucleoActivoOutput"></div>
@@ -835,7 +828,7 @@ body.light-mode .nucleo-pill{
 
   <div class="matrix-console" id="matrixConsole">
     <div class="matrix-title">
-      <strong>🧠 Matriz Interactiva GenKin</strong>
+      <strong>🧊 Cubo Rubik GenKin</strong>
       <span id="matrixStatus">En espera</span>
     </div>
 
@@ -854,83 +847,26 @@ body.light-mode .nucleo-pill{
 
       <div>
         <div class="dna" id="dnaBox">
-          <div class="dna-line">A-T-C-G • 8,911,711 • +1/+79 • SUPERVIVENCIA • NÚCLEO • DERIVADOS</div>
-          <div class="dna-line">01 07 44 63 72 10 16 23 55 65 • GENKIN MATRIX</div>
-          <div class="dna-line">ANALIZANDO SECUENCIAS • CRUZANDO SORTEOS • FILTRANDO NÚMEROS VIVOS</div>
+          <div class="dna-line">MOTOR HÍBRIDO ELITE • NÚCLEO HISTÓRICO • ÚLTIMO SORTEO • SUPERVIVENCIA</div>
+          <div class="dna-line">23 46 61 63 • DERIVADOS ±1 • MEMORIA ACTIVA • FILTRO FINAL</div>
+          <div class="dna-line">5 HISTÓRICOS + 5 RECIENTES • 10 TICKETS ELITE • VERIFICACIÓN</div>
         </div>
         <div class="console-log" id="consoleLog">
           <span class="warn">Sistema listo.</span><br>
-          Presiona un botón para iniciar la animación y mostrar el resultado aquí.
+          Pega el último sorteo y genera el Motor Híbrido Elite.
         </div>
       </div>
     </div>
 
-    
-
-
-  <div class="actions">
-    <button onclick="ejecutarConAnimacion(&#39;Generando ticket núcleo...&#39;, generarTicketNucleo)" class="btn-purple tooltip-btn" data-tooltip="Crea 1 ticket usando los 10 números con mayor supervivencia en tus sorteos reales." title="Crea 1 ticket usando los 10 números con mayor supervivencia en tus sorteos reales.">🔥 Generar Ticket Núcleo</button>
-    <button onclick="ejecutarConAnimacion(&#39;Activando ADN Evolutivo...&#39;, activarADNEvolutivo)" class="btn-green tooltip-btn" data-tooltip="Evoluciona candidatos usando tus sorteos reales: cruza, filtra y conserva los tickets con mejor rendimiento histórico." title="Evoluciona candidatos usando tus sorteos reales: cruza, filtra y conserva los tickets con mejor rendimiento histórico.">🧬 ADN Evolutivo</button>
-    <button onclick="ejecutarConAnimacion(&#39;Verificando tickets generados...&#39;, verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta." title="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta.">📊 Verificar Tickets</button>
-  </div>
-
-    <div class="console-output" id="matrixOutput"><div class="ticket">
-    <h2>🎟️ Tickets Guardados</h2>
-    <div class="grid">
-      <div class="stat"><span>Tickets generados</span><strong>10</strong></div>
-      <div class="stat"><span>Números por ticket</span><strong>10</strong></div>
-    </div>
-    <div class="compact-actions">
-      <button onclick="ejecutarConAnimacion(&#39;Verificando tickets generados...&#39;, verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta." title="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta.">📊 Verificar Tickets</button>
-    </div>
-    <details class="collapse-box">
-      <summary>🎟️ Ver/Ocultar Tickets Generados (10)</summary><div class="ticket"><strong>Ticket #1</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #2</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">53</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #3</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">53</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #4</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">53</div><div class="ball">60</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #5</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">19</div><div class="ball">37</div><div class="ball">52</div><div class="ball">53</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #6</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div><div class="ball">78</div></div></div><div class="ticket"><strong>Ticket #7</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">54</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #8</strong><div class="balls"><div class="ball">12</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">53</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #9</strong><div class="balls"><div class="ball">01</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">53</div><div class="ball">60</div><div class="ball">63</div><div class="ball">65</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #10</strong><div class="balls"><div class="ball">01</div><div class="ball">12</div><div class="ball">19</div><div class="ball">34</div><div class="ball">37</div><div class="ball">52</div><div class="ball">53</div><div class="ball">60</div><div class="ball">63</div><div class="ball">72</div></div></div></details></div></div>
-  </div>
-
-
-
-  <div class="lab-adn" id="laboratorioADN">
-    <h2>🧪 Laboratorio Estadístico ADN Evolutivo</h2>
-    <p class="small">Simula sorteos matemáticamente válidos de Kino y compara esos sorteos contra los 10 tickets generados por ADN Evolutivo.</p>
-    <div class="lab-warning">
-      <strong>IMPORTANTE:</strong> Esta prueba no usa sorteos reales. Cada sorteo simulado contiene 20 números únicos, del 1 al 80, sin repetir.
-    </div>
-
-    <div class="lab-actions">
-      <button onclick="simularLaboratorioADN(1000)" class="btn-green tooltip-btn" data-tooltip="Prueba rápida del Laboratorio ADN. Usa sorteos simulados válidos, no sorteos reales." title="Prueba rápida del Laboratorio ADN. Usa sorteos simulados válidos, no sorteos reales.">🔥 Simular 1,000</button>
-      <button onclick="simularLaboratorioADN(10000)" class="btn-purple tooltip-btn" data-tooltip="Prueba media para detectar tickets que empiezan a resistir mejor que otros dentro de los 10 ADN." title="Prueba media para detectar tickets que empiezan a resistir mejor que otros dentro de los 10 ADN.">📊 Simular 10,000</button>
-      <button onclick="simularLaboratorioADN(100000)" class="btn-orange tooltip-btn" data-tooltip="Prueba fuerte para elegir candidatos antes de jugar. Mide supervivencia, ranking y Hall Of Fame." title="Prueba fuerte para elegir candidatos antes de jugar. Mide supervivencia, ranking y Hall Of Fame.">🚀 Simular 100,000</button>
-      <button onclick="simularLaboratorioADN(500000)" class="btn-blue tooltip-btn" data-tooltip="Prueba avanzada. Sirve para confirmar estabilidad y reducir ruido estadístico." title="Prueba avanzada. Sirve para confirmar estabilidad y reducir ruido estadístico.">⚡ Simular 500,000</button>
-      <button onclick="simularLaboratorioADN(1000000)" class="btn-dark tooltip-btn" data-tooltip="Prueba rápida del Laboratorio ADN. Usa sorteos simulados válidos, no sorteos reales." title="Prueba rápida del Laboratorio ADN. Usa sorteos simulados válidos, no sorteos reales.">♾️ Simular 1,000,000</button>
-    </div>
-
-    <div id="labProgressBox" class="hidden">
-      <div class="small" id="labProgressText">Preparando simulación...</div>
-      <div class="lab-progress"><div class="lab-progress-bar" id="labProgressBar"></div></div>
-    </div>
-
-    <div class="lab-output" id="laboratorioADNOutput"></div>
-
-    <details class="collapse-box" open="">
-      <summary>🔥 Hall Of Fame ADN</summary>
-      <div id="hallOfFameADN"><div class="hof-grid">
-    <div class="hof-card"><strong>🏆 Mayor cantidad de 10 aciertos</strong><div>0</div><div class="small">—</div></div>
-    <div class="hof-card"><strong>🥇 Mayor cantidad de 9 aciertos</strong><div>0</div><div class="small">—</div></div>
-    <div class="hof-card"><strong>💰 Ticket más rentable</strong><div>0 pts</div><div class="small">—</div></div>
-    <div class="hof-card"><strong>🧬 Ticket con más supervivencia</strong><div>0% </div><div class="small">—</div></div>
-  </div></div>
-      <div class="compact-actions">
-        <button onclick="reiniciarHallOfFameADN()" class="btn-dark tooltip-btn" data-tooltip="Borra el historial guardado del Hall Of Fame ADN en este navegador." title="Borra el historial guardado del Hall Of Fame ADN en este navegador.">🧹 Reiniciar Hall Of Fame</button>
-      </div>
-    </details>
+    <div class="console-output" id="matrixOutput"></div>
   </div>
 
   <div class="ticket">
     <strong>📅 Período para verificar</strong>
-    <p class="small">Selecciona cuántos sorteos usar al verificar tickets.</p>
+    <p class="small">Selecciona cuántos sorteos usar al verificar los 10 tickets híbridos.</p>
     <div class="filters">
       <label><input type="radio" name="usarSorteos" value="3"> 🔥 Últimos 3 días</label>
-      <label><input type="radio" name="usarSorteos" value="7" checked=""> 📅 Últimos 7 días</label>
+      <label><input type="radio" name="usarSorteos" value="7" checked> 📅 Últimos 7 días</label>
       <label><input type="radio" name="usarSorteos" value="15"> 📅 Últimos 15 días</label>
       <label><input type="radio" name="usarSorteos" value="30"> 📅 Últimos 30 días</label>
       <label><input type="radio" name="usarSorteos" value="50"> 📊 Últimos 50 sorteos</label>
@@ -940,26 +876,11 @@ body.light-mode .nucleo-pill{
     </div>
   </div>
 
-  <div id="legacyHidden" style="display:none"><div id="supervivencia"></div>
-  <div id="ticketsBox"></div>
-  <div id="verificacion"></div></div>
-
-  <div class="final-tools">
-    <h2>🧰 Herramientas secundarias</h2>
-
-    <div class="ticket">
-      <strong>➕ Agregar ticket personalizado</strong>
-      <p class="small">Escribe 10 números del 1 al 80 para compararlo contra los sorteos guardados.</p>
-      <textarea id="ticketPersonalizado" style="min-height:75px" placeholder="07 23 25 34 40 46 59 61 63 70"></textarea>
-      <button onclick="ejecutarConAnimacion(&#39;Comparando ticket personalizado...&#39;, compararTicketPersonalizado)" class="btn-orange tooltip-btn" data-tooltip="Compara un ticket escrito manualmente contra los sorteos reales guardados y el período seleccionado." title="Compara un ticket escrito manualmente contra los sorteos reales guardados y el período seleccionado.">🔍 Comparar Ticket Personalizado</button>
-    </div>
-
-    <div class="ticket">
-      <strong>📥 Agregar sorteos reales</strong>
-      <p class="small">Pega sorteos reales. Un sorteo por línea, 20 números por sorteo. El sistema elimina duplicados automáticamente.</p>
-      <textarea id="sorteosInput" placeholder="01 07 08 11 12 16 18 22 29 35 37 42 44 46 56 60 65 69 72 79"></textarea>
-      <button onclick="guardarSorteosReales()" class="btn-blue tooltip-btn" data-tooltip="Agrega nuevos sorteos reales a la base local. El sistema valida 20 números únicos y evita duplicados." title="Agrega nuevos sorteos reales a la base local. El sistema valida 20 números únicos y evita duplicados.">💾 Guardar Sorteos Reales</button>
-    </div>
+  <div id="legacyHidden" style="display:none">
+    <div id="supervivencia"></div>
+    <div id="ticketsBox"></div>
+    <div id="verificacion"></div>
+    <div id="hallOfFameADN"></div>
   </div>
 
 </div>
@@ -2274,10 +2195,124 @@ function generarNucleoActivoDesdeInput(){
   `);
 }
 
+
+function generarTicketsHistoricosBase(cantidad=5){
+  if(!asegurarRanking()) return [];
+  const top10 = rankingSupervivencia.slice(0,10).map(x=>x.num);
+  const apoyo = rankingSupervivencia.slice(10,45).map(x=>x.num);
+  const derivados = derivadosNucleo(top10).filter(n=>!top10.includes(n));
+  const pool = numerosUnicosOrdenados([...apoyo, ...derivados, ...rankingSupervivencia.slice(0,60).map(x=>x.num)]);
+
+  const moldes = [
+    [...top10],
+    [...top10.slice(0,7), ...pool.slice(0,3)],
+    [...top10.slice(0,6), ...pool.slice(3,7)],
+    [...top10.slice(2,10), ...pool.slice(7,9)],
+    [...top10.slice(0,5), ...derivados.slice(0,5)]
+  ];
+
+  const tickets = [];
+  const vistas = new Set();
+  moldes.forEach((m,i)=>{
+    const rotPool = [...pool.slice(i*4), ...pool.slice(0,i*4), ...top10];
+    const t = completarTicket(m, rotPool);
+    const clave = t.join("-");
+    if(!vistas.has(clave)){ tickets.push(t); vistas.add(clave); }
+  });
+
+  let i=0;
+  while(tickets.length<cantidad && i<80){
+    const base = [...top10.slice(i%top10.length), ...top10.slice(0,i%top10.length)].slice(0,6);
+    const extra = completarTicket(base, [...pool.slice(i), ...pool]);
+    const clave = extra.join("-");
+    if(!vistas.has(clave)){ tickets.push(extra); vistas.add(clave); }
+    i++;
+  }
+  return tickets.slice(0,cantidad);
+}
+
+function renderMotorHibridoElite(data, historicos, activos){
+  const out = document.getElementById("nucleoActivoOutput");
+  const pill = arr => arr.map(n=>`<span class="nucleo-pill">${fmt(n)}</span>`).join("");
+  const tickets = [...historicos, ...activos];
+
+  let html = `
+    <div class="ticket">
+      <h2>🧬 Motor Híbrido Elite armado</h2>
+      <div class="grid">
+        <div class="stat"><span>Núcleo Histórico</span><strong>5 tickets</strong></div>
+        <div class="stat"><span>Núcleo Activo</span><strong>5 tickets</strong></div>
+        <div class="stat"><span>Total final</span><strong>10 tickets</strong></div>
+      </div>
+      <p class="small">Núcleo detectado desde último sorteo:</p>
+      <div>${pill(data.nucleo)}</div>
+      <p class="small">Apoyos recientes:</p>
+      <div>${pill(data.apoyo)}</div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-row">
+        <h2>🎟️ 10 Tickets Híbridos Elite</h2>
+        <button class="btn-green copy-small" onclick="copiarTodosTicketsNucleo()">📋 Copiar todos</button>
+      </div>
+      <details class="collapse-box" open>
+        <summary>🔥 Tickets 1-5: Núcleo Histórico</summary>`;
+
+  historicos.forEach((ticket,i)=>{
+    html += `<div class="ticket"><div class="ticket-row"><strong>Histórico #${i+1}</strong><button class="btn-blue copy-small" onclick="copiarTicketNucleo(${i})">📋 Copiar</button></div><div class="balls">${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}</div></div>`;
+  });
+
+  html += `</details><details class="collapse-box" open><summary>⚡ Tickets 6-10: Núcleo Activo + Último Sorteo</summary>`;
+
+  activos.forEach((ticket,i)=>{
+    const idx = i + historicos.length;
+    html += `<div class="ticket"><div class="ticket-row"><strong>Activo #${i+1}</strong><button class="btn-blue copy-small" onclick="copiarTicketNucleo(${idx})">📋 Copiar</button></div><div class="balls">${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}</div></div>`;
+  });
+
+  html += `</details><div class="compact-actions"><button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button></div></div>`;
+  if(out) out.innerHTML = html;
+}
+
+function generarMotorHibridoElite(){
+  const sorteo = parsearSorteoNucleo();
+  if(sorteo.length !== 20){
+    alert("Pega un sorteo válido de 20 números únicos entre 1 y 80.");
+    return;
+  }
+  if(!rankingSupervivencia.length && sorteosReales.length) analizarSupervivencia();
+
+  const data = detectarNucleoActivo(sorteo);
+  const historicos = generarTicketsHistoricosBase(5);
+  const activos = generarTicketsDesdeNucleoActivo(data).slice(0,5);
+  const tickets = [...historicos, ...activos].slice(0,10);
+
+  ticketsNucleoActivo = tickets;
+  ticketsGenerados = tickets;
+  nucleoActivoMemoria = numerosUnicosOrdenados([...data.nucleo, ...data.apoyo.slice(0,2)]);
+
+  localStorage.setItem("ticketsNucleoActivoKino", JSON.stringify(ticketsNucleoActivo));
+  localStorage.setItem("ticketsGeneradosKino", JSON.stringify(ticketsGenerados));
+  localStorage.setItem("nucleoActivoMemoriaKino", JSON.stringify(nucleoActivoMemoria));
+
+  if(document.getElementById("guardarSorteoNucleo")?.checked){
+    guardarSorteoDesdeNucleo(sorteo);
+  }
+
+  renderMotorHibridoElite(data, historicos, activos);
+  mostrarEnMatriz(`
+    <div class="ticket">
+      <h2>🔥 Motor Híbrido Elite listo</h2>
+      <p class="small">Se generaron 10 tickets finales: 5 históricos + 5 activos con último sorteo.</p>
+      <div class="compact-actions">
+        <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
+        <button onclick="copiarTodosTicketsNucleo()" class="btn-green">📋 Copiar 10 Tickets</button>
+      </div>
+    </div>
+  `);
+}
+
 function cargarNucleoActivoGuardado(){
   if(!ticketsNucleoActivo.length) return;
-  const data = {nucleo:nucleoActivoMemoria.slice(0,5), apoyo:nucleoActivoMemoria.slice(5,7), derivados:derivadosNucleo(nucleoActivoMemoria)};
-  renderNucleoActivo(data, ticketsNucleoActivo);
+  renderTickets(ticketsNucleoActivo,"🎟️ Tickets Híbridos Guardados");
 }
 
 inicializarSorteosBaseVisibles();
