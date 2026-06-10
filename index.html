@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0062)file:///C:/Users/Andy/Downloads/index44_botones_reducidos.html -->
+<!-- saved from url=(0065)file:///C:/Users/Andy/Downloads/genkin_4060_4fijos_6mutantes.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -798,29 +798,29 @@ body.light-mode .nucleo-pill{
 
   <div class="header">
     <h1>🧬 Motor Híbrido Elite</h1>
-    <p>Fusiona 5 tickets del Núcleo Histórico + 5 tickets del Núcleo Activo con último sorteo.</p>
+    <p>Fusiona Núcleo Histórico + Núcleo Activo usando regla 40/60: 4 fijos + 6 mutantes.</p>
   </div>
 
   <div class="grid">
-    <div class="stat"><span>Sorteos reales</span><strong id="contadorReales">101</strong></div>
+    <div class="stat"><span>Sorteos reales</span><strong id="contadorReales">103</strong></div>
     <div class="stat"><span>Motor actual</span><strong>Híbrido Elite</strong></div>
     <div class="stat"><span>Tickets diarios</span><strong>10</strong></div>
   </div>
 
   <div class="nucleo-activo" id="nucleoActivoBox">
     <h2>🔥 Motor Híbrido Elite</h2>
-    <p class="small">Pega el último sorteo. El sistema generará 10 tickets finales: 5 desde Núcleo Histórico y 5 desde Núcleo Activo + último sorteo.</p>
+    <p class="small">Pega el último sorteo. El sistema generará 10 tickets finales con regla 40/60: 4 números fijos del núcleo y 6 números mutantes para evitar tickets clonados.</p>
     <textarea id="ultimoSorteoNucleo" placeholder="03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
 
     <div class="nucleo-opciones">
-      <label><input type="checkbox" id="usarMemoriaNucleo" checked> 🧬 Mantener memoria del núcleo anterior</label>
-      <label><input type="checkbox" id="guardarSorteoNucleo" checked> 💾 Guardar este sorteo en la base real</label>
+      <label><input type="checkbox" id="usarMemoriaNucleo" checked=""> 🧬 Mantener memoria del núcleo anterior</label>
+      <label><input type="checkbox" id="guardarSorteoNucleo" checked=""> 💾 Guardar este sorteo en la base real</label>
     </div>
 
     <div class="compact-actions">
-      <button onclick="ejecutarConAnimacion('Generando Motor Híbrido Elite...', generarMotorHibridoElite)" class="btn-blue tooltip-btn" data-tooltip="Genera 5 tickets del Núcleo Histórico y 5 tickets del Núcleo Activo + último sorteo." title="Genera 5 tickets del Núcleo Histórico y 5 tickets del Núcleo Activo + último sorteo.">🔥 Generar Motor Híbrido Elite</button>
-      <button onclick="copiarTodosTicketsNucleo()" class="btn-green tooltip-btn" data-tooltip="Copia en un solo bloque los 10 tickets híbridos generados." title="Copia en un solo bloque los 10 tickets híbridos generados.">📋 Copiar 10 Tickets</button>
-      <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los 10 tickets híbridos contra el período seleccionado." title="Compara los 10 tickets híbridos contra el período seleccionado.">📊 Verificar Tickets</button>
+      <button onclick="ejecutarConAnimacion(&#39;Generando Motor Híbrido Elite...&#39;, generarMotorHibridoElite)" class="btn-blue tooltip-btn" data-tooltip="Genera tickets con 4 números fijos del núcleo y 6 mutantes, evitando clones entre tickets." title="Genera tickets con 4 números fijos del núcleo y 6 mutantes, evitando clones entre tickets.">🔥 Generar Motor Híbrido Elite</button>
+      <button onclick="copiarTodosTicketsNucleo()" class="btn-green tooltip-btn" data-tooltip="Copia en un solo bloque los 10 tickets generados por Núcleo Activo." title="Copia en un solo bloque los 10 tickets generados por Núcleo Activo.">📋 Copiar 10 Tickets</button>
+      <button onclick="ejecutarConAnimacion(&#39;Verificando tickets generados...&#39;, verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta." title="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta.">📊 Verificar Tickets</button>
     </div>
 
     <div class="nucleo-output" id="nucleoActivoOutput"></div>
@@ -847,26 +847,36 @@ body.light-mode .nucleo-pill{
 
       <div>
         <div class="dna" id="dnaBox">
-          <div class="dna-line">MOTOR HÍBRIDO ELITE • NÚCLEO HISTÓRICO • ÚLTIMO SORTEO • SUPERVIVENCIA</div>
-          <div class="dna-line">23 46 61 63 • DERIVADOS ±1 • MEMORIA ACTIVA • FILTRO FINAL</div>
-          <div class="dna-line">5 HISTÓRICOS + 5 RECIENTES • 10 TICKETS ELITE • VERIFICACIÓN</div>
+          <div class="dna-line">MOTOR HÍBRIDO ELITE • REGLA 40/60 • 4 FIJOS • 6 MUTANTES</div>
+          <div class="dna-line">NÚCLEO FIJO 40% • MUTACIÓN 60% • MEMORIA ACTIVA • FILTRO ANTI-CLON</div>
+          <div class="dna-line">10 TICKETS ELITE • DIVERSIDAD MÍNIMA • VERIFICACIÓN</div>
         </div>
         <div class="console-log" id="consoleLog">
           <span class="warn">Sistema listo.</span><br>
-          Pega el último sorteo y genera el Motor Híbrido Elite.
+          Pega el último sorteo y genera tickets con regla 40/60.
         </div>
       </div>
     </div>
 
-    <div class="console-output" id="matrixOutput"></div>
+    <div class="console-output" id="matrixOutput"><div class="ticket">
+    <h2>🎟️ Tickets Guardados</h2>
+    <div class="grid">
+      <div class="stat"><span>Tickets generados</span><strong>10</strong></div>
+      <div class="stat"><span>Números por ticket</span><strong>10</strong></div>
+    </div>
+    <div class="compact-actions">
+      <button onclick="ejecutarConAnimacion(&#39;Verificando tickets generados...&#39;, verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta." title="Compara los tickets generados contra el período seleccionado: 7 días, 50, 100, todos o prueba mixta.">📊 Verificar Tickets</button>
+    </div>
+    <details class="collapse-box">
+      <summary>🎟️ Ver/Ocultar Tickets Generados (10)</summary><div class="ticket"><strong>Ticket #1</strong><div class="balls"><div class="ball">01</div><div class="ball">02</div><div class="ball">03</div><div class="ball">04</div><div class="ball">05</div><div class="ball">06</div><div class="ball">07</div><div class="ball">08</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #2</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">08</div><div class="ball">09</div><div class="ball">10</div><div class="ball">11</div><div class="ball">12</div><div class="ball">13</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #3</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">12</div><div class="ball">13</div><div class="ball">14</div><div class="ball">15</div><div class="ball">16</div><div class="ball">17</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #4</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">16</div><div class="ball">17</div><div class="ball">18</div><div class="ball">19</div><div class="ball">20</div><div class="ball">21</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #5</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">20</div><div class="ball">21</div><div class="ball">22</div><div class="ball">23</div><div class="ball">24</div><div class="ball">25</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #6</strong><div class="balls"><div class="ball">01</div><div class="ball">02</div><div class="ball">03</div><div class="ball">04</div><div class="ball">06</div><div class="ball">07</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #7</strong><div class="balls"><div class="ball">06</div><div class="ball">07</div><div class="ball">08</div><div class="ball">09</div><div class="ball">10</div><div class="ball">11</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #8</strong><div class="balls"><div class="ball">10</div><div class="ball">11</div><div class="ball">12</div><div class="ball">13</div><div class="ball">14</div><div class="ball">16</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #9</strong><div class="balls"><div class="ball">14</div><div class="ball">16</div><div class="ball">17</div><div class="ball">18</div><div class="ball">19</div><div class="ball">21</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #10</strong><div class="balls"><div class="ball">19</div><div class="ball">21</div><div class="ball">23</div><div class="ball">24</div><div class="ball">25</div><div class="ball">26</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div></details></div></div>
   </div>
 
   <div class="ticket">
     <strong>📅 Período para verificar</strong>
-    <p class="small">Selecciona cuántos sorteos usar al verificar los 10 tickets híbridos.</p>
+    <p class="small">Selecciona cuántos sorteos usar al verificar los 10 tickets generados.</p>
     <div class="filters">
       <label><input type="radio" name="usarSorteos" value="3"> 🔥 Últimos 3 días</label>
-      <label><input type="radio" name="usarSorteos" value="7" checked> 📅 Últimos 7 días</label>
+      <label><input type="radio" name="usarSorteos" value="7" checked=""> 📅 Últimos 7 días</label>
       <label><input type="radio" name="usarSorteos" value="15"> 📅 Últimos 15 días</label>
       <label><input type="radio" name="usarSorteos" value="30"> 📅 Últimos 30 días</label>
       <label><input type="radio" name="usarSorteos" value="50"> 📊 Últimos 50 sorteos</label>
@@ -880,7 +890,12 @@ body.light-mode .nucleo-pill{
     <div id="supervivencia"></div>
     <div id="ticketsBox"></div>
     <div id="verificacion"></div>
-    <div id="hallOfFameADN"></div>
+    <div id="hallOfFameADN"><div class="hof-grid">
+    <div class="hof-card"><strong>🏆 Mayor cantidad de 10 aciertos</strong><div>0</div><div class="small">—</div></div>
+    <div class="hof-card"><strong>🥇 Mayor cantidad de 9 aciertos</strong><div>0</div><div class="small">—</div></div>
+    <div class="hof-card"><strong>💰 Ticket más rentable</strong><div>0 pts</div><div class="small">—</div></div>
+    <div class="hof-card"><strong>🧬 Ticket con más supervivencia</strong><div>0% </div><div class="small">—</div></div>
+  </div></div>
   </div>
 
 </div>
@@ -2019,8 +2034,8 @@ function detectarNucleoActivo(sorteo){
     return {n, score, hist, cerca, familia, memoria};
   }).sort((a,b)=>b.score-a.score || b.hist-a.hist || a.n-b.n);
 
-  const nucleo = candidatos.slice(0,5).map(x=>x.n);
-  const apoyo = candidatos.slice(5,10).map(x=>x.n);
+  const nucleo = candidatos.slice(0,4).map(x=>x.n); // 40% fijo: 4 números
+  const apoyo = candidatos.slice(4,16).map(x=>x.n); // pool amplio para 60% mutante
   const derivados = derivadosNucleo([...nucleo, ...apoyo])
     .filter(n=>!nucleo.includes(n))
     .sort((a,b)=>(freq[b]||0)-(freq[a]||0) || a-b)
@@ -2043,43 +2058,86 @@ function completarTicket(base, pool){
   return ticket.slice(0,10).sort((a,b)=>a-b);
 }
 
+function contarCoincidenciasTicket(a,b){
+  return (a || []).filter(n=>(b || []).includes(n)).length;
+}
+
+function rotarPoolNucleo(pool, paso){
+  if(!pool.length) return [];
+  const p = ((paso % pool.length) + pool.length) % pool.length;
+  return [...pool.slice(p), ...pool.slice(0,p)];
+}
+
+function generarTicket4060(nucleoBase, poolMutante, paso=0){
+  const fijos = numerosUnicosOrdenados(nucleoBase).slice(0,4);
+  const usados = new Set(fijos);
+  const mutantes = [];
+  const pool = rotarPoolNucleo(numerosUnicosOrdenados(poolMutante), paso);
+
+  for(const n of pool){
+    if(mutantes.length >= 6) break;
+    if(n>=1 && n<=80 && !usados.has(n)){
+      usados.add(n);
+      mutantes.push(n);
+    }
+  }
+
+  let n = ((paso * 7) % 80) + 1;
+  let guardia = 0;
+  while(mutantes.length < 6 && guardia < 160){
+    if(!usados.has(n)){
+      usados.add(n);
+      mutantes.push(n);
+    }
+    n = (n % 80) + 1;
+    guardia++;
+  }
+
+  return numerosUnicosOrdenados([...fijos, ...mutantes]);
+}
+
+function agregarTicketDiverso(tickets, candidato, vistas, maxIguales=6){
+  if(!candidato || candidato.length !== 10) return false;
+  const clave = candidato.join("-");
+  if(vistas.has(clave)) return false;
+  const esClon = tickets.some(t=>contarCoincidenciasTicket(t, candidato) > maxIguales);
+  if(esClon) return false;
+  tickets.push(candidato);
+  vistas.add(clave);
+  return true;
+}
+
+function generarTickets4060DesdePool(nucleoBase, poolMutante, cantidad=10, maxIguales=6){
+  const tickets = [];
+  const vistas = new Set();
+  const pool = numerosUnicosOrdenados(poolMutante);
+
+  let intento = 0;
+  while(tickets.length < cantidad && intento < 500){
+    const ticket = generarTicket4060(nucleoBase, pool, intento * 3 + tickets.length);
+    agregarTicketDiverso(tickets, ticket, vistas, maxIguales);
+    intento++;
+  }
+
+  // Si el filtro quedó demasiado estricto por falta de pool, completa sin bloquear el sistema.
+  intento = 0;
+  while(tickets.length < cantidad && intento < 200){
+    const ticket = generarTicket4060(nucleoBase, [...pool, ...generarSorteoAzar()], intento * 5);
+    const clave = ticket.join("-");
+    if(!vistas.has(clave)){ tickets.push(ticket); vistas.add(clave); }
+    intento++;
+  }
+
+  return tickets.slice(0,cantidad);
+}
+
 function generarTicketsDesdeNucleoActivo(data){
   const {nucleo, apoyo, derivados} = data;
   const memoria = document.getElementById("usarMemoriaNucleo")?.checked ? nucleoActivoMemoria : [];
-  const historicos = rankingSupervivencia.length ? rankingSupervivencia.slice(0,35).map(x=>x.num) : [];
+  const historicos = rankingSupervivencia.length ? rankingSupervivencia.slice(0,45).map(x=>x.num) : [];
   const pool = numerosUnicosOrdenados([...apoyo, ...derivados, ...memoria, ...historicos]);
 
-  const moldes = [
-    [...nucleo, ...apoyo],
-    [...nucleo, ...apoyo.slice(0,3), ...derivados.slice(0,2)],
-    [...nucleo, ...apoyo.slice(2,5), ...derivados.slice(2,4)],
-    [...nucleo, ...derivados.slice(0,5)],
-    [...nucleo, ...apoyo.slice(0,2), ...derivados.slice(4,7)],
-    [...nucleo, ...apoyo.slice(3,5), ...derivados.slice(7,10)],
-    [...nucleo.slice(0,4), ...apoyo, ...derivados.slice(0,1)],
-    [...nucleo.slice(1,5), ...apoyo, ...derivados.slice(1,2)],
-    [...nucleo, ...memoria.slice(0,2), ...derivados.slice(10,13)],
-    [...nucleo.slice(0,3), ...apoyo.slice(0,4), ...derivados.slice(0,3)]
-  ];
-
-  const tickets = [];
-  const vistas = new Set();
-  moldes.forEach((m,i)=>{
-    const rotPool = [...pool.slice(i), ...pool.slice(0,i)];
-    const t = completarTicket(m, rotPool);
-    const clave = t.join("-");
-    if(!vistas.has(clave)){ tickets.push(t); vistas.add(clave); }
-  });
-
-  let i=0;
-  while(tickets.length<10){
-    const extra = completarTicket([...nucleo.slice(i%5), ...apoyo.slice(0,3)], [...pool.slice(i*2), ...pool]);
-    const clave = extra.join("-");
-    if(!vistas.has(clave)){ tickets.push(extra); vistas.add(clave); }
-    i++;
-    if(i>50) break;
-  }
-  return tickets.slice(0,10);
+  return generarTickets4060DesdePool(nucleo, pool, 10, 6);
 }
 
 function textoTicketNucleo(ticket, i){
@@ -2198,37 +2256,12 @@ function generarNucleoActivoDesdeInput(){
 
 function generarTicketsHistoricosBase(cantidad=5){
   if(!asegurarRanking()) return [];
-  const top10 = rankingSupervivencia.slice(0,10).map(x=>x.num);
-  const apoyo = rankingSupervivencia.slice(10,45).map(x=>x.num);
-  const derivados = derivadosNucleo(top10).filter(n=>!top10.includes(n));
-  const pool = numerosUnicosOrdenados([...apoyo, ...derivados, ...rankingSupervivencia.slice(0,60).map(x=>x.num)]);
+  const nucleoHistorico = rankingSupervivencia.slice(0,4).map(x=>x.num); // 40% fijo histórico
+  const apoyo = rankingSupervivencia.slice(4,55).map(x=>x.num);
+  const derivados = derivadosNucleo([...nucleoHistorico, ...apoyo.slice(0,12)]).filter(n=>!nucleoHistorico.includes(n));
+  const pool = numerosUnicosOrdenados([...apoyo, ...derivados, ...rankingSupervivencia.slice(0,70).map(x=>x.num)]);
 
-  const moldes = [
-    [...top10],
-    [...top10.slice(0,7), ...pool.slice(0,3)],
-    [...top10.slice(0,6), ...pool.slice(3,7)],
-    [...top10.slice(2,10), ...pool.slice(7,9)],
-    [...top10.slice(0,5), ...derivados.slice(0,5)]
-  ];
-
-  const tickets = [];
-  const vistas = new Set();
-  moldes.forEach((m,i)=>{
-    const rotPool = [...pool.slice(i*4), ...pool.slice(0,i*4), ...top10];
-    const t = completarTicket(m, rotPool);
-    const clave = t.join("-");
-    if(!vistas.has(clave)){ tickets.push(t); vistas.add(clave); }
-  });
-
-  let i=0;
-  while(tickets.length<cantidad && i<80){
-    const base = [...top10.slice(i%top10.length), ...top10.slice(0,i%top10.length)].slice(0,6);
-    const extra = completarTicket(base, [...pool.slice(i), ...pool]);
-    const clave = extra.join("-");
-    if(!vistas.has(clave)){ tickets.push(extra); vistas.add(clave); }
-    i++;
-  }
-  return tickets.slice(0,cantidad);
+  return generarTickets4060DesdePool(nucleoHistorico, pool, cantidad, 6);
 }
 
 function renderMotorHibridoElite(data, historicos, activos){
@@ -2240,8 +2273,8 @@ function renderMotorHibridoElite(data, historicos, activos){
     <div class="ticket">
       <h2>🧬 Motor Híbrido Elite armado</h2>
       <div class="grid">
-        <div class="stat"><span>Núcleo Histórico</span><strong>5 tickets</strong></div>
-        <div class="stat"><span>Núcleo Activo</span><strong>5 tickets</strong></div>
+        <div class="stat"><span>Regla fija</span><strong>4 números</strong></div>
+        <div class="stat"><span>Mutación</span><strong>6 números</strong></div>
         <div class="stat"><span>Total final</span><strong>10 tickets</strong></div>
       </div>
       <p class="small">Núcleo detectado desde último sorteo:</p>
@@ -2251,17 +2284,17 @@ function renderMotorHibridoElite(data, historicos, activos){
     </div>
     <div class="ticket">
       <div class="ticket-row">
-        <h2>🎟️ 10 Tickets Híbridos Elite</h2>
+        <h2>🎟️ 10 Tickets Elite 40/60</h2>
         <button class="btn-green copy-small" onclick="copiarTodosTicketsNucleo()">📋 Copiar todos</button>
       </div>
       <details class="collapse-box" open>
-        <summary>🔥 Tickets 1-5: Núcleo Histórico</summary>`;
+        <summary>🔥 Tickets 1-5: Núcleo Histórico 40/60</summary>`;
 
   historicos.forEach((ticket,i)=>{
     html += `<div class="ticket"><div class="ticket-row"><strong>Histórico #${i+1}</strong><button class="btn-blue copy-small" onclick="copiarTicketNucleo(${i})">📋 Copiar</button></div><div class="balls">${ticket.map(n=>`<div class="ball">${fmt(n)}</div>`).join("")}</div></div>`;
   });
 
-  html += `</details><details class="collapse-box" open><summary>⚡ Tickets 6-10: Núcleo Activo + Último Sorteo</summary>`;
+  html += `</details><details class="collapse-box" open><summary>⚡ Tickets 6-10: Núcleo Activo 40/60</summary>`;
 
   activos.forEach((ticket,i)=>{
     const idx = i + historicos.length;
@@ -2301,7 +2334,7 @@ function generarMotorHibridoElite(){
   mostrarEnMatriz(`
     <div class="ticket">
       <h2>🔥 Motor Híbrido Elite listo</h2>
-      <p class="small">Se generaron 10 tickets finales: 5 históricos + 5 activos con último sorteo.</p>
+      <p class="small">Se generaron 10 tickets finales con regla 40/60: 4 fijos + 6 mutantes, evitando clones.</p>
       <div class="compact-actions">
         <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
         <button onclick="copiarTodosTicketsNucleo()" class="btn-green">📋 Copiar 10 Tickets</button>
