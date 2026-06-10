@@ -51,22 +51,41 @@ body.light .notice{color:#92400e;background:#fff7ed}
 
 <div class="grid">
   <div class="stat"><span>Sorteos en memoria</span><strong id="statSorteos">0</strong></div>
-  <div class="stat"><span>Motor</span><strong>AutoTrain</strong></div>
-  <div class="stat"><span>Candidatos por ciclo</span><strong id="statCands">200</strong></div>
+  <div class="stat"><span>Motor</span><strong>Infinito</strong></div>
+  <div class="stat"><span>Modo</span><strong>Memoria real</strong></div>
   <div class="stat"><span>Tickets finales</span><strong>10</strong></div>
 </div>
 
 <div class="flow">
   <section class="panel">
-    <h2>1) 📥 Alimentar memoria real</h2>
-    <p>Pega uno o varios sorteos reales. Cada línea debe tener 20 números del 1 al 80.</p>
-    <textarea id="realInput" placeholder="03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
+    <h2>1) 🧠 Memoria Real</h2>
+    <div class="stat" style="margin:10px 0">
+      <span>Sorteos cargados</span>
+      <strong><span id="memoriaCount">0</span> sorteos</strong>
+    </div>
+    <p>Entrena automáticamente usando todos los sorteos reales guardados. No necesitas pegar sorteos para entrenar.</p>
+
     <div class="actions">
-      <button class="green" onclick="guardarReales()">💾 Guardar sorteos</button>
-      <button class="gold" onclick="autoEntrenar()">🤖 Autoentrenar</button>
+      <button class="gold" onclick="iniciarAutoTrain()">▶ Autoentrenar infinito</button>
+      <button class="red" onclick="detenerAutoTrain()">⏹ Detener</button>
       <button onclick="generarMejores10()">🔥 Generar mejores 10</button>
     </div>
-    <div id="trainBox"></div>
+
+    <div id="trainBox">
+      <div class="ticket">
+        <strong>⏹ Estado: Inactivo</strong>
+        <p>Presiona “Autoentrenar infinito” para que el motor trabaje con la memoria real.</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>➕ Agregar nuevo sorteo real</summary>
+      <p>Solo usa esta opción cuando salga un nuevo sorteo. Cada línea debe tener 20 números del 1 al 80.</p>
+      <textarea id="realInput" placeholder="03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
+      <div class="actions">
+        <button class="green" onclick="guardarReales()">💾 Guardar nuevo sorteo</button>
+      </div>
+    </details>
   </section>
 
   <section class="panel">
@@ -99,11 +118,6 @@ body.light .notice{color:#92400e;background:#fff7ed}
   <div class="actions"><button class="dark" onclick="reiniciarMemoria()">🧨 Reiniciar memoria local</button></div>
 </details>
 
-<section class="panel" style="margin-top:10px">
-  <h2>🧠 Qué eliminé del ruido</h2>
-  <p>Quité el cubo Rubik, ADN animado, consola visual, filtros repetidos y paneles legacy ocultos. Ahora todo queda en tres acciones reales: guardar, entrenar, comparar.</p>
-  <div class="notice">Nota honesta: ningún motor puede garantizar resultados de lotería; lo útil aquí es medir, aprender de histórico real, evitar tickets clonados y detectar patrones que sobreviven mejor en backtest.</div>
-</section>
 </div>
 
 <script>
@@ -112,11 +126,59 @@ const PREMIOS={10:25000000,9:150000,8:10000,7:1000,6:300,5:60,0:80};
 let sorteos=JSON.parse(localStorage.getItem('genkin_reales_v2')||'null')||SORTEOS_BASE_VISIBLES.slice();
 let modelo=JSON.parse(localStorage.getItem('genkin_modelo_v2')||'null')||null;
 let tickets=JSON.parse(localStorage.getItem('genkin_tickets_v2')||'[]');
+let autoTrainRun=false;
+let autoTrainCycles=0;
+
+function iniciarAutoTrain(){
+ if(autoTrainRun) return;
+ autoTrainRun=true;
+ autoTrainCycles=0;
+
+ document.getElementById('trainBox').innerHTML=`<div class="ticket"><strong>🧠 Entrenamiento iniciado</strong><p>Usando todos los sorteos guardados...</p></div>`;
+
+ const loop=()=>{
+   if(!autoTrainRun) return;
+
+   modelo=pesosModelo();
+
+   for(let i=0;i<25;i++){
+      const t=ticketCandidato();
+      scoreTicket(t);
+   }
+
+   autoTrainCycles+=25;
+
+   const top=modelo.ranking.slice(0,12).map(x=>x.n);
+
+   document.getElementById('trainBox').innerHTML=`
+   <div class="ticket">
+      <strong>🧠 Estado: Entrenando...</strong>
+      <p>Ciclos: ${autoTrainCycles.toLocaleString()} | Sorteos usados: ${sorteos.length}</p>
+      <div class="balls">${top.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div>
+   </div>`;
+
+   setTimeout(loop,20);
+ };
+
+ loop();
+}
+
+function detenerAutoTrain(){
+ autoTrainRun=false;
+ guardarTodo();
+ document.getElementById('trainBox').innerHTML+=`<div class="ticket"><strong>⏹ Estado: Detenido</strong><p>Ciclos realizados: ${autoTrainCycles.toLocaleString()}</p></div>`;
+}
+
 function fmt(n){return n<10?'0'+n:''+n}
 function parseNums(t){return [...new Set((t.match(/\d+/g)||[]).map(Number).filter(n=>n>=1&&n<=80))].sort((a,b)=>a-b)}
 function clave(a){return [...a].sort((x,y)=>x-y).join('-')}
 function guardarTodo(){localStorage.setItem('genkin_reales_v2',JSON.stringify(sorteos));localStorage.setItem('genkin_modelo_v2',JSON.stringify(modelo));localStorage.setItem('genkin_tickets_v2',JSON.stringify(tickets));actualizarUI()}
-function actualizarUI(){document.getElementById('statSorteos').textContent=sorteos.length;document.getElementById('statCands').textContent=document.getElementById('candidateCount')?.value||200;renderTickets()}
+function actualizarUI(){
+ const a=document.getElementById('statSorteos'); if(a)a.textContent=sorteos.length;
+ const b=document.getElementById('statCands'); if(b)b.textContent=document.getElementById('candidateCount')?.value||200;
+ const c=document.getElementById('memoriaCount'); if(c)c.textContent=sorteos.length;
+ renderTickets()
+}
 function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('genkin_theme',document.body.classList.contains('light')?'light':'dark');document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'🌙 Oscuro':'☀️ Claro'}
 if(localStorage.getItem('genkin_theme')==='light') document.body.classList.add('light');
 function guardarReales(silencioso=false){
