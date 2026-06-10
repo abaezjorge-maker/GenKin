@@ -838,6 +838,55 @@ body.light-mode .compare-badge{
   border-color:#86efac;
 }
 
+
+
+/* === Versión minimalista cómoda === */
+.main{max-width:980px;padding:10px}
+.card{padding:14px;border-radius:18px}
+.header{margin-bottom:8px}
+.header h1{font-size:24px;margin-bottom:4px}
+.header p{margin:0;font-size:13px}
+.grid{grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.stat{padding:9px;border-radius:12px}
+.stat strong{font-size:16px}
+.stat span{font-size:12px}
+.mini-flow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;margin-top:10px}
+.nucleo-activo,.comparador-real,.matrix-console,.ticket{margin:10px 0;border-radius:16px;padding:12px}
+.nucleo-activo h2,.comparador-real h2{font-size:18px;margin-bottom:4px}
+.nucleo-activo p,.comparador-real p{margin:4px 0 8px;font-size:12px;line-height:1.3}
+textarea{min-height:72px!important;font-size:13px;padding:10px;border-radius:10px}
+.nucleo-opciones{grid-template-columns:1fr;gap:6px;margin:8px 0}
+.nucleo-opciones label{padding:8px;font-size:12px}
+.compact-actions{grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px;margin-top:8px}
+button{padding:10px 11px;border-radius:11px;font-size:13px;min-height:42px}
+.theme-toggle{top:8px;right:8px;padding:8px 10px;font-size:12px}
+.matrix-console{min-height:auto;padding:10px;background:#081120}
+.matrix-title{margin-bottom:6px;font-size:13px}
+.stage-wrap{display:none}
+.console-output{margin-top:6px}
+.console-output>.ticket{margin:0;padding:10px}
+.ticket h2{font-size:18px;margin:0 0 8px}
+.balls{gap:4px;margin-top:7px}
+.ball{width:28px;height:28px;font-size:12px}
+.filters{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.filters label{padding:8px;font-size:12px}
+.compare-result{padding:8px;margin-top:8px}
+.compare-badge{font-size:11px;padding:5px 8px}
+.collapse-box{padding:9px;margin:8px 0}
+.ticket .ticket{padding:9px;margin:8px 0}
+@media(max-width:780px){
+  .main{padding:6px}
+  .card{padding:10px;border-radius:14px}
+  .mini-flow{grid-template-columns:1fr;gap:6px}
+  .grid{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .header h1{font-size:21px;padding-right:92px;text-align:left}
+  .header p{text-align:left}
+  .compact-actions{grid-template-columns:1fr 1fr}
+  .compact-actions button:first-child{grid-column:1/-1}
+  .ball{width:26px;height:26px;font-size:11px}
+  .filters{grid-template-columns:1fr 1fr}
+}
+
 </style>
 </head>
 <body>
@@ -856,6 +905,7 @@ body.light-mode .compare-badge{
     <div class="stat"><span>Tickets diarios</span><strong>10</strong></div>
   </div>
 
+  <div class="mini-flow">
   <div class="nucleo-activo" id="nucleoActivoBox">
     <h2>🔥 Motor Híbrido Elite</h2>
     <p class="small">Pega el último sorteo. El sistema generará 10 tickets finales con regla 40/60: 4 números fijos del núcleo y 6 números mutantes para evitar tickets clonados.</p>
@@ -875,9 +925,22 @@ body.light-mode .compare-badge{
     <div class="nucleo-output" id="nucleoActivoOutput"></div>
   </div>
 
+  <div class="comparador-real" id="comparadorRealBox">
+    <h2>🎯 Comparar sorteo real</h2>
+    <p class="small">Pega aquí el resultado que salió. El sistema comparará ese sorteo contra los tickets generados y marcará los aciertos en verde.</p>
+    <textarea id="resultadoRealComparar" placeholder="Ejemplo: 03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
+    <div class="compact-actions">
+      <button onclick="compararSorteoRealConTickets()" class="btn-green tooltip-btn" data-tooltip="Compara el sorteo real pegado aquí contra los tickets generados y calcula aciertos/premio." title="Compara el sorteo real pegado aquí contra los tickets generados y calcula aciertos/premio.">🎯 Comparar con sorteo real</button>
+      <button onclick="limpiarComparadorReal()" class="btn-dark tooltip-btn" data-tooltip="Limpia el resultado pegado y el análisis de comparación." title="Limpia el resultado pegado y el análisis de comparación.">🧹 Limpiar comparación</button>
+    </div>
+    <div class="compare-result" id="comparadorRealOutput"></div>
+  </div>
+
+  </div>
+
   <div class="matrix-console" id="matrixConsole">
     <div class="matrix-title">
-      <strong>🧊 Cubo Rubik GenKin</strong>
+      <strong>🎟️ Panel de resultados</strong>
       <span id="matrixStatus">En espera</span>
     </div>
 
@@ -918,17 +981,6 @@ body.light-mode .compare-badge{
     </div>
     <details class="collapse-box">
       <summary>🎟️ Ver/Ocultar Tickets Generados (10)</summary><div class="ticket"><strong>Ticket #1</strong><div class="balls"><div class="ball">01</div><div class="ball">02</div><div class="ball">03</div><div class="ball">04</div><div class="ball">05</div><div class="ball">06</div><div class="ball">07</div><div class="ball">08</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #2</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">08</div><div class="ball">09</div><div class="ball">10</div><div class="ball">11</div><div class="ball">12</div><div class="ball">13</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #3</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">12</div><div class="ball">13</div><div class="ball">14</div><div class="ball">15</div><div class="ball">16</div><div class="ball">17</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #4</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">16</div><div class="ball">17</div><div class="ball">18</div><div class="ball">19</div><div class="ball">20</div><div class="ball">21</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #5</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">20</div><div class="ball">21</div><div class="ball">22</div><div class="ball">23</div><div class="ball">24</div><div class="ball">25</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #6</strong><div class="balls"><div class="ball">01</div><div class="ball">02</div><div class="ball">03</div><div class="ball">04</div><div class="ball">06</div><div class="ball">07</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #7</strong><div class="balls"><div class="ball">06</div><div class="ball">07</div><div class="ball">08</div><div class="ball">09</div><div class="ball">10</div><div class="ball">11</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #8</strong><div class="balls"><div class="ball">10</div><div class="ball">11</div><div class="ball">12</div><div class="ball">13</div><div class="ball">14</div><div class="ball">16</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #9</strong><div class="balls"><div class="ball">14</div><div class="ball">16</div><div class="ball">17</div><div class="ball">18</div><div class="ball">19</div><div class="ball">21</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #10</strong><div class="balls"><div class="ball">19</div><div class="ball">21</div><div class="ball">23</div><div class="ball">24</div><div class="ball">25</div><div class="ball">26</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div></details></div></div>
-  </div>
-
-  <div class="comparador-real" id="comparadorRealBox">
-    <h2>🎯 Comparar sorteo real</h2>
-    <p class="small">Pega aquí el resultado que salió. El sistema comparará ese sorteo contra los tickets generados y marcará los aciertos en verde.</p>
-    <textarea id="resultadoRealComparar" placeholder="Ejemplo: 03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
-    <div class="compact-actions">
-      <button onclick="compararSorteoRealConTickets()" class="btn-green tooltip-btn" data-tooltip="Compara el sorteo real pegado aquí contra los tickets generados y calcula aciertos/premio." title="Compara el sorteo real pegado aquí contra los tickets generados y calcula aciertos/premio.">🎯 Comparar con sorteo real</button>
-      <button onclick="limpiarComparadorReal()" class="btn-dark tooltip-btn" data-tooltip="Limpia el resultado pegado y el análisis de comparación." title="Limpia el resultado pegado y el análisis de comparación.">🧹 Limpiar comparación</button>
-    </div>
-    <div class="compare-result" id="comparadorRealOutput"></div>
   </div>
 
   <div class="ticket">
