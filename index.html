@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GenKin AutoEntrenamiento Elite</title>
+<title>GenKin Núcleo Activo Supervivientes</title>
 <style>
 *{box-sizing:border-box}
 :root{--bg:#07111f;--card:#0f1b2d;--card2:#13233a;--text:#e8f0ff;--muted:#9fb3d1;--line:#27415f;--blue:#2f80ed;--green:#22c55e;--gold:#f59e0b;--red:#ef4444}
@@ -43,43 +43,38 @@ body.light .notice{color:#92400e;background:#fff7ed}
 <div class="main">
 <div class="header card">
   <div>
-    <h1>🧬 GenKin AutoEntrenamiento Elite</h1>
-    <p>Flujo limpio: entrenar con sorteos reales → generar mejores 10 tickets → comparar resultado real → guardar aprendizaje.</p>
+    <h1>🧬 GenKin Núcleo Activo Supervivientes</h1>
+    <p>Flujo original limpio: 102 sorteos reales → detectar supervivientes → Núcleo Activo → mejores 10 tickets → comparar resultado real.</p>
   </div>
   <button class="theme" onclick="toggleTheme()" id="themeBtn">☀️ Claro</button>
 </div>
 
 <div class="grid">
   <div class="stat"><span>Sorteos en memoria</span><strong id="statSorteos">0</strong></div>
-  <div class="stat"><span>Motor</span><strong>Infinito</strong></div>
-  <div class="stat"><span>Modo</span><strong>Memoria real</strong></div>
+  <div class="stat"><span>Motor</span><strong>Núcleo Activo</strong></div>
+  <div class="stat"><span>Modo</span><strong>Supervivientes</strong></div>
   <div class="stat"><span>Tickets finales</span><strong>10</strong></div>
 </div>
 
 <div class="flow">
   <section class="panel">
-    <h2>1) 🧠 Memoria Real</h2>
+    <h2>1) ⚛️ Núcleo Activo + Supervivientes</h2>
     <div class="stat" style="margin:10px 0">
       <span>Sorteos cargados</span>
       <strong><span id="memoriaCount">0</span> sorteos</strong>
     </div>
-    <p>Entrena automáticamente usando todos los sorteos reales guardados. No necesitas pegar sorteos para entrenar.</p>
+    <p>El sistema usa los sorteos reales guardados para detectar números, zonas y estructuras supervivientes. Luego el Núcleo Activo genera candidatos y conserva los mejores 10.</p>
 
     <div class="actions">
-      <button class="gold" onclick="iniciarAutoTrain()">▶ Autoentrenar infinito</button>
-      <button class="red" onclick="detenerAutoTrain()">⏹ Detener</button>
+      <button class="gold" onclick="autoEntrenar()">🧬 Detectar supervivientes</button>
       <button onclick="generarMejores10()">🔥 Generar mejores 10</button>
-    </div>
-    <div class="actions">
-      <button class="dark" onclick="entrenarPorCiclos(2500)">⚡ Entreno rápido</button>
-      <button class="dark" onclick="entrenarPorCiclos(10000)">🧠 Entreno diario</button>
-      <button class="dark" onclick="entrenarPorCiclos(30000)">🚀 Entreno profundo</button>
+      <button class="dark" onclick="copiarTickets()">📋 Copiar tickets</button>
     </div>
 
     <div id="trainBox">
       <div class="ticket">
-        <strong>⏹ Estado: Inactivo</strong>
-        <p>Presiona “Autoentrenar infinito” para que el motor trabaje con la memoria real.</p>
+        <strong>⚛️ Estado: Núcleo listo</strong>
+        <p>Presiona “Detectar supervivientes” y luego “Generar mejores 10”.</p>
       </div>
     </div>
 
@@ -95,7 +90,7 @@ body.light .notice{color:#92400e;background:#fff7ed}
 
   <section class="panel">
     <h2>2) 🎯 Comparar resultado real</h2>
-    <p>Pega el sorteo que acaba de salir. Si activas aprendizaje, se guarda y reentrena el motor.</p>
+    <p>Pega el sorteo que acaba de salir para verificar los 10 tickets. Si activas aprendizaje, se guarda en la memoria real.</p>
     <textarea id="compareInput" placeholder="Resultado real actual..."></textarea>
     <label class="small"><input type="checkbox" id="learnAfterCompare" checked> Guardar este resultado y reentrenar después de comparar</label>
     <div class="actions">
@@ -115,7 +110,7 @@ body.light .notice{color:#92400e;background:#fff7ed}
   <div class="actions" style="margin-bottom:8px">
     <button class="green" onclick="copiarTickets()">📋 Copiar los 10 tickets</button>
   </div>
-  <div id="ticketsBox" class="small">Presiona “Autoentrenar” y luego “Generar mejores 10”.</div>
+  <div id="ticketsBox" class="small">Presiona “Detectar supervivientes” y luego “Generar mejores 10”.</div>
 </section>
 
 <details>
@@ -137,82 +132,8 @@ const PREMIOS={10:25000000,9:150000,8:10000,7:1000,6:300,5:60,0:80};
 let sorteos=JSON.parse(localStorage.getItem('genkin_reales_v2')||'null')||SORTEOS_BASE_VISIBLES.slice();
 let modelo=JSON.parse(localStorage.getItem('genkin_modelo_v2')||'null')||null;
 let tickets=JSON.parse(localStorage.getItem('genkin_tickets_v2')||'[]');
-let autoTrainRun=false;
-let autoTrainCycles=0;
 
-function iniciarAutoTrain(){
- if(autoTrainRun) return;
- autoTrainRun=true;
- autoTrainCycles=0;
-
- document.getElementById('trainBox').innerHTML=`<div class="ticket"><strong>🧠 Entrenamiento iniciado</strong><p>Usando todos los sorteos guardados...</p></div>`;
-
- const loop=()=>{
-   if(!autoTrainRun) return;
-
-   modelo=pesosModelo();
-
-   for(let i=0;i<25;i++){
-      const t=ticketCandidato();
-      scoreTicket(t);
-   }
-
-   autoTrainCycles+=25;
-
-   const top=modelo.ranking.slice(0,12).map(x=>x.n);
-
-   document.getElementById('trainBox').innerHTML=`
-   <div class="ticket">
-      <strong>🧠 Estado: Entrenando...</strong>
-      <p>Ciclos: ${autoTrainCycles.toLocaleString()} | Sorteos usados: ${sorteos.length}</p>
-      <div class="balls">${top.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div>
-   </div>`;
-
-   setTimeout(loop,20);
- };
-
- loop();
-}
-
-function detenerAutoTrain(){
- autoTrainRun=false;
- guardarTodo();
- document.getElementById('trainBox').innerHTML+=`<div class="ticket"><strong>⏹ Estado: Detenido</strong><p>Ciclos realizados: ${autoTrainCycles.toLocaleString()}</p></div>`;
-}
-function entrenarPorCiclos(meta){
- if(autoTrainRun) detenerAutoTrain();
- if(sorteos.length<5){alert('Necesitas al menos 5 sorteos reales para entrenar bien.');return}
- autoTrainRun=false;
- autoTrainCycles=0;
- let hechos=0;
- const lote=250;
- document.getElementById('trainBox').innerHTML=`<div class="ticket"><strong>🧠 Entrenamiento por objetivo iniciado</strong><p>Meta: ${meta.toLocaleString()} ciclos.</p></div>`;
- const paso=()=>{
-   modelo=pesosModelo();
-   for(let i=0;i<lote;i++){
-      const t=ticketCandidato();
-      scoreTicket(t);
-   }
-   hechos+=lote;
-   autoTrainCycles=hechos;
-   const top=modelo.ranking.slice(0,12).map(x=>x.n);
-   document.getElementById('trainBox').innerHTML=`
-   <div class="ticket">
-      <strong>🧠 Entrenando por objetivo...</strong>
-      <p>Ciclos: ${Math.min(hechos,meta).toLocaleString()} / ${meta.toLocaleString()} | Sorteos usados: ${sorteos.length}</p>
-      <div class="balls">${top.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div>
-   </div>`;
-   if(hechos<meta){
-     setTimeout(paso,10);
-   }else{
-     guardarTodo();
-     document.getElementById('trainBox').innerHTML+=`<div class="ticket"><strong>✅ Entrenamiento completado</strong><p>Ahora presiona “Generar mejores 10”.</p></div>`;
-   }
- };
- paso();
-}
-
-
+/* Funciones de entrenamiento infinito eliminadas para volver al flujo limpio de Núcleo Activo + Supervivientes. */
 function fmt(n){return n<10?'0'+n:''+n}
 function parseNums(t){return [...new Set((t.match(/\d+/g)||[]).map(Number).filter(n=>n>=1&&n<=80))].sort((a,b)=>a-b)}
 function clave(a){return [...a].sort((x,y)=>x-y).join('-')}
@@ -241,10 +162,11 @@ function pesosModelo(){
  score.sort((a,b)=>b.score-a.score); return {usados,freq,rec,gap,pair,ranking:score};
 }
 function autoEntrenar(){
- if(sorteos.length<5){alert('Necesitas al menos 5 sorteos reales para entrenar bien.');return}
- modelo=pesosModelo(); const top=modelo.ranking.slice(0,12).map(x=>x.n);
+ if(sorteos.length<5){alert('Necesitas al menos 5 sorteos reales para detectar supervivientes.');return}
+ modelo=pesosModelo();
+ const top=modelo.ranking.slice(0,12).map(x=>x.n);
  guardarTodo();
- document.getElementById('trainBox').innerHTML=`<div class="ticket"><strong>🤖 Autoentrenamiento completado</strong><p>Ventana usada: ${modelo.usados.length} sorteos. Núcleo fuerte:</p><div class="balls">${top.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div></div>`;
+ document.getElementById('trainBox').innerHTML=`<div class="ticket"><strong>🧬 Supervivientes detectados</strong><p>Ventana usada: ${modelo.usados.length} sorteos reales. Núcleo fuerte actual:</p><div class="balls">${top.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div></div>`;
 }
 function weightedPick(pool, used){
  const libres=pool.filter(x=>!used.has(x.n)); const sum=libres.reduce((a,x)=>a+Math.max(.1,x.score),0); let r=Math.random()*sum;
@@ -290,7 +212,7 @@ function generarMejores10(){
 }
 function renderTickets(){
  const box=document.getElementById('ticketsBox'); if(!box)return;
- if(!tickets.length){box.innerHTML='Presiona “Autoentrenar” y luego “Generar mejores 10”.';return}
+ if(!tickets.length){box.innerHTML='Presiona “Detectar supervivientes” y luego “Generar mejores 10”.';return}
  box.innerHTML=tickets.map((t,i)=>`<div class="ticket"><div class="ticket-head"><strong>Ticket #${i+1}</strong></div><div class="balls">${t.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div></div>`).join('');
  document.getElementById('ticketMeta').textContent=tickets.length+' tickets listos';
 }
