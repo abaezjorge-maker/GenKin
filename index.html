@@ -789,6 +789,55 @@ body.light-mode .nucleo-pill{
   border-color:#bfdbfe;
 }
 
+
+/* === Comparador de sorteo real vs tickets generados === */
+.comparador-real{
+  margin:18px 0;
+  background:#0b1220;
+  border:1px solid #22c55e;
+  border-radius:20px;
+  padding:18px;
+  color:#e5e7eb;
+  box-shadow:0 0 24px rgba(34,197,94,.12);
+}
+.comparador-real h2{
+  margin:0 0 8px;
+  color:#86efac;
+}
+.compare-result{
+  margin-top:14px;
+}
+.ball.hit{
+  background:#22c55e !important;
+  color:#052e16 !important;
+  border-color:#bbf7d0 !important;
+  box-shadow:0 0 0 3px rgba(34,197,94,.22), 0 0 14px rgba(34,197,94,.55);
+}
+.compare-badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#064e3b;
+  color:#bbf7d0;
+  border:1px solid #22c55e;
+  margin-top:8px;
+  font-weight:bold;
+}
+body.light-mode .comparador-real{
+  background:#ffffff;
+  border-color:#86efac;
+  color:#111827;
+  box-shadow:0 8px 24px rgba(15,23,42,.08);
+}
+body.light-mode .comparador-real h2{
+  color:#047857;
+}
+body.light-mode .compare-badge{
+  background:#dcfce7;
+  color:#065f46;
+  border-color:#86efac;
+}
+
 </style>
 </head>
 <body>
@@ -869,6 +918,17 @@ body.light-mode .nucleo-pill{
     </div>
     <details class="collapse-box">
       <summary>🎟️ Ver/Ocultar Tickets Generados (10)</summary><div class="ticket"><strong>Ticket #1</strong><div class="balls"><div class="ball">01</div><div class="ball">02</div><div class="ball">03</div><div class="ball">04</div><div class="ball">05</div><div class="ball">06</div><div class="ball">07</div><div class="ball">08</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #2</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">08</div><div class="ball">09</div><div class="ball">10</div><div class="ball">11</div><div class="ball">12</div><div class="ball">13</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #3</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">12</div><div class="ball">13</div><div class="ball">14</div><div class="ball">15</div><div class="ball">16</div><div class="ball">17</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #4</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">16</div><div class="ball">17</div><div class="ball">18</div><div class="ball">19</div><div class="ball">20</div><div class="ball">21</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #5</strong><div class="balls"><div class="ball">04</div><div class="ball">07</div><div class="ball">20</div><div class="ball">21</div><div class="ball">22</div><div class="ball">23</div><div class="ball">24</div><div class="ball">25</div><div class="ball">63</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #6</strong><div class="balls"><div class="ball">01</div><div class="ball">02</div><div class="ball">03</div><div class="ball">04</div><div class="ball">06</div><div class="ball">07</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #7</strong><div class="balls"><div class="ball">06</div><div class="ball">07</div><div class="ball">08</div><div class="ball">09</div><div class="ball">10</div><div class="ball">11</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #8</strong><div class="balls"><div class="ball">10</div><div class="ball">11</div><div class="ball">12</div><div class="ball">13</div><div class="ball">14</div><div class="ball">16</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #9</strong><div class="balls"><div class="ball">14</div><div class="ball">16</div><div class="ball">17</div><div class="ball">18</div><div class="ball">19</div><div class="ball">21</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div><div class="ticket"><strong>Ticket #10</strong><div class="balls"><div class="ball">19</div><div class="ball">21</div><div class="ball">23</div><div class="ball">24</div><div class="ball">25</div><div class="ball">26</div><div class="ball">65</div><div class="ball">67</div><div class="ball">69</div><div class="ball">72</div></div></div></details></div></div>
+  </div>
+
+  <div class="comparador-real" id="comparadorRealBox">
+    <h2>🎯 Comparar sorteo real</h2>
+    <p class="small">Pega aquí el resultado que salió. El sistema comparará ese sorteo contra los tickets generados y marcará los aciertos en verde.</p>
+    <textarea id="resultadoRealComparar" placeholder="Ejemplo: 03 14 16 19 23 26 32 33 37 42 45 52 56 64 65 67 69 71 72 73"></textarea>
+    <div class="compact-actions">
+      <button onclick="compararSorteoRealConTickets()" class="btn-green tooltip-btn" data-tooltip="Compara el sorteo real pegado aquí contra los tickets generados y calcula aciertos/premio." title="Compara el sorteo real pegado aquí contra los tickets generados y calcula aciertos/premio.">🎯 Comparar con sorteo real</button>
+      <button onclick="limpiarComparadorReal()" class="btn-dark tooltip-btn" data-tooltip="Limpia el resultado pegado y el análisis de comparación." title="Limpia el resultado pegado y el análisis de comparación.">🧹 Limpiar comparación</button>
+    </div>
+    <div class="compare-result" id="comparadorRealOutput"></div>
   </div>
 
   <div class="ticket">
@@ -1393,7 +1453,8 @@ function renderTickets(tickets,titulo="🎟️ Tickets Generados"){
       <div class="stat"><span>Números por ticket</span><strong>10</strong></div>
     </div>
     <div class="compact-actions">
-      <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
+      <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los tickets generados contra la base de sorteos guardados.">📊 Verificar Tickets</button>
+      <button onclick="compararSorteoRealConTickets()" class="btn-green tooltip-btn" data-tooltip="Compara el sorteo real pegado abajo contra los tickets generados.">🎯 Comparar sorteo real</button>
     </div>
     <details class="collapse-box">
       <summary>🎟️ Ver/Ocultar Tickets Generados (${tickets.length})</summary>`;
@@ -1671,6 +1732,72 @@ function calcularResumenTickets(tickets){
     diasConPremio,probabilidadDiaria,mejor,
     mejorHit:stats.length?Math.max(...stats.map(s=>s.maxHits)):0
   };
+}
+
+
+function obtenerPremioTexto(hits){
+  const premio = premioPorHits(hits);
+  return premio ? "RD$" + premio.toLocaleString() : "Sin premio";
+}
+
+function renderBolasComparadas(ticket, setResultado){
+  return ticket.map(n=>`<div class="ball ${setResultado.has(n) ? 'hit' : ''}">${fmt(n)}</div>`).join("");
+}
+
+function compararSorteoRealConTickets(){
+  if(!ticketsGenerados.length){alert("Primero genera los tickets.");return;}
+  const input = document.getElementById("resultadoRealComparar");
+  const out = document.getElementById("comparadorRealOutput");
+  if(!input || !out) return;
+
+  const resultado = [...new Set(limpiarLinea(input.value))].sort((a,b)=>a-b);
+  if(resultado.length !== 20){
+    alert("Pega un sorteo real válido de 20 números únicos entre 1 y 80.");
+    return;
+  }
+
+  const setResultado = new Set(resultado);
+  const analisis = ticketsGenerados.map((ticket,i)=>{
+    const aciertos = ticket.filter(n=>setResultado.has(n)).sort((a,b)=>a-b);
+    const hits = aciertos.length;
+    return {ticket:i+1, numeros:ticket, aciertos, hits, premio:premioPorHits(hits)};
+  }).sort((a,b)=>b.hits-a.hits || b.premio-a.premio || a.ticket-b.ticket);
+
+  const totalPremios = analisis.reduce((sum,x)=>sum+x.premio,0);
+  const mejoresHits = analisis.length ? analisis[0].hits : 0;
+  const ticketsPremiados = analisis.filter(x=>x.premio>0).length;
+
+  let html = `<div class="ticket">
+    <h2>🎯 Resultado de comparación</h2>
+    <div class="grid">
+      <div class="stat"><span>Mejor acierto</span><strong>${mejoresHits}/10</strong></div>
+      <div class="stat"><span>Tickets premiados</span><strong>${ticketsPremiados}</strong></div>
+      <div class="stat"><span>Premio estimado</span><strong>RD$${totalPremios.toLocaleString()}</strong></div>
+    </div>
+    <p class="small"><strong>Sorteo real:</strong> ${resultado.map(fmt).join(" • ")}</p>
+    <span class="compare-badge">🟢 Verde = número acertado</span>
+  </div>`;
+
+  analisis.forEach(x=>{
+    html += `<div class="ticket">
+      <div class="ticket-row">
+        <strong>Ticket #${x.ticket} — ${x.hits} aciertos</strong>
+        <span class="compare-badge">${obtenerPremioTexto(x.hits)}</span>
+      </div>
+      <div class="balls">${renderBolasComparadas(x.numeros, setResultado)}</div>
+      <p class="small"><strong>Aciertos:</strong> ${x.aciertos.length ? x.aciertos.map(fmt).join(" • ") : "Ninguno"}</p>
+    </div>`;
+  });
+
+  out.innerHTML = html;
+  out.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function limpiarComparadorReal(){
+  const input = document.getElementById("resultadoRealComparar");
+  const out = document.getElementById("comparadorRealOutput");
+  if(input) input.value = "";
+  if(out) out.innerHTML = "";
 }
 
 function verificarTicketsGenerados(){
@@ -2246,8 +2373,9 @@ function generarNucleoActivoDesdeInput(){
       <h2>🔥 Núcleo Activo enviado a Verificar Tickets</h2>
       <p class="small">Los 10 tickets Elite ya quedaron guardados como tickets generados.</p>
       <div class="compact-actions">
-        <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark">📊 Verificar Tickets</button>
-        <button onclick="copiarTodosTicketsNucleo()" class="btn-green">📋 Copiar 10 Tickets</button>
+        <button onclick="ejecutarConAnimacion('Verificando tickets generados...', verificarTicketsGenerados)" class="btn-dark tooltip-btn" data-tooltip="Compara los tickets generados contra la base de sorteos guardados.">📊 Verificar Tickets</button>
+        <button onclick="compararSorteoRealConTickets()" class="btn-green tooltip-btn" data-tooltip="Compara el sorteo real pegado en el comparador contra estos tickets.">🎯 Comparar sorteo real</button>
+        <button onclick="copiarTodosTicketsNucleo()" class="btn-green tooltip-btn" data-tooltip="Copia los 10 tickets generados.">📋 Copiar 10 Tickets</button>
       </div>
     </div>
   `);
