@@ -70,6 +70,11 @@ body.light .notice{color:#92400e;background:#fff7ed}
       <button class="red" onclick="detenerAutoTrain()">⏹ Detener</button>
       <button onclick="generarMejores10()">🔥 Generar mejores 10</button>
     </div>
+    <div class="actions">
+      <button class="dark" onclick="entrenarPorCiclos(2500)">⚡ Entreno rápido</button>
+      <button class="dark" onclick="entrenarPorCiclos(10000)">🧠 Entreno diario</button>
+      <button class="dark" onclick="entrenarPorCiclos(30000)">🚀 Entreno profundo</button>
+    </div>
 
     <div id="trainBox">
       <div class="ticket">
@@ -103,7 +108,13 @@ body.light .notice{color:#92400e;background:#fff7ed}
 </div>
 
 <section class="panel" style="margin-top:10px">
-  <div class="ticket-head"><h2>3) 🎟️ Tickets finales</h2><span class="badge" id="ticketMeta">Sin generar</span></div>
+  <div class="ticket-head">
+    <h2>3) 🎟️ Tickets finales</h2>
+    <span class="badge" id="ticketMeta">Sin generar</span>
+  </div>
+  <div class="actions" style="margin-bottom:8px">
+    <button class="green" onclick="copiarTickets()">📋 Copiar los 10 tickets</button>
+  </div>
   <div id="ticketsBox" class="small">Presiona “Autoentrenar” y luego “Generar mejores 10”.</div>
 </section>
 
@@ -168,6 +179,39 @@ function detenerAutoTrain(){
  guardarTodo();
  document.getElementById('trainBox').innerHTML+=`<div class="ticket"><strong>⏹ Estado: Detenido</strong><p>Ciclos realizados: ${autoTrainCycles.toLocaleString()}</p></div>`;
 }
+function entrenarPorCiclos(meta){
+ if(autoTrainRun) detenerAutoTrain();
+ if(sorteos.length<5){alert('Necesitas al menos 5 sorteos reales para entrenar bien.');return}
+ autoTrainRun=false;
+ autoTrainCycles=0;
+ let hechos=0;
+ const lote=250;
+ document.getElementById('trainBox').innerHTML=`<div class="ticket"><strong>🧠 Entrenamiento por objetivo iniciado</strong><p>Meta: ${meta.toLocaleString()} ciclos.</p></div>`;
+ const paso=()=>{
+   modelo=pesosModelo();
+   for(let i=0;i<lote;i++){
+      const t=ticketCandidato();
+      scoreTicket(t);
+   }
+   hechos+=lote;
+   autoTrainCycles=hechos;
+   const top=modelo.ranking.slice(0,12).map(x=>x.n);
+   document.getElementById('trainBox').innerHTML=`
+   <div class="ticket">
+      <strong>🧠 Entrenando por objetivo...</strong>
+      <p>Ciclos: ${Math.min(hechos,meta).toLocaleString()} / ${meta.toLocaleString()} | Sorteos usados: ${sorteos.length}</p>
+      <div class="balls">${top.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div>
+   </div>`;
+   if(hechos<meta){
+     setTimeout(paso,10);
+   }else{
+     guardarTodo();
+     document.getElementById('trainBox').innerHTML+=`<div class="ticket"><strong>✅ Entrenamiento completado</strong><p>Ahora presiona “Generar mejores 10”.</p></div>`;
+   }
+ };
+ paso();
+}
+
 
 function fmt(n){return n<10?'0'+n:''+n}
 function parseNums(t){return [...new Set((t.match(/\d+/g)||[]).map(Number).filter(n=>n>=1&&n<=80))].sort((a,b)=>a-b)}
@@ -217,7 +261,23 @@ function premio(h){return PREMIOS[h]||0}
 function scoreTicket(t){
  const usados=modelo?.usados||sorteos; let pts=0,max=0,c5=0,c6=0,c7=0,c0=0;
  usados.forEach(s=>{const h=hits(t,s); max=Math.max(max,h); if(h===0)c0++; if(h>=5)c5++; if(h>=6)c6++; if(h>=7)c7++; pts+=h+premio(h)/100;});
- const zona=new Set(t.map(n=>Math.ceil(n/10))).size; return {pts:pts+zona*2+c5*4+c6*8+c7*20+c0*3,max,c5,c6,c7,c0,zona};
+ const zona=new Set(t.map(n=>Math.ceil(n/10))).size; 
+const c8 = usados.filter(s=>hits(t,s)>=8).length;
+const c9 = usados.filter(s=>hits(t,s)>=9).length;
+
+return {
+pts:
+pts +
+zona*2 +
+c5*20 +
+c6*50 +
+c7*150 +
+c8*500 +
+c9*2000 +
+c0*2,
+max,c5,c6,c7,c0,zona
+};
+
 }
 function distancia(a,b){const B=new Set(b);return a.filter(n=>!B.has(n)).length}
 function generarMejores10(){
@@ -231,7 +291,7 @@ function generarMejores10(){
 function renderTickets(){
  const box=document.getElementById('ticketsBox'); if(!box)return;
  if(!tickets.length){box.innerHTML='Presiona “Autoentrenar” y luego “Generar mejores 10”.';return}
- box.innerHTML=tickets.map((t,i)=>`<div class="ticket"><div class="ticket-head"><strong>Ticket #${i+1}</strong><button class="copy" onclick="copiarUno(${i})">📋 Copiar</button></div><div class="balls">${t.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div></div>`).join('');
+ box.innerHTML=tickets.map((t,i)=>`<div class="ticket"><div class="ticket-head"><strong>Ticket #${i+1}</strong></div><div class="balls">${t.map(n=>`<span class="ball">${fmt(n)}</span>`).join('')}</div></div>`).join('');
  document.getElementById('ticketMeta').textContent=tickets.length+' tickets listos';
 }
 async function copiarUno(i){await navigator.clipboard.writeText(tickets[i].map(fmt).join(' '))}
@@ -247,6 +307,12 @@ async function copiarTickets(){
    area.select();
    document.execCommand('copy');
    area.remove();
+ }
+ const meta=document.getElementById('ticketMeta');
+ if(meta){
+   const old=meta.textContent;
+   meta.textContent='✅ 10 tickets copiados';
+   setTimeout(()=>meta.textContent=old,1800);
  }
 }
 function compararReal(){
