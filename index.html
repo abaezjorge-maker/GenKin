@@ -27,7 +27,7 @@ body:before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(25
   <section class="hero">
     <div>
       <h1>ATAQUE<br>DUAL</h1>
-      <p class="sub">5 tickets 100% aleatorios + 5 tickets formados desde sorteos reales guardados. Sin ruido. Sin paneles pesados. Solo iniciar y verificar contra un sorteo real elegido al azar por el sistema.</p>
+      <p class="sub">8 tickets formados desde sorteos reales guardados + 2 tickets 100% aleatorios. Sin ruido. Sin paneles pesados. Solo iniciar y verificar contra un sorteo real elegido al azar por el sistema.</p>
       <div class="orb"><div class="ring"></div><button class="start" id="startBtn">INICIAR</button></div>
     </div>
   </section>
@@ -35,7 +35,7 @@ body:before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(25
   <section class="panel" id="panel">
     <div class="grid">
       <div class="card">
-        <h2>🎟️ 10 Tickets generados</h2>
+        <h2>🎟️ 10 Tickets generados · 8 reales / 2 azar</h2>
         <div id="tickets" class="tickets"><p class="muted">Pulsa INICIAR.</p></div>
       </div>
       <div class="card">
@@ -118,8 +118,8 @@ function randomTicket(){const s=new Set();while(s.size<10)s.add(randInt(1,80));r
 function sample(arr,k){const a=[...arr], out=[];while(out.length<k&&a.length){out.push(a.splice(randInt(0,a.length-1),1)[0])}return out.sort((x,y)=>x-y)}
 function realFragmentTicket(){const d=draws[randInt(0,draws.length-1)]||randomTicket();return sample(d,10)}
 function money(n){return 'RD$'+Number(n||0).toLocaleString('en-US')}
-function renderTickets(){ $('tickets').innerHTML=tickets.map((t,i)=>`<div class="ticket"><div class="ticketTitle"><span>${i<5?'🎲 Ticket Aleatorio #'+(i+1):'📜 Ticket Real #'+(i-4)}</span><span class="tag ${i>=5?'real':''}">${i<5?'100% Azar':'Fragmento Real'}</span></div><div class="balls">${t.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('') }
-function iniciar(){tickets=[];for(let i=0;i<5;i++)tickets.push(randomTicket());for(let i=0;i<5;i++)tickets.push(realFragmentTicket());$('panel').classList.add('show');renderTickets();$('verify').innerHTML='';$('drawUsed').textContent='--';$('bestHit').textContent='--';$('totalPrize').textContent='--';setTimeout(()=>$('panel').scrollIntoView({behavior:'smooth'}),260)}
+function renderTickets(){ $('tickets').innerHTML=tickets.map((t,i)=>`<div class="ticket"><div class="ticketTitle"><span>${i<8?'📜 Ticket Real #'+(i+1):'🎲 Ticket Aleatorio #'+(i-7)}</span><span class="tag ${i<8?'real':''}">${i<8?'Fragmento Real':'100% Azar'}</span></div><div class="balls">${t.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('') }
+function iniciar(){tickets=[];for(let i=0;i<8;i++)tickets.push(realFragmentTicket());for(let i=0;i<2;i++)tickets.push(randomTicket());$('panel').classList.add('show');renderTickets();$('verify').innerHTML='';$('drawUsed').textContent='--';$('bestHit').textContent='--';$('totalPrize').textContent='--';setTimeout(()=>$('panel').scrollIntoView({behavior:'smooth'}),260)}
 function verifyRandom(){if(!tickets.length){iniciar()}const idx=randInt(0,draws.length-1), real=draws[idx];let total=0,best=0,bestI=0;let html=`<div class="resultLine"><b>Sorteo real elegido #${idx+1}</b><div class="balls">${real.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`;
 tickets.forEach((t,i)=>{const hits=t.filter(n=>real.includes(n));const prize=PRIZES[hits.length]||0;total+=prize;if(hits.length>best){best=hits.length;bestI=i+1}html+=`<div class="ticket resultLine"><div class="ticketTitle"><span>Ticket #${i+1} — ${hits.length} aciertos</span><span class="${prize?'win':'lose'}">${money(prize)}</span></div><div class="balls">${t.map(n=>`<span class="ball ${real.includes(n)?'hit':''}">${pad(n)}</span>`).join('')}</div></div>`});
 $('drawUsed').textContent='#'+(idx+1);$('bestHit').textContent=best+' aciertos';$('totalPrize').textContent=money(total);$('verify').innerHTML=html;}
