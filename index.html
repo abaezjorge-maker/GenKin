@@ -3,58 +3,87 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kino · 20 Fragmentos Reales</title>
+<title>Kino · Análisis Premium Aleatorio</title>
 <style>
 :root{
-  --bg:#070816;--bg2:#10162a;--panel:rgba(255,255,255,.075);--panel2:rgba(255,255,255,.11);
-  --line:rgba(255,255,255,.16);--txt:#eef7ff;--muted:#9fb2d1;--a:#6ee7ff;--b:#b388ff;--c:#44f5a1;--d:#ffcf5b;--bad:#ff6b8b;
+  --bg:#070a13;--bg2:#111827;--panel:rgba(255,255,255,.08);--panel2:rgba(255,255,255,.12);
+  --line:rgba(255,255,255,.16);--txt:#eef7ff;--muted:#9fb2d1;--a:#6ee7ff;--b:#a78bfa;--c:#4ade80;--d:#facc15;--bad:#fb7185;
 }
-*{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;color:var(--txt);background:
-  radial-gradient(circle at 18% 12%,rgba(110,231,255,.20),transparent 30%),
-  radial-gradient(circle at 80% 22%,rgba(179,136,255,.18),transparent 28%),
-  radial-gradient(circle at 50% 90%,rgba(68,245,161,.14),transparent 35%),linear-gradient(135deg,var(--bg),var(--bg2));overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(circle at center,black,transparent 78%);pointer-events:none}
-.wrap{min-height:100%;max-width:1180px;margin:auto;padding:26px;position:relative}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:1000;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:.78rem}.chip{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(14px);padding:10px 14px;border-radius:999px;color:var(--muted);font-weight:800}.hero{min-height:62vh;display:grid;place-items:center;text-align:center}.orb{position:relative;width:min(430px,88vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(110,231,255,.22),rgba(179,136,255,.12) 45%,transparent 70%);filter:drop-shadow(0 0 60px rgba(110,231,255,.22))}.orb:before,.orb:after{content:"";position:absolute;inset:7%;border-radius:50%;border:1px solid rgba(110,231,255,.5);animation:spin 16s linear infinite}.orb:after{inset:16%;border-color:rgba(179,136,255,.55);animation-duration:10s;animation-direction:reverse}.ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent,var(--a),transparent,var(--b),transparent,var(--c),transparent);filter:blur(.5px);animation:spin 8s linear infinite;opacity:.72}.start{position:relative;z-index:3;border:0;border-radius:999px;padding:22px 44px;font-size:1.25rem;font-weight:1000;letter-spacing:.16em;cursor:pointer;color:#06111c;background:linear-gradient(135deg,var(--a),var(--b),var(--c));box-shadow:0 22px 80px rgba(110,231,255,.32);transition:.2s}.start:hover{transform:translateY(-3px) scale(1.02)}h1{font-size:clamp(2.1rem,7vw,5.7rem);line-height:.9;margin:0 0 18px;letter-spacing:-.075em}.sub{max-width:760px;margin:0 auto 26px;color:var(--muted);font-size:1.05rem}.panel{display:none;animation:rise .45s ease both}.panel.show{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{border:1px solid var(--line);background:linear-gradient(145deg,var(--panel),rgba(255,255,255,.045));backdrop-filter:blur(18px);border-radius:30px;padding:20px;box-shadow:0 30px 90px rgba(0,0,0,.28)}.card h2{margin:0 0 14px}.tickets{display:grid;gap:12px}.ticket{border:1px solid var(--line);background:var(--panel2);border-radius:22px;padding:15px}.ticketTitle{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:1000}.tag{font-size:.78rem;color:#07111c;background:linear-gradient(135deg,var(--a),var(--c));padding:5px 9px;border-radius:999px}.tag.real{background:linear-gradient(135deg,var(--d),var(--b))}.balls{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.ball{width:37px;height:37px;border-radius:50%;display:grid;place-items:center;font-weight:1000;background:radial-gradient(circle at 30% 25%,#fff,rgba(110,231,255,.85) 20%,rgba(110,231,255,.18) 70%);border:1px solid rgba(110,231,255,.45);color:#eaffff}.ball.hit{background:radial-gradient(circle at 30% 25%,#fff,var(--c) 22%,rgba(68,245,161,.18) 72%);color:#03120b}.muted{color:var(--muted)}.btn{border:0;border-radius:999px;padding:14px 20px;font-weight:1000;cursor:pointer;color:#06111c;background:linear-gradient(135deg,var(--d),var(--c));box-shadow:0 16px 40px rgba(68,245,161,.18)}.verifyBox{margin-top:14px}.resultLine{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.win{color:var(--c);font-weight:1000}.lose{color:var(--bad);font-weight:1000}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.stat{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:18px;padding:12px}.stat b{display:block;font-size:1.45rem;color:var(--a)}.footer{margin:22px 0;color:var(--muted);font-size:.9rem;text-align:center}@keyframes spin{to{transform:rotate(360deg)}}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}@media(max-width:840px){.grid{grid-template-columns:1fr}.wrap{padding:16px}.hero{min-height:58vh}.stats{grid-template-columns:1fr}.ball{width:34px;height:34px}.top{align-items:flex-start;flex-direction:column}}
+*{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;color:var(--txt);background:
+radial-gradient(circle at 20% 15%,rgba(110,231,255,.18),transparent 28%),
+radial-gradient(circle at 80% 18%,rgba(167,139,250,.17),transparent 30%),
+radial-gradient(circle at 50% 95%,rgba(74,222,128,.13),transparent 38%),linear-gradient(135deg,var(--bg),var(--bg2));}
+.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:1000;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:.78rem}.chip{border:1px solid var(--line);background:var(--panel);padding:10px 14px;border-radius:999px;color:var(--muted);font-weight:900}
+.hero{min-height:48vh;display:grid;place-items:center;text-align:center}h1{font-size:clamp(2.4rem,7vw,6rem);line-height:.9;margin:0 0 18px;letter-spacing:-.07em}.sub{max-width:760px;margin:0 auto 28px;color:var(--muted);font-size:1.05rem}
+.actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}button{border:0;border-radius:999px;padding:17px 28px;font-weight:1000;cursor:pointer;color:#06111c;background:linear-gradient(135deg,var(--a),var(--c));box-shadow:0 16px 55px rgba(110,231,255,.22);transition:.18s}button:hover{transform:translateY(-2px) scale(1.02)}button.secondary{background:linear-gradient(135deg,var(--d),var(--b))}button.stop{background:linear-gradient(135deg,var(--bad),var(--d))!important;color:#13040a}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.card{border:1px solid var(--line);background:linear-gradient(145deg,var(--panel),rgba(255,255,255,.045));backdrop-filter:blur(18px);border-radius:30px;padding:20px;box-shadow:0 30px 90px rgba(0,0,0,.26)}.card h2{margin:0 0 14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:rgba(0,0,0,.2);border:1px solid var(--line);border-radius:18px;padding:12px}.stat span{display:block;color:var(--muted);font-size:.82rem}.stat b{display:block;font-size:1.35rem;color:var(--a)}
+.tickets{display:grid;gap:10px;max-height:680px;overflow:auto;padding-right:4px}.ticket{border:1px solid var(--line);background:var(--panel2);border-radius:20px;padding:12px}.ticket.best{outline:2px solid rgba(74,222,128,.65);box-shadow:0 0 30px rgba(74,222,128,.12)}
+.ticketTitle{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:1000}.tag{font-size:.78rem;color:#07111c;background:linear-gradient(135deg,var(--a),var(--c));padding:5px 9px;border-radius:999px}.tag.gold{background:linear-gradient(135deg,var(--d),var(--c))}.tag.bad{background:linear-gradient(135deg,var(--bad),var(--d))}
+.balls{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.ball{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:1000;background:radial-gradient(circle at 30% 25%,#fff,rgba(110,231,255,.86) 21%,rgba(110,231,255,.18) 72%);border:1px solid rgba(110,231,255,.44)}.ball.hit{background:radial-gradient(circle at 30% 25%,#fff,var(--c) 22%,rgba(74,222,128,.18) 74%);color:#03120b}
+.muted{color:var(--muted)}.drawBox{margin-top:12px}.champBox{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}.miniGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.freqRow{display:flex;align-items:center;gap:8px;margin:8px 0}.bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--a),var(--c));box-shadow:0 0 18px rgba(110,231,255,.14)}.small{font-size:.82rem}.footer{text-align:center;color:var(--muted);margin:22px 0 0;font-size:.9rem}.hidden{display:none}.select{border:1px solid var(--line);border-radius:999px;padding:16px 22px;font-weight:1000;color:var(--txt);background:rgba(255,255,255,.10);box-shadow:0 16px 55px rgba(110,231,255,.12);outline:0}.progress{height:14px;border-radius:999px;background:rgba(255,255,255,.10);overflow:hidden;border:1px solid var(--line);margin:12px 0}.progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--a),var(--c),var(--d));transition:.12s}.premiumBox{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:880px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.wrap{padding:16px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top">
-    <div class="brand">Kino Lab · 20 Sorteos Reales</div>
-    <div class="chip" id="baseChip">Base: -- sorteos</div>
-  </div>
-
+  <div class="top"><div class="brand">Kino Lab · análisis premium aleatorio</div><div class="chip" id="baseChip">Base: -- sorteos</div></div>
   <section class="hero">
     <div>
-      <h1>ATAQUE<br>REAL</h1>
-      <p class="sub">20 tickets formados únicamente desde sorteos reales guardados. Sin azar puro. Sin paneles pesados. Solo iniciar y verificar contra un sorteo real elegido al azar por el sistema.</p>
-      <div class="orb"><div class="ring"></div><button class="start" id="startBtn">INICIAR</button></div>
+      <h1>MODO<br>PREMIUM</h1>
+      <p class="sub">Genera miles de tickets aleatorios, los verifica automáticamente contra sorteos reales históricos, se detiene solo al terminar y entrega los 10 tickets premium detectados. Incluye modo 10+ que se detiene solo al encontrar 3 tickets perfectos contra la base histórica.</p>
+      <div class="actions">
+        <select id="batchSize" class="select">
+          <option value="500">500 tickets</option>
+          <option value="1000">1,000 tickets</option>
+          <option value="5000" selected>5,000 tickets</option>
+          <option value="10000">10,000 tickets</option>
+        </select>
+        <button id="generateBtn">GENERAR Y ANALIZAR</button>
+        <button class="secondary" id="tenBtn">BUSCAR 3 TICKETS 10+</button>
+        <button class="secondary" id="verifyBtn">DETENER</button>
+      </div>
     </div>
   </section>
-
-  <section class="panel" id="panel">
-    <div class="grid">
-      <div class="card">
-        <h2>🎟️ 20 Tickets reales generados</h2>
-        <div id="tickets" class="tickets"><p class="muted">Pulsa INICIAR.</p></div>
+  <section class="grid">
+    <div class="card">
+      <h2>🎟️ Tickets analizados</h2>
+      <div class="stats">
+        <div class="stat"><span>Tickets</span><b id="ticketCount">0</b></div>
+        <div class="stat"><span>Sorteo usado</span><b id="drawUsed">--</b></div>
+        <div class="stat"><span>Mejor acierto</span><b id="bestHit">--</b></div>
+        <div class="stat"><span>Total premios</span><b id="totalPrize">--</b></div>
       </div>
-      <div class="card">
-        <h2>🔍 Verificación automática</h2>
-        <p class="muted">El botón elige un sorteo real de la base integrada/localStorage y compara los 10 tickets.</p>
-        <button class="btn" id="verifyBtn">VERIFICAR CON SORTEO ALEATORIO</button>
+      <div id="drawBox" class="drawBox hidden"></div>
+      <div class="progress hidden" id="progress"><i id="progressBar"></i></div><div id="tickets" class="tickets"><p class="muted">Pulsa GENERAR Y ANALIZAR.</p></div>
+    </div>
+    <div class="card">
+      <h2>💎 10 Tickets Premium detectados</h2>
+      <p class="muted">Al finalizar el análisis, aquí quedan los 10 tickets con mejor rendimiento. Se priorizan 7+, 8+, 9+ y premio acumulado.</p>
+      <div class="stats">
+        <div class="stat"><span>Verificaciones</span><b id="runs">0</b></div>
+        <div class="stat"><span>Mejor histórico</span><b id="hofBest">--</b></div>
+      </div>
+      <div id="hall" class="tickets"><p class="muted">Todavía no hay tickets premium.</p></div>
+      <div class="champBox">
+        <h2>🧬 ADN de Campeones</h2>
+        <p class="muted small">Agrupa tickets repetidos, mide victorias reales y extrae los números que más aparecen entre los campeones.</p>
         <div class="stats">
-          <div class="stat"><span>Sorteo usado</span><b id="drawUsed">--</b></div>
-          <div class="stat"><span>Mejor ticket</span><b id="bestHit">--</b></div>
-          <div class="stat"><span>Total premio</span><b id="totalPrize">--</b></div>
+          <div class="stat"><span>Tickets campeones</span><b id="champCount">0</b></div>
+          <div class="stat"><span>7+ guardados</span><b id="champ7">0</b></div>
         </div>
-        <div id="verify" class="verifyBox"></div>
+        <div id="champions" class="tickets"><p class="muted">Aún no hay ADN suficiente.</p></div>
+        <h2 style="margin-top:18px">🔥 Números en campeones</h2>
+        <div id="champNums"></div>
       </div>
     </div>
-    <div class="footer">Premios: 0=RD$80 · 5=RD$60 · 6=RD$300 · 7=RD$1,000 · 8=RD$10,000 · 9=RD$150,000 · 10=RD$25,000,000</div>
   </section>
+  <div class="footer">Premios: 0=RD$80 · 5=RD$60 · 6=RD$300 · 7=RD$1,000 · 8=RD$10,000 · 9=RD$150,000 · 10=RD$25,000,000</div>
 </div>
 <script>
 const KEY='kino_nucleo_inmortal_sorteos_v1';
+const HKEY='kino_100_aleatorio_hof_v1';
 const PRIZES={0:80,5:60,6:300,7:1000,8:10000,9:150000,10:25000000};
 const DEFAULT_TEXT=`
 10 12 16 18 23 27 29 36 37 39 42 43 46 50 54 59 63 71 73 75
@@ -107,23 +136,225 @@ const DEFAULT_TEXT=`
 05 07 08 12 14 15 21 23 24 27 29 41 46 55 61 71 73 76 77 79
 04 08 10 12 16 17 20 24 25 28 39 50 52 55 58 60 68 70 71 74
 `;
-let draws=[], tickets=[];
+let draws=[], tickets=[], premiumTickets=[], hall={runs:0,items:[]};
+let isRunning=false, stopRequested=false;
+const TESTS_PER_TICKET=7; // cada ticket se mide contra 7 sorteos reales aleatorios
+const CHUNK=250;
 const $=id=>document.getElementById(id);
 function pad(n){return String(n).padStart(2,'0')}
+function money(n){return 'RD$'+Number(n||0).toLocaleString('en-US')}
 function parseLine(line){const nums=(line.match(/\d+/g)||[]).map(Number).filter(n=>n>=1&&n<=80);const u=[...new Set(nums)].sort((a,b)=>a-b);return u.length>=20?u.slice(0,20):null}
 function parseText(txt){return txt.split(/\n+/).map(parseLine).filter(Boolean)}
-function loadDraws(){try{draws=JSON.parse(localStorage.getItem(KEY)||'[]')}catch{draws=[]} if(!Array.isArray(draws)||!draws.length)draws=parseText(DEFAULT_TEXT); $('baseChip').textContent=`Base: ${draws.length} sorteos`;}
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function randomTicket(){const s=new Set();while(s.size<10)s.add(randInt(1,80));return [...s].sort((a,b)=>a-b)}
-function sample(arr,k){const a=[...arr], out=[];while(out.length<k&&a.length){out.push(a.splice(randInt(0,a.length-1),1)[0])}return out.sort((x,y)=>x-y)}
-function realFragmentTicket(){const d=draws[randInt(0,draws.length-1)]||randomTicket();return sample(d,10)}
-function money(n){return 'RD$'+Number(n||0).toLocaleString('en-US')}
-function renderTickets(){ $('tickets').innerHTML=tickets.map((t,i)=>`<div class="ticket"><div class="ticketTitle"><span>📜 Ticket Real #${i+1}</span><span class="tag real">Fragmento Real</span></div><div class="balls">${t.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('') }
-function iniciar(){tickets=[];for(let i=0;i<20;i++)tickets.push(realFragmentTicket());$('panel').classList.add('show');renderTickets();$('verify').innerHTML='';$('drawUsed').textContent='--';$('bestHit').textContent='--';$('totalPrize').textContent='--';setTimeout(()=>$('panel').scrollIntoView({behavior:'smooth'}),260)}
-function verifyRandom(){if(!tickets.length){iniciar()}const idx=randInt(0,draws.length-1), real=draws[idx];let total=0,best=0,bestI=0;let html=`<div class="resultLine"><b>Sorteo real elegido #${idx+1}</b><div class="balls">${real.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`;
-tickets.forEach((t,i)=>{const hits=t.filter(n=>real.includes(n));const prize=PRIZES[hits.length]||0;total+=prize;if(hits.length>best){best=hits.length;bestI=i+1}html+=`<div class="ticket resultLine"><div class="ticketTitle"><span>Ticket #${i+1} — ${hits.length} aciertos</span><span class="${prize?'win':'lose'}">${money(prize)}</span></div><div class="balls">${t.map(n=>`<span class="ball ${real.includes(n)?'hit':''}">${pad(n)}</span>`).join('')}</div></div>`});
-$('drawUsed').textContent='#'+(idx+1);$('bestHit').textContent=best+' aciertos';$('totalPrize').textContent=money(total);$('verify').innerHTML=html;}
-$('startBtn').onclick=iniciar;$('verifyBtn').onclick=verifyRandom;loadDraws();
-</script>
+function signature(nums){return nums.slice().sort((a,b)=>a-b).join('-')}
+function scoreFor(hits,prize){
+  return ({0:1,1:2,2:4,3:9,4:18,5:55,6:180,7:1200,8:9000,9:90000,10:900000}[hits]||0)+Math.floor((prize||0)/100);
+}
+function loadDraws(){
+  try{draws=JSON.parse(localStorage.getItem(KEY)||'[]')}catch{draws=[]}
+  if(!Array.isArray(draws)||!draws.length)draws=parseText(DEFAULT_TEXT);
+  $('baseChip').textContent=`Base: ${draws.length} sorteos`;
+}
+function loadHall(){
+  try{hall=JSON.parse(localStorage.getItem(HKEY)||'{}')}catch{hall={}}
+  if(!hall||!Array.isArray(hall.items))hall={runs:0,items:[]};
+  renderHall();
+}
+function saveHall(){localStorage.setItem(HKEY,JSON.stringify(hall));}
+function evaluateTicket(nums){
+  let totalScore=0,totalPrize=0,totalHits=0,bestHits=0,bestDraw=null,tests=[];
+  const used=new Set();
+  for(let i=0;i<Math.min(TESTS_PER_TICKET,draws.length);i++){
+    let idx=randInt(0,draws.length-1), guard=0;
+    while(used.has(idx)&&guard<100){idx=randInt(0,draws.length-1); guard++;}
+    used.add(idx);
+    const real=draws[idx];
+    const hits=nums.filter(n=>real.includes(n)).length;
+    const prize=PRIZES[hits]||0;
+    const score=scoreFor(hits,prize);
+    totalScore+=score; totalPrize+=prize; totalHits+=hits;
+    if(hits>bestHits){bestHits=hits; bestDraw=idx+1;}
+    tests.push({draw:idx+1,hits,prize,score});
+  }
+  return {nums,score:totalScore,prize:totalPrize,bestHits,bestDraw,avgHits:totalHits/tests.length,tests};
+}
+function renderProgress(done,total){
+  const pct=total?Math.round(done/total*100):0;
+  $('progress').classList.remove('hidden');
+  $('progressBar').style.width=pct+'%';
+  $('ticketCount').textContent=done+'/'+total;
+}
+function renderTickets(real=null){
+  const list=(tickets.length?tickets:premiumTickets).slice(0,100);
+  $('ticketCount').textContent=tickets.length||premiumTickets.length||0;
+  if(!list.length){$('tickets').innerHTML='<p class="muted">Pulsa GENERAR Y ANALIZAR.</p>'; return;}
+  $('tickets').innerHTML=list.map((obj,i)=>{
+    const t=obj.nums||obj; const h=obj.bestHits??obj.hits??0; const prize=obj.prize||0;
+    return `<div class="ticket ${i<10?'best':''}"><div class="ticketTitle"><span>${i<10?'💎':'🎲'} Ticket #${i+1} ${obj.bestHits!=null?'· mejor '+obj.bestHits+' aciertos':''}</span><span class="tag ${h>=7?'gold':h<5?'bad':''}">${obj.bestHits!=null?'Score '+obj.score:money(prize)}</span></div><div class="muted small">${obj.avgHits!=null?'Promedio '+obj.avgHits.toFixed(2)+' · Premio acumulado '+money(obj.prize)+' · Mejor sorteo #'+obj.bestDraw:'100% azar'}</div><div class="balls">${t.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`;
+  }).join('');
+}
+function renderPremium(){
+  if(!premiumTickets.length){$('hall').innerHTML='<p class="muted">Todavía no hay tickets premium.</p>';return;}
+  $('hall').innerHTML=premiumTickets.slice(0,10).map((x,i)=>`<div class="ticket best"><div class="ticketTitle"><span>💎 Premium #${i+1} · ${x.bestHits} máximo</span><span class="tag ${x.bestHits>=7?'gold':''}">${money(x.prize)}</span></div><div class="muted small">Score ${x.score} · Promedio ${x.avgHits.toFixed(2)} · Mejor contra sorteo #${x.bestDraw}</div><div class="balls">${x.nums.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('');
+  renderChampionDNA();
+}
+function finishAnalysis(){
+  isRunning=false; stopRequested=false;
+  $('generateBtn').disabled=false;
+  $('verifyBtn').textContent='DETENER';
+  $('verifyBtn').classList.remove('stop');
+  $('drawUsed').textContent='varios';
+  $('bestHit').textContent=(premiumTickets[0]?.bestHits??'--')+' aciertos';
+  $('totalPrize').textContent=money(premiumTickets.reduce((a,x)=>a+(x.prize||0),0));
+  $('drawBox').classList.remove('hidden');
+  $('drawBox').innerHTML=`<b>Análisis completado</b><p class="muted">Se analizaron ${tickets.length} tickets aleatorios. El sistema se detuvo solo y extrajo los 10 Premium.</p>`;
+  hall.runs=(hall.runs||0)+1;
+  premiumTickets.slice(0,10).forEach((x,i)=>{
+    hall.items.push({nums:x.nums,hits:x.bestHits,prize:x.prize,score:x.score,draw:x.bestDraw,date:new Date().toLocaleString(),rank:i+1,avgHits:x.avgHits});
+  });
+  const seen=new Map();
+  hall.items.sort((a,b)=>b.hits-a.hits||b.score-a.score||b.prize-a.prize).forEach(x=>{
+    const key=signature(x.nums)+'|'+x.draw;
+    if(!seen.has(key))seen.set(key,x);
+  });
+  hall.items=[...seen.values()].slice(0,500);
+  saveHall(); renderTickets(); renderHall(); renderPremium();
+}
+async function runAnalysis(){
+  if(isRunning)return;
+  const total=parseInt($('batchSize').value,10)||5000;
+  isRunning=true; stopRequested=false; tickets=[]; premiumTickets=[];
+  $('generateBtn').disabled=true;
+  $('verifyBtn').textContent='DETENER'; $('verifyBtn').classList.add('stop');
+  $('tickets').innerHTML='<p class="muted">Analizando tickets aleatorios...</p>';
+  $('hall').innerHTML='<p class="muted">Esperando finalizar análisis...</p>';
+  $('progressBar').style.width='0%'; $('progress').classList.remove('hidden');
+  const bySig=new Map();
+  for(let i=0;i<total;i++){
+    if(stopRequested)break;
+    const nums=randomTicket();
+    const sig=signature(nums);
+    if(bySig.has(sig)){i--; continue;}
+    const evaluated=evaluateTicket(nums);
+    bySig.set(sig,evaluated); tickets.push(evaluated);
+    if((i+1)%CHUNK===0){
+      tickets.sort((a,b)=>b.bestHits-a.bestHits||b.score-a.score||b.prize-a.prize||b.avgHits-a.avgHits);
+      premiumTickets=tickets.slice(0,10);
+      renderProgress(i+1,total); renderTickets(); renderPremium();
+      await new Promise(r=>setTimeout(r,0));
+    }
+  }
+  tickets.sort((a,b)=>b.bestHits-a.bestHits||b.score-a.score||b.prize-a.prize||b.avgHits-a.avgHits);
+  premiumTickets=tickets.slice(0,10);
+  renderProgress(tickets.length,total);
+  finishAnalysis();
+}
+async function searchThreeTens(){
+  if(isRunning)return;
+  isRunning=true; stopRequested=false; tickets=[]; premiumTickets=[];
+  const target=3;
+  const found=[];
+  const foundKeys=new Set();
+  let checked=0;
+  $('generateBtn').disabled=true;
+  $('tenBtn').disabled=true;
+  $('verifyBtn').textContent='DETENER';
+  $('verifyBtn').classList.add('stop');
+  $('progress').classList.remove('hidden');
+  $('progressBar').style.width='0%';
+  $('tickets').innerHTML='<p class="muted">Buscando tickets aleatorios con 10 aciertos contra la base histórica...</p>';
+  $('hall').innerHTML='<p class="muted">El sistema se detendrá automáticamente al encontrar 3 tickets 10/10.</p>';
+  $('drawBox').classList.remove('hidden');
+  $('drawBox').innerHTML='<b>Modo búsqueda 10+</b><p class="muted">Generando tickets aleatorios infinitos. Puedes detenerlo manualmente.</p>';
+  while(!stopRequested && found.length<target){
+    for(let i=0;i<CHUNK && found.length<target;i++){
+      const nums=randomTicket();
+      const sig=signature(nums);
+      if(foundKeys.has(sig)){checked++; continue;}
+      let best=null;
+      for(let d=0; d<draws.length; d++){
+        const real=draws[d];
+        const hits=nums.filter(n=>real.includes(n)).length;
+        if(hits===10){best={draw:d+1,hits,prize:PRIZES[10],score:scoreFor(10,PRIZES[10])}; break;}
+      }
+      checked++;
+      if(best){
+        foundKeys.add(sig);
+        const obj={nums,score:best.score,prize:best.prize,bestHits:10,bestDraw:best.draw,avgHits:10,tests:[best]};
+        found.push(obj); premiumTickets=found.slice(); tickets=found.slice();
+        hall.items.push({nums:obj.nums,hits:10,prize:obj.prize,score:obj.score,draw:obj.bestDraw,date:new Date().toLocaleString(),rank:found.length,avgHits:10});
+        saveHall(); renderPremium(); renderHall();
+      }
+    }
+    $('ticketCount').textContent=checked.toLocaleString('en-US');
+    $('drawUsed').textContent='todos';
+    $('bestHit').textContent=(found.length?10:'--')+' aciertos';
+    $('totalPrize').textContent=money(found.reduce((a,x)=>a+x.prize,0));
+    $('progressBar').style.width=Math.round(found.length/target*100)+'%';
+    $('drawBox').innerHTML=`<b>Modo búsqueda 10+</b><p class="muted">Tickets aleatorios analizados: ${checked.toLocaleString('en-US')} · Encontrados: ${found.length}/3</p>`;
+    renderTickets();
+    await new Promise(r=>setTimeout(r,0));
+  }
+  tickets=found.slice(); premiumTickets=found.slice(0,3);
+  const seen=new Map();
+  (hall.items||[]).sort((a,b)=>b.hits-a.hits||b.score-a.score||b.prize-a.prize).forEach(x=>{
+    const key=signature(x.nums)+'|'+x.draw;
+    if(!seen.has(key))seen.set(key,x);
+  });
+  hall.items=[...seen.values()].slice(0,500);
+  hall.runs=(hall.runs||0)+1;
+  saveHall();
+  isRunning=false; stopRequested=false;
+  $('generateBtn').disabled=false;
+  $('tenBtn').disabled=false;
+  $('verifyBtn').textContent='DETENER';
+  $('verifyBtn').classList.remove('stop');
+  $('drawBox').innerHTML=found.length>=target
+    ? `<b>Búsqueda completada</b><p class="muted">Encontrados 3 tickets 10/10 después de analizar ${checked.toLocaleString('en-US')} tickets aleatorios.</p>`
+    : `<b>Búsqueda detenida</b><p class="muted">Analizados ${checked.toLocaleString('en-US')} tickets. Encontrados: ${found.length}/3.</p>`;
+  renderTickets(); renderPremium(); renderHall();
+}
+function stopAnalysis(){
+  if(!isRunning)return;
+  stopRequested=true;
+  $('verifyBtn').textContent='DETENIENDO...';
+}
+function championGroups(){
+  const map=new Map();
+  (hall.items||[]).forEach(x=>{
+    const key=signature(x.nums);
+    if(!map.has(key))map.set(key,{nums:x.nums.slice().sort((a,b)=>a-b),wins:0,best:0,totalHits:0,totalPrize:0,score:0,draws:new Set(),drawMap:new Map(),dates:[]});
+    const g=map.get(key), prev=g.drawMap.get(x.draw);
+    if(!prev || x.hits>prev.hits || x.score>prev.score){
+      if(prev){g.totalHits-=prev.hits; g.totalPrize-=prev.prize||0; g.score-=prev.score||0;}
+      else {g.wins++; g.draws.add(x.draw);}
+      g.drawMap.set(x.draw,x); g.best=Math.max(g.best,x.hits); g.totalHits+=x.hits; g.totalPrize+=x.prize||0; g.score+=x.score||0; g.dates.push(x.date);
+    }
+  });
+  return [...map.values()].sort((a,b)=>b.best-a.best||b.draws.size-a.draws.size||b.score-a.score||b.totalPrize-a.totalPrize);
+}
+function renderChampionDNA(){
+  const groups=championGroups();
+  $('champCount').textContent=groups.length;
+  $('champ7').textContent=(hall.items||[]).filter(x=>x.hits>=7).length;
+  if(!groups.length){$('champions').innerHTML='<p class="muted">Aún no hay ADN suficiente.</p>'; $('champNums').innerHTML=''; return;}
+  $('champions').innerHTML=groups.slice(0,8).map((g,i)=>`<div class="ticket ${g.best>=7?'best':''}"><div class="ticketTitle"><span>🧬 Campeón #${i+1} · ${g.best} máximo</span><span class="tag ${g.best>=7?'gold':''}">${g.draws.size} sorteo${g.draws.size===1?'':'s'}</span></div><div class="muted small">Promedio ${(g.totalHits/Math.max(1,g.draws.size)).toFixed(2)} · Victorias reales ${g.draws.size} · Premio acumulado ${money(g.totalPrize)}</div><div class="balls">${g.nums.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('');
+  const freq={}; groups.filter(g=>g.best>=5).forEach(g=>g.nums.forEach(n=>freq[n]=(freq[n]||0)+g.wins));
+  const arr=Object.entries(freq).map(([n,c])=>({n:+n,c})).sort((a,b)=>b.c-a.c||a.n-b.n).slice(0,20); const max=arr[0]?.c||1;
+  $('champNums').innerHTML=arr.length?arr.map(x=>`<div class="freqRow"><span class="ball">${pad(x.n)}</span><div class="bar" style="width:${Math.max(8,Math.round(x.c/max*72))}%"></div><span class="muted small">${x.c}</span></div>`).join(''):'<p class="muted">Todavía no hay suficientes tickets con 5+.</p>';
+}
+function renderHall(){
+  $('runs').textContent=hall.runs||0; const best=hall.items&&hall.items[0]; $('hofBest').textContent=best?best.hits+' aciertos':'--';
+  if(!hall.items||!hall.items.length){$('hall').innerHTML='<p class="muted">Todavía no hay tickets premium.</p>'; renderChampionDNA(); return;}
+  if(!premiumTickets.length){
+    $('hall').innerHTML=hall.items.slice(0,10).map((x,i)=>`<div class="ticket"><div class="ticketTitle"><span>🏆 Histórico #${i+1} · ${x.hits} aciertos</span><span class="tag ${x.hits>=7?'gold':''}">${money(x.prize)}</span></div><div class="muted">Sorteo #${x.draw} · Score ${x.score} · ${x.date}</div><div class="balls">${x.nums.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('');
+  }
+  renderChampionDNA();
+}
+$('generateBtn').onclick=runAnalysis;
+$('tenBtn').onclick=searchThreeTens;
+$('verifyBtn').onclick=stopAnalysis;
+loadDraws(); loadHall();</script>
 </body>
 </html>
