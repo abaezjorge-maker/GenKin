@@ -1,437 +1,78 @@
-<!DOCTYPE html>
-<!-- saved from url=(0058)file:///C:/Users/Andy/Downloads/genkin_bajos_10_pasos.html -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GenKin Motor Bajos Supervivientes</title>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Núcleo Inmortal Épico Kino</title>
 <style>
-:root{--bg:#08111f;--card:#111c30;--card2:#18243a;--txt:#eef5ff;--muted:#9fb0c7;--accent:#5eead4;--warn:#fde68a;--bad:#fca5a5;--line:#2b3b55;}
-.light{--bg:#f5f7fb;--card:#ffffff;--card2:#edf2f7;--txt:#111827;--muted:#526071;--accent:#0f766e;--warn:#92400e;--bad:#b91c1c;--line:#d5dce8;}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(circle at top,#15243c,var(--bg));color:var(--txt);padding:18px}.wrap{max-width:1150px;margin:auto}.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.brand{font-size:clamp(24px,4vw,42px);font-weight:900;letter-spacing:-1px}.sub{color:var(--muted);margin-top:4px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}@media(max-width:850px){.grid{grid-template-columns:1fr}}.card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 35px #0004}.btns{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;background:var(--accent);color:#04201d}.btn.secondary{background:transparent;color:var(--txt);border:1px solid var(--line)}.pill{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border-radius:999px;background:#e5e7eb;color:#111827;font-weight:900;margin:4px;border:2px solid transparent}.pill.hot{background:var(--accent);color:#04201d}.pill.mid{background:var(--warn);color:#2b1900}.pill.zone2{background:#bfdbfe;color:#0f172a}.pill.zone3{background:#fecaca;color:#450a0a}.small{font-size:13px;color:var(--muted)}.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:14px}.ticket{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:12px}.ticket h3{margin:0 0 8px;font-size:15px;color:var(--accent)}.nums{display:flex;flex-wrap:wrap}.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.box{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;padding:12px}.box b{font-size:24px}.textarea{width:100%;min-height:100px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:var(--txt);padding:12px;font-weight:700}.footer{margin-top:16px;color:var(--muted);font-size:13px}
-
-
-/* === MODO LECTURA LIMPIO PARA COMPARADOR === */
-.resultsPanel{display:flex;flex-direction:column;gap:16px;margin-top:16px}.resultHero{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.resultCard{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:16px}.resultCard h3{margin:0 0 10px;color:var(--accent);font-size:17px}.bigNumber{font-size:34px;font-weight:950;line-height:1.05}.metricLine{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:8px 0;font-size:14px}.metricLine:first-of-type{border-top:0}.cleanTable{width:100%;border-collapse:separate;border-spacing:0 8px}.cleanTable th{text-align:left;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:0 10px}.cleanTable td{background:rgba(255,255,255,.045);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;font-size:14px}.cleanTable td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px;font-weight:900;color:var(--accent)}.cleanTable td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}.sectionTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 8px}.sectionTitle h3{margin:0;color:var(--accent)}.readGrid{display:grid;grid-template-columns:1fr;gap:14px}.drawBlock{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:14px}.drawHeader{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}.drawResult{font-size:13px;color:var(--muted);line-height:1.5}.hitGood{color:var(--accent);font-weight:900}.hitMid{color:var(--warn);font-weight:900}.hitLow{color:var(--muted);font-weight:900}.chipRow{display:flex;flex-wrap:wrap;gap:6px}.miniChip{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:30px;border-radius:999px;background:#e5e7eb;color:#111827;font-weight:900;font-size:13px}.miniChip.hot{background:var(--accent);color:#04201d}.miniChip.warn{background:var(--warn);color:#2b1900}.mutedBox{background:rgba(0,0,0,.18);border:1px dashed var(--line);border-radius:14px;padding:12px;color:var(--muted);font-size:13px;line-height:1.5}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0}.toggleBtn{border:1px solid var(--line);background:transparent;color:var(--txt);border-radius:12px;padding:9px 12px;font-weight:800;cursor:pointer}.hiddenDetails{display:none}.hiddenDetails.show{display:block}@media(min-width:980px){.readGrid.two{grid-template-columns:1.1fr .9fr}.readGrid.three{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){body{padding:10px}.card{padding:12px}.bigNumber{font-size:28px}.cleanTable th:nth-child(4),.cleanTable td:nth-child(4){display:none}.pill{min-width:34px;height:34px;margin:3px}.ticket{padding:10px}}
-
-.moneyStrip{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;padding:10px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:13px}.moneyStrip span{white-space:nowrap}</style>
+:root{--bg:#020807;--card:rgba(3,18,13,.78);--text:#d8ffe6;--muted:#7ac99a;--line:#124d2a;--accent:#00ff66;--accent2:#00d9ff;--danger:#ff4d6d;--warn:#facc15;--ball:#072617;--ballText:#d8ffe6;--good:#00ff66;--shadow:0 0 35px rgba(0,255,102,.16);--matrix:#00ff66}
+body.light{--bg:#eef5f2;--card:rgba(255,255,255,.92);--text:#102018;--muted:#587064;--line:#cfe0d8;--accent:#00a94a;--accent2:#0077ff;--danger:#e11d48;--warn:#f59e0b;--ball:#e8f2ed;--ballText:#102018;--good:#00c853;--shadow:0 16px 50px rgba(0,40,20,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--bg);color:var(--text);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-4;background:radial-gradient(circle at 50% 50%,rgba(0,255,102,.10),transparent 35%),radial-gradient(circle at 15% 20%,rgba(0,217,255,.12),transparent 25%),radial-gradient(circle at 90% 85%,rgba(250,204,21,.10),transparent 25%),linear-gradient(180deg,#010403,#020807)}
+body:after{content:"010101 04 10 17 23 71 777 1010 1 2 3 4 5 7 8 010101";position:fixed;inset:-80px;font-size:16px;line-height:2.2;letter-spacing:11px;color:rgba(0,255,102,.06);white-space:pre-wrap;word-break:break-all;transform:rotate(-9deg);z-index:-3;pointer-events:none;animation:rain 18s linear infinite}@keyframes rain{to{transform:translateY(80px) rotate(-9deg)}}
+.wrap{max-width:1180px;margin:auto;padding:18px 16px 40px;position:relative;z-index:2}.top{display:flex;justify-content:space-between;align-items:center;gap:14px}.brand h1{margin:0;font-size:clamp(22px,3.4vw,42px);letter-spacing:.5px;text-shadow:0 0 18px rgba(0,255,102,.55)}.brand p{margin:7px 0 0;color:var(--muted);font-size:14px}.ghost{background:transparent!important;color:var(--text)!important;border:1px solid var(--line)!important;box-shadow:none!important}.hero{min-height:58vh;display:grid;place-items:center;text-align:center;padding:40px 0 18px}.coreOrb{width:min(390px,82vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,rgba(0,255,102,.18),rgba(0,255,102,.04) 45%,transparent 68%);filter:drop-shadow(0 0 28px rgba(0,255,102,.28))}.coreOrb:before,.coreOrb:after{content:"";position:absolute;inset:10%;border-radius:50%;border:1px solid rgba(0,255,102,.38);animation:spin 10s linear infinite}.coreOrb:after{inset:22%;border-color:rgba(0,217,255,.38);animation-duration:6s;animation-direction:reverse}@keyframes spin{to{transform:rotate(360deg)}}
+.startBtn{width:210px;height:210px;border-radius:50%;font-size:24px;text-transform:uppercase;letter-spacing:1px;border:2px solid var(--accent);background:radial-gradient(circle,var(--accent),#003b1b 70%);color:#001b0c;font-weight:1000;cursor:pointer;box-shadow:0 0 28px rgba(0,255,102,.55),inset 0 0 22px rgba(255,255,255,.25);animation:pulse 1.7s ease-in-out infinite}.startBtn:hover{transform:scale(1.04)}@keyframes pulse{50%{box-shadow:0 0 55px rgba(0,255,102,.85),inset 0 0 28px rgba(255,255,255,.32)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:13px 0;box-shadow:var(--shadow);backdrop-filter:blur(9px)}.panel{display:none}.panel.show{display:block;animation:appear .5s ease both}@keyframes appear{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}button{border:0;border-radius:14px;padding:12px 15px;font-weight:1000;cursor:pointer;background:var(--accent);color:#001b0c;box-shadow:0 8px 22px rgba(0,200,83,.22);font-family:inherit}button.secondary{background:var(--accent2);color:#001018}button.warn{background:var(--warn);color:#261500}button.danger{background:var(--danger);color:white}button:hover{transform:translateY(-1px);filter:brightness(1.05)}
+textarea,input,select{width:100%;border:1px solid var(--line);background:rgba(0,20,10,.55);color:var(--text);border-radius:15px;padding:13px;font-size:14px;line-height:1.5;outline:none;font-family:inherit}body.light textarea,body.light input,body.light select{background:rgba(255,255,255,.7)}textarea{min-height:145px;resize:vertical}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{border:1px solid var(--line);border-radius:17px;padding:13px;background:rgba(0,255,102,.045)}.stat b{display:block;font-size:22px}.stat span{font-size:13px;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:18px;background:var(--card);margin:10px 0;overflow:hidden;box-shadow:var(--shadow)}summary{cursor:pointer;padding:14px 16px;font-weight:1000;color:var(--accent)}.inside{padding:0 16px 16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.draw,.ticketRow{border-top:1px solid var(--line);padding:10px 0}.drawTitle{font-weight:1000;color:var(--muted);font-size:13px;margin-bottom:7px}.balls{display:flex;gap:7px;flex-wrap:wrap}.ball{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--ball);color:var(--ballText);font-weight:1000;font-size:13px;border:1px solid rgba(127,127,127,.16)}.ball.hot,.ball.hit{background:var(--good);color:#001b0c;box-shadow:0 0 14px rgba(0,255,102,.45)}.ball.tombola{background:var(--accent2);color:#001018;box-shadow:0 0 14px rgba(0,217,255,.45)}.ball.miss{opacity:.42}.freq{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}.freqItem{border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center;background:rgba(0,255,102,.04)}.freqItem b{display:block;font-size:18px}.freqItem span,.small{font-size:12px;color:var(--muted)}pre{white-space:pre-wrap;background:rgba(148,163,184,.1);border:1px solid var(--line);padding:12px;border-radius:14px;color:var(--text);overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{border-bottom:1px solid var(--line);padding:9px;text-align:left}.table th{color:var(--accent)}.win{color:var(--accent);font-weight:1000}.dangerText{color:var(--danger);font-weight:1000}
+.corner{position:fixed;width:170px;height:170px;z-index:1;opacity:.8;pointer-events:none}.c1{left:18px;top:88px}.c2{right:18px;top:88px}.c3{left:18px;bottom:20px}.c4{right:18px;bottom:20px}.cube{position:relative;width:78px;height:78px;margin:40px auto;transform-style:preserve-3d;animation:cubeSpin 6s linear infinite}.face{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:4px;background:rgba(0,255,102,.08);border:1px solid rgba(0,255,102,.45)}.face span{background:var(--accent);border-radius:3px;box-shadow:0 0 8px rgba(0,255,102,.45)}.f1{transform:translateZ(39px)}.f2{transform:rotateY(90deg) translateZ(39px)}.f3{transform:rotateX(90deg) translateZ(39px)}.f4{transform:rotateY(180deg) translateZ(39px)}.f5{transform:rotateY(-90deg) translateZ(39px)}.f6{transform:rotateX(-90deg) translateZ(39px)}@keyframes cubeSpin{to{transform:rotateX(360deg) rotateY(360deg)}}
+.atom{position:relative;width:130px;height:130px;margin:20px auto;border-radius:50%}.atom:before{content:"";position:absolute;left:55px;top:55px;width:20px;height:20px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent)}.orbit{position:absolute;inset:15px;border:1px solid rgba(0,217,255,.65);border-radius:50%;animation:spin 3s linear infinite}.orbit:nth-child(2){transform:rotate(60deg);animation-duration:4.2s}.orbit:nth-child(3){transform:rotate(120deg);animation-duration:5s}.orbit:after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px var(--accent2)}
+.dna{position:relative;width:120px;height:150px;margin:8px auto;animation:dnaTurn 5s linear infinite}.dna i{position:absolute;left:50%;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}.dna i:nth-child(even){background:var(--accent2)}.dna i:after{content:"";position:absolute;left:0;top:4px;width:70px;height:1px;background:rgba(0,255,102,.35);transform-origin:left center}.dna i:nth-child(1){top:0;transform:translateX(-40px)}.dna i:nth-child(2){top:15px;transform:translateX(34px)}.dna i:nth-child(3){top:30px;transform:translateX(-34px)}.dna i:nth-child(4){top:45px;transform:translateX(28px)}.dna i:nth-child(5){top:60px;transform:translateX(-28px)}.dna i:nth-child(6){top:75px;transform:translateX(24px)}.dna i:nth-child(7){top:90px;transform:translateX(-28px)}.dna i:nth-child(8){top:105px;transform:translateX(34px)}.dna i:nth-child(9){top:120px;transform:translateX(-40px)}@keyframes dnaTurn{to{transform:rotateY(360deg)}}
+.portal{position:relative;width:138px;height:138px;margin:16px auto;border-radius:50%;border:2px solid rgba(0,255,102,.55);box-shadow:0 0 18px rgba(0,255,102,.45),inset 0 0 24px rgba(0,217,255,.18);animation:spin 7s linear infinite}.portal:before,.portal:after{content:"";position:absolute;inset:22px;border-radius:50%;border:1px dashed rgba(0,217,255,.7)}.portal:after{inset:45px;border-color:rgba(250,204,21,.7);animation:spin 2s linear infinite reverse}
+.tombolaBox{min-height:190px;border:1px solid var(--line);border-radius:20px;padding:14px;background:rgba(0,217,255,.04);position:relative;overflow:hidden}.sphere{width:130px;height:130px;border-radius:50%;margin:auto;border:2px solid rgba(0,217,255,.7);box-shadow:0 0 26px rgba(0,217,255,.28),inset 0 0 25px rgba(0,255,102,.12);position:relative;animation:spin 5s linear infinite}.miniBall{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#001b0c;font-size:9px;display:grid;place-items:center;font-weight:1000;animation:bounce 2.2s ease-in-out infinite}.miniBall:nth-child(1){left:12px;top:35px}.miniBall:nth-child(2){right:18px;top:28px;animation-delay:.2s}.miniBall:nth-child(3){left:55px;bottom:12px;animation-delay:.4s}.miniBall:nth-child(4){right:32px;bottom:40px;animation-delay:.7s}@keyframes bounce{50%{transform:translate(12px,-18px) scale(1.1)}}
+@media(max-width:880px){.corner{width:88px;height:88px;opacity:.35}.c1,.c2{top:78px}.cube{width:48px;height:48px}.f1{transform:translateZ(24px)}.f2{transform:rotateY(90deg) translateZ(24px)}.f3{transform:rotateX(90deg) translateZ(24px)}.f4{transform:rotateY(180deg) translateZ(24px)}.f5{transform:rotateY(-90deg) translateZ(24px)}.f6{transform:rotateX(-90deg) translateZ(24px)}.atom,.portal{width:78px;height:78px}.dna{height:90px;scale:.65}.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.startBtn{width:170px;height:170px}.ball{width:33px;height:33px;font-size:12px}}
+</style>
 </head>
-<body class="">
+<body>
+<div class="corner c1"><div class="cube"><div class="face f1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="face f2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="face f3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="face f4"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="face f5"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="face f6"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>
+<div class="corner c2"><div class="atom"><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+<div class="corner c3"><div class="dna"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="corner c4"><div class="portal"></div></div>
 <div class="wrap">
-  <div class="top">
-    <div><div class="brand">GenKin Kino · Motor Bajos Supervivientes</div><div class="sub">Genera 20 tickets leyendo la supervivencia del recorrido 01→10 y sus acompañantes históricos.</div></div>
-    <div class="btns"><button class="btn" onclick="generateTickets()">Generar 20 tickets</button><button class="btn secondary" onclick="copyTickets()">Copiar tickets</button><button class="btn secondary" onclick="toggleTheme()">Claro / oscuro</button></div>
-  </div>
-
-  <div class="grid">
-    <section class="card">
-      <h2>🔥 Bajos sobrevivientes 01 → 10</h2>
-      <div id="lowSurvivors"><span class="pill hot">03<small style="margin-left:4px">6</small></span><span class="pill hot">07<small style="margin-left:4px">5</small></span><span class="pill hot">10<small style="margin-left:4px">4</small></span><span class="pill mid">01<small style="margin-left:4px">3</small></span><span class="pill mid">02<small style="margin-left:4px">2</small></span><span class="pill mid">04<small style="margin-left:4px">2</small></span><span class="pill ">05<small style="margin-left:4px">2</small></span><span class="pill ">06<small style="margin-left:4px">2</small></span><span class="pill ">08<small style="margin-left:4px">2</small></span><span class="pill ">09<small style="margin-left:4px">2</small></span></div>
-      <p class="small">Lectura base: 10 sorteos reales, 20 números por sorteo. Se cuenta supervivencia dentro de los primeros 10 pasos: 01,02,03,04,05,06,07,08,09,10.</p>
-    </section>
-    <section class="card">
-      <h2>📊 Resumen del patrón</h2>
-      <div class="stat" id="stats">
-    <div class="box"><div class="small">Más vivo</div><b>03</b><div>6/10 sorteos</div></div>
-    <div class="box"><div class="small">Segundo</div><b>07</b><div>5/10 sorteos</div></div>
-    <div class="box"><div class="small">Núcleo bajo</div><div>03 - 07 - 10 - 01</div></div>
-    <div class="box"><div class="small">Acompañantes fuertes</div><div>12 - 40 - 16 - 37 - 55 - 14 - 23 - 33</div></div></div>
-    </section>
-  </div>
-
-  <section class="card" style="margin-top:14px">
-    <h2>🎟️ Tickets generados</h2>
-    <div class="small">Motor integrado: 40% bajos supervivientes 01-10 + 30% acompañantes + 20% migración + 10% cierre alto.</div>
-    <div class="tickets" id="tickets"><div class="ticket"><h3>Ticket #1</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">06</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">14</span><span class="pill ">27</span><span class="pill ">39</span><span class="pill ">40</span><span class="pill ">65</span><span class="pill ">80</span></div></div><div class="ticket"><h3>Ticket #2</h3><div class="nums"><span class="pill hot">02</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">38</span><span class="pill ">44</span><span class="pill ">46</span><span class="pill ">54</span><span class="pill ">56</span><span class="pill ">78</span></div></div><div class="ticket"><h3>Ticket #3</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">08</span><span class="pill hot">10</span><span class="pill ">26</span><span class="pill ">33</span><span class="pill ">43</span><span class="pill ">53</span><span class="pill ">54</span><span class="pill ">79</span></div></div><div class="ticket"><h3>Ticket #4</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">08</span><span class="pill hot">09</span><span class="pill ">44</span><span class="pill ">50</span><span class="pill ">60</span><span class="pill ">67</span><span class="pill ">74</span><span class="pill ">80</span></div></div><div class="ticket"><h3>Ticket #5</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">06</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">33</span><span class="pill ">41</span><span class="pill ">45</span><span class="pill ">67</span><span class="pill ">75</span><span class="pill ">76</span></div></div><div class="ticket"><h3>Ticket #6</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">05</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">14</span><span class="pill ">38</span><span class="pill ">45</span><span class="pill ">52</span><span class="pill ">62</span><span class="pill ">76</span></div></div><div class="ticket"><h3>Ticket #7</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">04</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">12</span><span class="pill ">23</span><span class="pill ">31</span><span class="pill ">40</span><span class="pill ">70</span><span class="pill ">74</span></div></div><div class="ticket"><h3>Ticket #8</h3><div class="nums"><span class="pill hot">01</span><span class="pill hot">03</span><span class="pill hot">06</span><span class="pill hot">07</span><span class="pill ">12</span><span class="pill ">32</span><span class="pill ">41</span><span class="pill ">49</span><span class="pill ">57</span><span class="pill ">80</span></div></div><div class="ticket"><h3>Ticket #9</h3><div class="nums"><span class="pill hot">02</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">37</span><span class="pill ">41</span><span class="pill ">42</span><span class="pill ">50</span><span class="pill ">70</span><span class="pill ">74</span></div></div><div class="ticket"><h3>Ticket #10</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">08</span><span class="pill hot">10</span><span class="pill ">16</span><span class="pill ">17</span><span class="pill ">38</span><span class="pill ">44</span><span class="pill ">72</span><span class="pill ">80</span></div></div><div class="ticket"><h3>Ticket #11</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">06</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">20</span><span class="pill ">44</span><span class="pill ">46</span><span class="pill ">61</span><span class="pill ">75</span><span class="pill ">76</span></div></div><div class="ticket"><h3>Ticket #12</h3><div class="nums"><span class="pill hot">01</span><span class="pill hot">02</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill ">25</span><span class="pill ">31</span><span class="pill ">52</span><span class="pill ">70</span><span class="pill ">71</span><span class="pill ">76</span></div></div><div class="ticket"><h3>Ticket #13</h3><div class="nums"><span class="pill hot">01</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">11</span><span class="pill ">18</span><span class="pill ">24</span><span class="pill ">62</span><span class="pill ">68</span><span class="pill ">71</span></div></div><div class="ticket"><h3>Ticket #14</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">06</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">16</span><span class="pill ">40</span><span class="pill ">49</span><span class="pill ">53</span><span class="pill ">55</span><span class="pill ">71</span></div></div><div class="ticket"><h3>Ticket #15</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">08</span><span class="pill hot">10</span><span class="pill ">23</span><span class="pill ">38</span><span class="pill ">67</span><span class="pill ">74</span><span class="pill ">76</span><span class="pill ">80</span></div></div><div class="ticket"><h3>Ticket #16</h3><div class="nums"><span class="pill hot">01</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">08</span><span class="pill ">20</span><span class="pill ">25</span><span class="pill ">43</span><span class="pill ">45</span><span class="pill ">51</span><span class="pill ">79</span></div></div><div class="ticket"><h3>Ticket #17</h3><div class="nums"><span class="pill hot">01</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">23</span><span class="pill ">30</span><span class="pill ">57</span><span class="pill ">60</span><span class="pill ">69</span><span class="pill ">72</span></div></div><div class="ticket"><h3>Ticket #18</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">04</span><span class="pill hot">07</span><span class="pill hot">10</span><span class="pill ">33</span><span class="pill ">51</span><span class="pill ">65</span><span class="pill ">66</span><span class="pill ">74</span><span class="pill ">78</span></div></div><div class="ticket"><h3>Ticket #19</h3><div class="nums"><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">08</span><span class="pill hot">10</span><span class="pill ">20</span><span class="pill ">24</span><span class="pill ">34</span><span class="pill ">41</span><span class="pill ">67</span><span class="pill ">78</span></div></div><div class="ticket"><h3>Ticket #20</h3><div class="nums"><span class="pill hot">02</span><span class="pill hot">03</span><span class="pill hot">07</span><span class="pill hot">09</span><span class="pill ">27</span><span class="pill ">61</span><span class="pill ">65</span><span class="pill ">69</span><span class="pill ">78</span><span class="pill ">79</span></div></div></div>
-  </section>
-
-  <section class="card" style="margin-top:14px">
-    <h2>✅ Comparar tickets con resultados reales integrados</h2>
-    <p class="small">Ya tiene cargados los 10 sorteos reales. Solo genera los tickets y presiona comparar.</p>
-    <div class="btns">
-      <button class="btn" onclick="compareBuiltInHistory()">📊 Comparar con resultados reales</button>
-      <button class="btn secondary" onclick="toggleRealBox()">Pegar otros sorteos</button>
-      <button class="btn secondary" onclick="loadBuiltInText()">Ver sorteos integrados</button>
-    </div>
-    <div id="realBox" style="display:none;margin-top:12px">
-      <textarea class="textarea" id="real" placeholder="Opcional: pega otros sorteos, uno por línea."></textarea><br><br>
-      <button class="btn secondary" onclick="compareCustomHistory()">Analizar sorteos pegados</button>
-    </div>
-    <div id="compare" class="resultsPanel"></div>
-  </section>
-
-  <div class="footer">Nota: esto no garantiza resultados; sirve como laboratorio para analizar supervivencia y comportamiento histórico.</div>
+ <div class="top"><div class="brand"><h1>🧬 NÚCLEO INMORTAL ÉPICO</h1><p>Un solo botón: analiza base, activa ADN, genera 3 tickets maestros y 1 ticket por tómbola experta 1-80.</p></div><button class="ghost" id="themeBtn">🌙 / ☀️</button></div>
+ <section class="hero"><div><div class="coreOrb"><button id="startBtn" class="startBtn">Iniciar</button></div><p id="msg" class="small">Base localStorage intacta. Pulsa iniciar para activar el laboratorio.</p></div></section>
+ <section id="mainPanel" class="panel">
+  <section class="stats"><div class="stat"><b id="drawCount">0</b><span>Sorteos guardados</span></div><div class="stat"><b id="numCount">0</b><span>Números totales</span></div><div class="stat"><b id="top5">--</b><span>Núcleo Top 5</span></div><div class="stat"><b id="lastSaved">--</b><span>Último guardado</span></div></section>
+  <section class="card"><h2>🎟️ Tickets maestros generados</h2><p class="small">3 tickets maestros salen del núcleo + rotativos + acompañantes. El 4to sale de la tómbola experta animada.</p><div class="btns"><button id="genTicketsBtn">🔁 Generar otra vez</button><button class="ghost" id="copyTicketsBtn">📋 Copiar 4 tickets</button></div><div id="ticketsBox"></div><textarea id="ticketsInput" placeholder="Aquí aparecerán los 4 tickets."></textarea></section>
+  <section class="card"><h2>🔮 Tómbola experta 1-80</h2><div class="tombolaBox"><div class="sphere"><span class="miniBall">01</span><span class="miniBall">40</span><span class="miniBall">71</span><span class="miniBall">80</span></div><div id="tombolaStatus" class="small" style="text-align:center;margin-top:10px">Lista para mezclar.</div></div></section>
+  <details><summary>📥 Base localStorage / pegar sorteos</summary><div class="inside"><p class="small">Una fila por sorteo. Guarda solo filas con 20 números únicos del 01 al 80.</p><textarea id="input" placeholder="01 02 09 14 17 18 20 23 31 32 34 38 40 42 46 53 58 60 64 77"></textarea><div class="btns"><button id="saveBtn">💾 Guardar sorteos pegados</button><button class="secondary" id="analyzeBtn">🔎 Analizar base</button><button class="ghost" id="exportBtn">📋 Copiar base</button><button class="ghost" id="downloadBtn">⬇️ Descargar TXT</button><button class="danger" id="clearBtn">🗑️ Borrar base</button></div></div></details>
+  <details open><summary>🎯 Núcleo y frecuencias</summary><div class="inside"><h3>Top 20 números</h3><div id="freq" class="freq"></div><h3>Núcleo sugerido</h3><pre id="coreBox">Guarda sorteos y analiza para ver el núcleo.</pre></div></details>
+  <details><summary>✅ Verificar tickets con sorteo real</summary><div class="inside"><textarea id="realInput" placeholder="Pega sorteo real de 20 números"></textarea><div class="btns"><button id="verifyBtn">✅ Verificar tickets</button></div><div id="verifyBox"></div></div></details>
+  <details><summary>📆 Comparar 1 día / 7 días</summary><div class="inside"><div class="grid2"><label>Periodo<select id="periodSelect"><option value="1">1 día</option><option value="7">7 días</option><option value="custom">Personalizado</option></select></label><label>Sorteos por día<input id="drawsPerDay" type="number" min="1" max="10" value="1" /></label></div><label id="customWrap" style="display:none;margin-top:10px">Cantidad de sorteos<input id="customCount" type="number" min="1" value="10" /></label><div class="btns"><button id="compareBtn">📊 Comparar periodo</button></div><div id="compareBox"></div></div></details>
+  <details><summary>💰 Tabla de premios Kino</summary><div class="inside"><table class="table"><thead><tr><th>Aciertos</th><th>Premio RD$</th></tr></thead><tbody id="prizeTable"></tbody></table></div></details>
+  <details><summary>🧬 ADN de saltos</summary><div class="inside"><div id="jumpBox" class="freq"></div><pre id="jumpText"></pre></div></details>
+  <details><summary>📚 Sorteos guardados</summary><div class="inside" id="drawsBox"></div></details>
+  <details><summary>🧾 Base en texto</summary><div class="inside"><pre id="textBase"></pre></div></details>
+ </section>
 </div>
 <script>
-const draws = [
-[3,16,20,23,30,34,37,39,40,41,46,50,51,52,57,60,63,70,77,79],
-[3,4,7,9,12,14,18,20,25,33,40,41,44,55,56,57,64,68,72,74],
-[3,14,16,19,23,26,32,33,37,42,45,52,56,64,65,67,69,71,72,73],
-[1,3,4,6,9,10,14,16,17,24,30,35,49,52,54,62,72,74,76,78],
-[3,6,7,12,24,28,36,39,40,45,49,60,62,64,67,75,77,78,79,80],
-[5,7,8,10,11,12,23,24,31,33,42,47,55,59,70,71,73,74,76,80],
-[2,5,7,12,16,27,37,40,41,44,50,55,56,60,61,63,65,66,76,80],
-[1,7,11,19,32,34,35,37,38,44,46,49,51,52,53,55,59,67,71,80],
-[8,10,12,16,18,19,23,27,28,33,40,43,46,65,67,68,71,72,76,78],
-[1,2,3,10,12,14,15,17,27,37,40,51,55,57,59,61,63,69,74,79]
-];
-const lowRange = [1,2,3,4,5,6,7,8,9,10];
-const fmt = n => String(n).padStart(2,'0');
-function freq(nums){const m={}; nums.flat().forEach(n=>m[n]=(m[n]||0)+1); return m;}
-const allFreq = freq(draws);
-const lowRank = lowRange.map(n=>({n,c:allFreq[n]||0})).sort((a,b)=>b.c-a.c||a.n-b.n);
-const companions = Object.entries(allFreq).map(([n,c])=>({n:+n,c})).filter(x=>!lowRange.includes(x.n)).sort((a,b)=>b.c-a.c||a.n-b.n);
-// === MOTOR BAJOS SUPERVIVIENTES 01 → 10 ===
-// Se enfoca en los primeros 10 pasos: 01,02,03,04,05,06,07,08,09,10.
-// Luego usa acompañantes, migración y cierre alto detectados en los sorteos de la imagen.
-function rankZone(zone){
-  return zone.map(n=>({n,c:allFreq[n]||0})).sort((a,b)=>b.c-a.c || a.n-b.n);
-}
-const survivalCoreRank = rankZone([1,2,3,4,5,6,7,8,9,10]);
-const lowBridgeRank = rankZone([12,14,16,17,18,19,20,23,24,27,28,31]);
-const companionRank = rankZone([12,14,16,23,33,40,41,44,46,49,50,51,52,55,56,57,59,60,63,64,65,67,71,72]);
-const migrationRank = rankZone([33,37,40,52,55,63,67,71,72]);
-const highCloseRank = rankZone([70,71,72,73,74,75,76,77,78,79,80]);
-function pillClass(n){
-  if(n>=1 && n<=10) return 'hot';
-  if([12,14,16,23,33,40,52,55,63,72].includes(n)) return 'zone2';
-  if(n>=70) return 'zone3';
-  return '';
-}
-
-function weightedPick(pool, count, avoid=new Set()){
-  const out=[]; let safety=0;
-  while(out.length<count && safety++<500){
-    const expanded=[]; pool.forEach(x=>{for(let i=0;i<Math.max(1,x.c);i++) expanded.push(x.n)});
-    const n=expanded[Math.floor(Math.random()*expanded.length)];
-    if(!avoid.has(n) && !out.includes(n)){out.push(n); avoid.add(n)}
-  }
-  return out;
-}
-function renderBase(){
-  document.getElementById('lowSurvivors').innerHTML = `
-    <div class="box" style="margin-bottom:10px"><div class="small">Paso 01→10 · supervivientes principales</div><div>${survivalCoreRank.map((x,i)=>`<span class="pill ${i<4?'hot':i<7?'mid':''}">${fmt(x.n)}<small style="margin-left:4px">${x.c}</small></span>`).join('')}</div></div>
-    <div class="box" style="margin-bottom:10px"><div class="small">Puentes bajos hacia zona media</div><div>${lowBridgeRank.slice(0,8).map(x=>`<span class="pill zone2">${fmt(x.n)}<small style="margin-left:4px">${x.c}</small></span>`).join('')}</div></div>
-    <div class="box"><div class="small">Cierre alto observado</div><div>${highCloseRank.slice(0,8).map(x=>`<span class="pill zone3">${fmt(x.n)}<small style="margin-left:4px">${x.c}</small></span>`).join('')}</div></div>`;
-  const core = survivalCoreRank.slice(0,4).map(x=>fmt(x.n)).join(' - ');
-  const comp = companionRank.slice(0,8).map(x=>fmt(x.n)).join(' - ');
-  const mig = migrationRank.slice(0,6).map(x=>fmt(x.n)).join(' - ');
-  const close = highCloseRank.slice(0,5).map(x=>fmt(x.n)).join(' - ');
-  document.getElementById('stats').innerHTML = `
-    <div class="box"><div class="small">40% Núcleo bajo</div><b>01-10</b><div>${core}</div></div>
-    <div class="box"><div class="small">30% Acompañantes</div><b>MED</b><div>${comp}</div></div>
-    <div class="box"><div class="small">20% Migración</div><b>PUENTE</b><div>${mig}</div></div>
-    <div class="box"><div class="small">10% Cierre</div><b>ALTO</b><div>${close}</div></div>`;
-}
-let lastTickets=[];
-function rotateWeighted(pool, count, offset, avoid=new Set()){
-  const base = pool.map(x=>x.n);
-  const out=[];
-  let idx = offset % base.length;
-  let safety = 0;
-  while(out.length<count && safety++<200){
-    const n = base[idx % base.length];
-    if(!avoid.has(n)){ out.push(n); avoid.add(n); }
-    idx++;
-  }
-  return out;
-}
-let generationId = 0;
-function randInt(max){
-  if(window.crypto && crypto.getRandomValues){
-    const arr = new Uint32Array(1);
-    crypto.getRandomValues(arr);
-    return arr[0] % max;
-  }
-  return Math.floor(Math.random() * max);
-}
-function shufflePool(pool){
-  const arr = pool.map(x=>x.n);
-  for(let i=arr.length-1;i>0;i--){
-    const j = randInt(i+1);
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-function pickHotRandom(pool, count, avoid=new Set()){
-  // Primero usa los calientes por frecuencia, pero mezclados en cada clic.
-  const weighted=[];
-  pool.forEach(x=>{
-    const weight = Math.max(1, x.c || 1);
-    for(let k=0;k<weight;k++) weighted.push(x.n);
-  });
-  const out=[];
-  let safety=0;
-  while(out.length<count && safety++<500){
-    const n = weighted[randInt(weighted.length)];
-    if(!avoid.has(n) && !out.includes(n)){
-      out.push(n);
-      avoid.add(n);
-    }
-  }
-  // Si faltan números, completa con la zona mezclada.
-  for(const n of shufflePool(pool)){
-    if(out.length>=count) break;
-    if(!avoid.has(n)){
-      out.push(n);
-      avoid.add(n);
-    }
-  }
-  return out;
-}
-function ticketKey(t){ return t.join('-'); }
-function generateTickets(){
-  generationId++;
-  lastTickets=[];
-  const usedTickets = new Set();
-
-  // Motor Bajos Supervivientes:
-  // 40% bajos 01-10, 30% acompañantes, 20% migración, 10% cierre alto.
-  // Prioriza el recorrido 01→10 observado en la imagen, sin forzar el antiguo 5-4-1.
-  let safetyAll=0;
-  while(lastTickets.length<20 && safetyAll++<3000){
-    const avoid=new Set();
-    let nums=[];
-
-    // Base viva: 03 y 07 aparecen como eje, pero cada ticket mezcla otros bajos para no quedarse estático.
-    if(randInt(100) < 90){ nums.push(3); avoid.add(3); }
-    if(randInt(100) < 85){ nums.push(7); avoid.add(7); }
-
-    // 4 números bajos en total desde el paso 01→10.
-    nums.push(...pickHotRandom(survivalCoreRank, 4-nums.length, avoid));
-
-    // 3 acompañantes históricos.
-    nums.push(...pickHotRandom(companionRank, 3, avoid));
-
-    // 2 migraciones / puentes.
-    nums.push(...pickHotRandom(migrationRank, 2, avoid));
-
-    // 1 cierre alto.
-    nums.push(...pickHotRandom(highCloseRank, 1, avoid));
-
-    // Si por seguridad falta algo, completa con acompañantes fuertes.
-    if(nums.length<10){ nums.push(...pickHotRandom(companionRank, 10-nums.length, avoid)); }
-
-    nums = nums.slice(0,10).sort((a,b)=>a-b);
-    const key = ticketKey(nums);
-    if(nums.length===10 && !usedTickets.has(key)){
-      usedTickets.add(key);
-      lastTickets.push(nums);
-    }
-  }
-
-  document.getElementById('tickets').innerHTML = `
-    <div class="box" style="grid-column:1/-1">
-      <div class="small">Generación #${generationId} · Motor Bajos Supervivientes activo</div>
-      <b>${lastTickets.length}</b> tickets nuevos generados
-      <div class="small">Fórmula: 4 bajos 01-10 · 3 acompañantes · 2 migración · 1 cierre alto</div>
-    </div>` +
-    lastTickets.map((t,i)=>`<div class="ticket"><h3>Ticket #${i+1}</h3><div class="small">Recorrido 01→10 + acompañantes + cierre</div><div class="nums">${t.map(n=>`<span class="pill ${pillClass(n)}">${fmt(n)}</span>`).join('')}</div></div>`).join('');
-}
-function copyTickets(){
-  const text = lastTickets.map((t,i)=>`Ticket #${i+1}: `+t.map(fmt).join(' ')).join('\n');
-  navigator.clipboard.writeText(text || '');
-}
-function parseDrawLines(){
-  const raw = document.getElementById('real')?.value.trim() || '';
-  if(!raw) return [];
-  return raw.split(/\n+/)
-    .map(line => (line.match(/\d+/g)||[]).map(Number).filter(n=>n>=1 && n<=80))
-    .filter(arr => arr.length>0);
-}
-function toggleRealBox(){
-  const box=document.getElementById('realBox');
-  box.style.display = box.style.display==='none' ? 'block' : 'none';
-}
-function loadBuiltInText(){
-  const box=document.getElementById('realBox');
-  const txt=document.getElementById('real');
-  box.style.display='block';
-  txt.value = draws.map(d=>d.map(fmt).join(' ')).join('\n\n');
-}
-function compareBuiltInHistory(){
-  analyzeHistory(draws, 'Resultados reales integrados');
-}
-function compareCustomHistory(){
-  const history = parseDrawLines();
-  if(!history.length){
-    document.getElementById('compare').innerHTML = `<div class="ticket"><h3>No hay sorteos</h3><div class="small">Pega uno o varios sorteos, uno por línea.</div></div>`;
-    return;
-  }
-  analyzeHistory(history, 'Sorteos pegados');
-}
-function compareReal(){
-  compareCustomHistory();
-}
-function compareHistory(){
-  compareCustomHistory();
-}
-
-function hitClass(v){ return v>=6 ? 'hitGood' : v>=4 ? 'hitMid' : 'hitLow'; }
-function chips(nums){ return nums.map(n=>`<span class="miniChip ${pillClass(n)}">${fmt(n)}</span>`).join(''); }
-function toggleDetails(id){ const el=document.getElementById(id); if(el) el.classList.toggle('show'); }
-
-const PRIZE_TABLE = {
-  10: 25000000,
-  9: 150000,
-  8: 10000,
-  7: 1000,
-  6: 300,
-  5: 60,
-  0: 80
-};
-const COSTO_TICKET = 25;
-function premioPorAciertos(aciertos){ return PRIZE_TABLE[aciertos] || 0; }
-function money(v){ return 'RD$' + Number(v||0).toLocaleString('es-DO'); }
-function balanceClass(v){ return v>=0 ? 'hitGood' : 'hitLow'; }
-
-function analyzeHistory(history, title='Historial'){
-  if(!lastTickets.length) generateTickets();
-  const ticketStats = lastTickets.map((t,i)=>({idx:i+1,total:0,max:0,min:99,rounds:[],prizes:[],prizeTotal:0,nums:t,bestHits:[],bestPrize:0,bestDraw:0}));
-  const numberFreq = {};
-  const prizeCount = {0:0,5:0,6:0,7:0,8:0,9:0,10:0};
-  history.forEach(draw => draw.forEach(n => numberFreq[n]=(numberFreq[n]||0)+1));
-
-  let recoveredTotal = 0;
-  let winnersTotal = 0;
-  let drawCards = '';
-  history.forEach((draw,di)=>{
-    const set = new Set(draw);
-    const ranked = lastTickets.map((t,i)=>{
-      const hits = t.filter(n=>set.has(n));
-      const prize = premioPorAciertos(hits.length);
-      if(prize > 0) winnersTotal++;
-      if(prizeCount[hits.length] !== undefined) prizeCount[hits.length]++;
-      recoveredTotal += prize;
-      ticketStats[i].total += hits.length;
-      ticketStats[i].prizeTotal += prize;
-      ticketStats[i].prizes.push(prize);
-      if(hits.length > ticketStats[i].max){ ticketStats[i].bestHits = hits; ticketStats[i].bestDraw = di+1; }
-      if(prize > ticketStats[i].bestPrize){ ticketStats[i].bestPrize = prize; }
-      ticketStats[i].max = Math.max(ticketStats[i].max, hits.length);
-      ticketStats[i].min = Math.min(ticketStats[i].min, hits.length);
-      ticketStats[i].rounds.push(hits.length);
-      return {idx:i+1,hits,prize,nums:t};
-    }).sort((a,b)=>b.hits.length-a.hits.length || b.prize-a.prize || a.idx-b.idx);
-    const top = ranked.slice(0,5);
-    const drawRecovered = ranked.reduce((sum,r)=>sum+r.prize,0);
-    const drawCost = lastTickets.length * COSTO_TICKET;
-    const drawBalance = drawRecovered - drawCost;
-    drawCards += `<div class="drawBlock">
-      <div class="drawHeader">
-        <div><b style="color:var(--accent)">Sorteo #${di+1}</b><div class="drawResult">${draw.map(fmt).join(' ')}</div></div>
-        <div class="bigNumber ${hitClass(top[0].hits.length)}">${top[0].hits.length}</div>
-      </div>
-      <div class="moneyStrip">
-        <span>Recuperado: <b>${money(drawRecovered)}</b></span>
-        <span>Invertido: <b>${money(drawCost)}</b></span>
-        <span>Balance: <b class="${balanceClass(drawBalance)}">${drawBalance>=0?'+':''}${money(drawBalance)}</b></span>
-      </div>
-      <table class="cleanTable">
-        <thead><tr><th>Ticket</th><th>Aciertos</th><th>Premio</th><th>Números pegados</th></tr></thead>
-        <tbody>${top.map(r=>`<tr><td>#${r.idx}</td><td><span class="${hitClass(r.hits.length)}">${r.hits.length}</span></td><td><b>${money(r.prize)}</b></td><td>${r.hits.length ? chips(r.hits) : '<span class="small">ninguno</span>'}</td></tr>`).join('')}</tbody>
-      </table>
-    </div>`;
-  });
-
-  const investedTotal = history.length * lastTickets.length * COSTO_TICKET;
-  const balanceTotal = recoveredTotal - investedTotal;
-  const roi = investedTotal ? ((balanceTotal / investedTotal) * 100) : 0;
-
-  const rankedTickets = ticketStats.map(s=>({
-    ...s,
-    avg:s.total/history.length,
-    balance:s.prizeTotal - (history.length*COSTO_TICKET),
-    stability:(s.total/history.length) - ((s.max-s.min)*0.15)
-  })).sort((a,b)=>b.max-a.max || b.avg-a.avg || b.total-a.total || a.idx-b.idx);
-
-  const avgRank = [...rankedTickets].sort((a,b)=>b.avg-a.avg || b.max-a.max || a.idx-b.idx);
-  const stableRank = [...rankedTickets].sort((a,b)=>b.stability-a.stability || b.avg-a.avg || a.idx-b.idx);
-  const profitRank = [...rankedTickets].sort((a,b)=>b.prizeTotal-a.prizeTotal || b.avg-a.avg || a.idx-b.idx);
-  const freqRank = Object.entries(numberFreq).map(([n,c])=>({n:+n,c})).sort((a,b)=>b.c-a.c || a.n-b.n);
-  const survivorNums = freqRank.slice(0,15);
-  const best = rankedTickets[0];
-  const stable = stableRank[0];
-  const profit = profitRank[0];
-  const allFreqTable = Array.from({length:80},(_,i)=>i+1).map(n=>({n,c:numberFreq[n]||0})).sort((a,b)=>b.c-a.c || a.n-b.n);
-
-  const avgRows = avgRank.slice(0,20).map(s=>`<tr><td>#${s.idx}</td><td>${s.avg.toFixed(2)}</td><td>${s.max}</td><td>${s.total}</td><td><b>${money(s.prizeTotal)}</b></td><td><span class="${balanceClass(s.balance)}">${s.balance>=0?'+':''}${money(s.balance)}</span></td><td>${s.rounds.join(' · ')}</td></tr>`).join('');
-  const profitRows = profitRank.slice(0,10).map(s=>`<tr><td>#${s.idx}</td><td><b>${money(s.prizeTotal)}</b></td><td><span class="${balanceClass(s.balance)}">${s.balance>=0?'+':''}${money(s.balance)}</span></td><td>${s.max}</td><td>${s.avg.toFixed(2)}</td></tr>`).join('');
-  const freqRows = allFreqTable.slice(0,40).map(x=>`<tr><td>${fmt(x.n)}</td><td>${x.c}</td><td>${Math.round((x.c/history.length)*100)}%</td><td>${x.n<=10?'Bajo 01-10':'Acompañante'}</td></tr>`).join('');
-  const prizeRows = [10,9,8,7,6,5,0].map(k=>`<tr><td>${k} aciertos</td><td><b>${money(PRIZE_TABLE[k])}</b></td><td>${prizeCount[k]||0}</td></tr>`).join('');
-
-  const html = `
-  <div class="resultHero">
-    <div class="resultCard">
-      <h3>💰 Resultado económico</h3>
-      <div class="metricLine"><span>Invertido</span><b>${money(investedTotal)}</b></div>
-      <div class="metricLine"><span>Recuperado</span><b>${money(recoveredTotal)}</b></div>
-      <div class="metricLine"><span>Balance</span><b class="${balanceClass(balanceTotal)}">${balanceTotal>=0?'+':''}${money(balanceTotal)}</b></div>
-      <div class="metricLine"><span>ROI</span><b class="${balanceClass(balanceTotal)}">${roi.toFixed(1)}%</b></div>
-    </div>
-    <div class="resultCard">
-      <h3>🏆 Mejor ticket</h3>
-      <div class="bigNumber">#${best.idx}</div>
-      <div class="metricLine"><span>Mayor acierto</span><b>${best.max}</b></div>
-      <div class="metricLine"><span>Premio máximo</span><b>${money(best.bestPrize)}</b></div>
-      <div class="chipRow">${chips(best.nums)}</div>
-    </div>
-    <div class="resultCard">
-      <h3>💵 Ticket más rentable</h3>
-      <div class="bigNumber">#${profit.idx}</div>
-      <div class="metricLine"><span>Total ganado</span><b>${money(profit.prizeTotal)}</b></div>
-      <div class="metricLine"><span>Balance</span><b class="${balanceClass(profit.balance)}">${profit.balance>=0?'+':''}${money(profit.balance)}</b></div>
-      <div class="metricLine"><span>Promedio</span><b>${profit.avg.toFixed(2)}</b></div>
-    </div>
-    <div class="resultCard">
-      <h3>🎯 Ticket más estable</h3>
-      <div class="bigNumber">#${stable.idx}</div>
-      <div class="metricLine"><span>Promedio</span><b>${stable.avg.toFixed(2)}</b></div>
-      <div class="metricLine"><span>Rango</span><b>${stable.min} → ${stable.max}</b></div>
-      <div class="mutedBox">Secuencia: ${stable.rounds.join(' · ')}</div>
-    </div>
-  </div>
-
-  <div class="readGrid two">
-    <div class="resultCard">
-      <div class="sectionTitle"><h3>🎰 Tabla de premios Kino</h3></div>
-      <table class="cleanTable"><thead><tr><th>Aciertos</th><th>Premio</th><th>Veces logrado</th></tr></thead><tbody>${prizeRows}</tbody></table>
-      <div class="mutedBox" style="margin-top:12px">Costo usado para cálculo: ${money(COSTO_TICKET)} por ticket.</div>
-    </div>
-    <div class="resultCard">
-      <div class="sectionTitle"><h3>📊 Ranking de rentabilidad</h3></div>
-      <table class="cleanTable"><thead><tr><th>Ticket</th><th>Ganado</th><th>Balance</th><th>Max</th><th>Prom.</th></tr></thead><tbody>${profitRows}</tbody></table>
-    </div>
-  </div>
-
-  <div class="readGrid two">
-    <div class="resultCard">
-      <div class="sectionTitle"><h3>🔥 Núcleo superviviente</h3></div>
-      <div class="chipRow">${survivorNums.map(x=>`<span class="miniChip ${x.n<=10?'hot':'warn'}">${fmt(x.n)}<small style="margin-left:4px">${x.c}</small></span>`).join('')}</div>
-      <div class="mutedBox" style="margin-top:12px">Estos son los números que más se repitieron dentro de los sorteos reales cargados.</div>
-    </div>
-    <div class="resultCard">
-      <div class="sectionTitle"><h3>📈 Promedio por ticket</h3></div>
-      <table class="cleanTable"><thead><tr><th>Ticket</th><th>Prom.</th><th>Max</th><th>Total</th><th>Ganado</th><th>Balance</th><th>Secuencia</th></tr></thead><tbody>${avgRows}</tbody></table>
-    </div>
-  </div>
-
-  <div class="resultCard">
-    <div class="sectionTitle"><h3>📊 Frecuencia de números</h3><button class="toggleBtn" onclick="toggleDetails('freqFull')">Mostrar / ocultar tabla</button></div>
-    <div class="chipRow">${allFreqTable.slice(0,20).map(x=>`<span class="miniChip ${x.n<=10?'hot':'warn'}">${fmt(x.n)}<small style="margin-left:4px">${x.c}</small></span>`).join('')}</div>
-    <div id="freqFull" class="hiddenDetails" style="margin-top:12px"><table class="cleanTable"><thead><tr><th>Número</th><th>Veces</th><th>%</th><th>Tipo</th></tr></thead><tbody>${freqRows}</tbody></table></div>
-  </div>
-
-  <div class="resultCard">
-    <div class="sectionTitle"><h3>🧾 Lectura por sorteo</h3><button class="toggleBtn" onclick="toggleDetails('drawDetails')">Mostrar / ocultar sorteos</button></div>
-    <div class="mutedBox">Cada sorteo muestra los 5 tickets más fuertes, sus aciertos y el dinero recuperado.</div>
-    <div id="drawDetails" class="hiddenDetails show" style="margin-top:12px"><div class="readGrid two">${drawCards}</div></div>
-  </div>`;
-
-  document.getElementById('compare').innerHTML = html;
-}
-function toggleTheme(){document.body.classList.toggle('light')}
-renderBase(); generateTickets();
+const KEY='kino_nucleo_inmortal_sorteos_v1',TICKET_KEY='kino_nucleo_inmortal_tickets_v2',THEME='kino_nucleo_inmortal_theme_v1';
+const PRIZES={0:80,5:60,6:300,7:1000,8:10000,9:150000,10:25000000}; const $=id=>document.getElementById(id); let draws=[],tickets=[];
+function pad(n){return String(n).padStart(2,'0')} function money(n){return 'RD$ '+Number(n||0).toLocaleString('es-DO')}
+function load(){try{draws=JSON.parse(localStorage.getItem(KEY)||'[]')}catch{draws=[]}try{tickets=JSON.parse(localStorage.getItem(TICKET_KEY)||'[]')}catch{tickets=[]}if(localStorage.getItem(THEME)==='light')document.body.classList.add('light');render();analyze(false);renderTickets();renderPrizeTable()}
+function save(){localStorage.setItem(KEY,JSON.stringify(draws));localStorage.setItem('kino_nucleo_inmortal_last',new Date().toLocaleString())} function saveTickets(){localStorage.setItem(TICKET_KEY,JSON.stringify(tickets))}
+function parseLine(line,needed=20){const nums=(line.match(/\d{1,2}/g)||[]).map(Number).filter(n=>n>=1&&n<=80);const unique=[...new Set(nums)].sort((a,b)=>a-b);return unique.length===needed?unique:null}
+function parsePasted(text){return text.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(l=>parseLine(l,20)).filter(Boolean)} function parseTickets(text){return text.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(l=>parseLine(l,10)).filter(Boolean)}
+function sameDraw(a,b){return a.length===b.length&&a.every((x,i)=>x===b[i])}
+function addDraws(){const lines=$('input').value.split(/\n+/).filter(Boolean),incoming=parsePasted($('input').value);let added=0,dup=0;for(const d of incoming){if(draws.some(x=>sameDraw(x,d)))dup++;else{draws.push(d);added++}}save();render();analyze(false);$('msg').textContent=`✅ Guardados: ${added}. Repetidos ignorados: ${dup}. Filas inválidas: ${Math.max(0,lines.length-incoming.length)}.`;if(added)$('input').value=''}
+function frequency(base=draws){const freq=Array.from({length:81},(_,i)=>({n:i,c:0}));base.flat().forEach(n=>freq[n].c++);return freq.slice(1).sort((a,b)=>b.c-a.c||a.n-b.n)}
+function jumpFrequency(){const map={};draws.forEach(d=>{for(let i=1;i<d.length;i++){const j=d[i]-d[i-1];map[j]=(map[j]||0)+1}});return Object.entries(map).map(([j,c])=>({j:Number(j),c})).sort((a,b)=>b.c-a.c||a.j-b.j)}
+function companions(nums){const score={};draws.forEach(d=>{if(nums.some(n=>d.includes(n))){d.forEach(n=>{if(!nums.includes(n))score[n]=(score[n]||0)+1})}});return Object.entries(score).map(([n,c])=>({n:Number(n),c})).sort((a,b)=>b.c-a.c||a.n-b.n).map(x=>x.n)}
+function analyze(showMsg=true){const f=frequency(),top20=f.slice(0,20);$('freq').innerHTML=top20.map(x=>`<div class="freqItem"><b>${pad(x.n)}</b><span>${x.c} veces</span></div>`).join('')||'<p class="small">Sin datos.</p>';const top5=f.slice(0,5).map(x=>pad(x.n)).join(' '),top10=f.slice(0,10).map(x=>pad(x.n)).join(' '),top15=f.slice(0,15).map(x=>pad(x.n)).join(' ');$('top5').textContent=top5||'--';$('coreBox').textContent=draws.length?`Núcleo Top 5:\n${top5}\n\nNúcleo Top 10:\n${top10}\n\nNúcleo Top 15:\n${top15}\n\nÚltimos 10 Top 5:\n${frequency(draws.slice(-10)).slice(0,5).map(x=>pad(x.n)).join(' ')}`:'Guarda sorteos y analiza para ver el núcleo.';renderJumps();if(showMsg)$('msg').textContent='🔎 Análisis actualizado.'}
+function renderJumps(){const jf=jumpFrequency();$('jumpBox').innerHTML=jf.slice(0,20).map(x=>`<div class="freqItem"><b>+${x.j}</b><span>${x.c} veces</span></div>`).join('')||'<p class="small">Sin datos.</p>';$('jumpText').textContent=jf.length?'ADN dominante de saltos:\n'+jf.slice(0,8).map(x=>'+'+x.j).join('  '):'Sin datos.'}
+function fillTicket(seed,pool,core,size=10){let t=[...core];for(let k=0;t.length<size&&k<pool.length*3;k++){const n=pool[(seed+k*(seed%5+1))%pool.length];if(!t.includes(n))t.push(n)}return t.sort((a,b)=>a-b)}
+function tombolaExpertTicket(){const f=frequency();const hot=f.slice(0,25).map(x=>x.n),recent=frequency(draws.slice(-10)).slice(0,18).map(x=>x.n),jumps=jumpFrequency().slice(0,8).map(x=>x.j);let pool=[...new Set([...hot,...recent,...Array.from({length:80},(_,i)=>i+1)])];let start=hot[Math.floor(Math.random()*Math.max(1,hot.length))]||Math.ceil(Math.random()*12);let t=[start];for(let i=0;i<80&&t.length<10;i++){let j=jumps[Math.floor(Math.random()*Math.max(1,jumps.length))]||Math.ceil(Math.random()*8);let next=t[t.length-1]+j;if(next>80||Math.random()<.25) next=pool[Math.floor(Math.random()*pool.length)]; if(next>=1&&next<=80&&!t.includes(next))t.push(next)}return t.sort((a,b)=>a-b)}
+function generateTickets(){if(!draws.length){$('msg').textContent='Primero guarda sorteos.';return}const f=frequency();const core=f.slice(0,5).map(x=>x.n);const comp=companions(core).slice(0,30);const pool=[...new Set([...f.slice(5,38).map(x=>x.n),...comp])].filter(n=>!core.includes(n));tickets=[];tickets.push(fillTicket(1,pool,core));tickets.push(fillTicket(7,pool,[...f.slice(0,3).map(x=>x.n),...frequency(draws.slice(-10)).slice(0,2).map(x=>x.n)].filter((v,i,a)=>a.indexOf(v)===i).slice(0,5)));tickets.push(fillTicket(13,[...pool].reverse(),core));$('tombolaStatus').textContent='🌀 Mezclando tómbola experta 1-80...';setTimeout(()=>{tickets.push(tombolaExpertTicket());saveTickets();renderTickets();$('ticketsInput').value=tickets.map(t=>t.map(pad).join(' ')).join('\n');$('tombolaStatus').textContent='✅ Tómbola experta generó el Ticket #4.';$('msg').textContent='🚀 Laboratorio activado: 3 tickets maestros + 1 ticket de tómbola experta.'},650)}
+function renderTickets(){if(!tickets.length){$('ticketsBox').innerHTML='<p class="small">Pulsa iniciar para generar.</p>';return}$('ticketsBox').innerHTML=tickets.map((t,i)=>`<div class="ticketRow"><div class="drawTitle">${i===3?'Tómbola Experta':'Ticket Maestro'} #${i+1}</div><div class="balls">${t.map(n=>`<span class="ball ${i===3?'tombola':'hot'}">${pad(n)}</span>`).join('')}</div></div>`).join('');$('ticketsInput').value=tickets.map(t=>t.map(pad).join(' ')).join('\n')}
+function getCurrentTickets(){const manual=parseTickets($('ticketsInput').value);if(manual.length){tickets=manual;saveTickets();return manual}return tickets} function prizeFor(hits){return PRIZES[hits]||0}
+function verifyAgainst(real,ticks=getCurrentTickets()){return ticks.map((t,i)=>{const hits=t.filter(n=>real.includes(n));return {i:i+1,t,hits,count:hits.length,prize:prizeFor(hits.length)}}).sort((a,b)=>b.count-a.count||a.i-b.i)}
+function renderVerify(){const real=parseLine($('realInput').value,20);if(!real){$('verifyBox').innerHTML='<p class="dangerText">Pega un sorteo real válido de 20 números.</p>';return}const res=verifyAgainst(real),total=res.reduce((s,x)=>s+x.prize,0);$('verifyBox').innerHTML=`<h3>Resultado: ${real.map(pad).join(' ')}</h3><p><b>Total detectado:</b> <span class="win">${money(total)}</span></p>`+res.map(r=>`<div class="ticketRow"><div class="drawTitle">Ticket #${r.i} — ${r.count} aciertos — <span class="win">${money(r.prize)}</span></div><div class="balls">${r.t.map(n=>`<span class="ball ${real.includes(n)?'hit':'miss'}">${pad(n)}</span>`).join('')}</div><p class="small">Aciertos: ${r.hits.map(pad).join(' ')||'ninguno'}</p></div>`).join('')}
+function comparePeriod(){const per=$('periodSelect').value,dpd=Math.max(1,Number($('drawsPerDay').value)||1);let count=per==='custom'?Number($('customCount').value)||10:Number(per)*dpd;const sample=draws.slice(-count);if(!sample.length){$('compareBox').innerHTML='<p class="dangerText">No hay sorteos suficientes.</p>';return}const ticks=getCurrentTickets();let total=0,best={count:-1,prize:0,draw:0,ticket:0,hits:[]},html='';sample.forEach((d,idx)=>{const res=verifyAgainst(d,ticks),dayTotal=res.reduce((s,x)=>s+x.prize,0);total+=dayTotal;if(res[0].count>best.count)best={...res[0],draw:idx+1};html+=`<div class="ticketRow"><div class="drawTitle">Sorteo #${idx+1} — Mejor Ticket #${res[0].i}, ${res[0].count} aciertos — Total: ${money(dayTotal)}</div><div class="balls">${d.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`});$('compareBox').innerHTML=`<h3>Comparación últimos ${sample.length} sorteos</h3><p>Total estimado: <span class="win">${money(total)}</span></p><p>Mejor lectura: Ticket #${best.i}, ${best.count} aciertos, premio ${money(best.prize)}.</p>${html}`}
+function render(){ $('drawCount').textContent=draws.length;$('numCount').textContent=draws.length*20;$('lastSaved').textContent=localStorage.getItem('kino_nucleo_inmortal_last')||'--';const text=draws.map((d,i)=>`Sorteo ${String(i+1).padStart(2,'0')}: ${d.map(pad).join(' ')}`).join('\n');$('textBase').textContent=text||'No hay sorteos guardados.';$('drawsBox').innerHTML=draws.map((d,i)=>`<div class="draw"><div class="drawTitle">Sorteo #${i+1}</div><div class="balls">${d.map(n=>`<span class="ball">${pad(n)}</span>`).join('')}</div></div>`).join('')||'<p class="small">No hay sorteos guardados.</p>'}
+function copyBase(){navigator.clipboard.writeText(draws.map(d=>d.map(pad).join(' ')).join('\n')).then(()=>{$('msg').textContent='📋 Base copiada.'})} function copyTickets(){navigator.clipboard.writeText(getCurrentTickets().map(t=>t.map(pad).join(' ')).join('\n')).then(()=>{$('msg').textContent='📋 Tickets copiados.'})}
+function downloadBase(){const blob=new Blob([draws.map(d=>d.map(pad).join(' ')).join('\n')],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sorteos_kino_localstorage.txt';a.click();URL.revokeObjectURL(a.href)} function renderPrizeTable(){$('prizeTable').innerHTML=[0,5,6,7,8,9,10].map(k=>`<tr><td>${k}</td><td>${money(PRIZES[k])}</td></tr>`).join('')}
+$('startBtn').onclick=()=>{$('mainPanel').classList.add('show');analyze(false);generateTickets();setTimeout(()=>$('mainPanel').scrollIntoView({behavior:'smooth'}),500)};$('saveBtn').onclick=addDraws;$('analyzeBtn').onclick=()=>analyze(true);$('genTicketsBtn').onclick=generateTickets;$('copyTicketsBtn').onclick=copyTickets;$('verifyBtn').onclick=renderVerify;$('compareBtn').onclick=comparePeriod;$('periodSelect').onchange=()=>{$('customWrap').style.display=$('periodSelect').value==='custom'?'block':'none'};$('exportBtn').onclick=copyBase;$('downloadBtn').onclick=downloadBase;$('clearBtn').onclick=()=>{if(confirm('¿Borrar todos los sorteos guardados?')){draws=[];save();render();analyze(false);$('msg').textContent='🗑️ Base borrada.'}};$('themeBtn').onclick=()=>{document.body.classList.toggle('light');localStorage.setItem(THEME,document.body.classList.contains('light')?'light':'dark')};load();
 </script>
-
-
-</body></html>
+</body>
+</html>
